@@ -65,10 +65,10 @@ def render(risk: Risk, options: PacketOptions) -> str:
         centred("(ATTACH TO COMMERCIAL INSURANCE APPLICATION)"),
         rule(),
         row(
-            cell("AGENCY", options.agency, 48),
-            cell("CARRIER", risk.prior_carriers[0].carrier, 30),
-            cell("NAIC", "24171", 18),
+            cell("AGENCY", options.agency, 56),
+            cell("NAIC", options.target_naic, 40),
         ),
+        row(cell("CARRIER", options.target_carrier, 96)),
         row(
             cell("NAMED INSURED(S)", risk.applicant.name, 60),
             cell("EFFECTIVE DATE", us_date(risk.policy.effective_date), 36),

@@ -170,3 +170,12 @@ def test_rendering_is_idempotent_and_leaves_no_trailing_whitespace(spec):
     for name, body in first.items():
         offenders = [line for line in body.split("\n") if line != line.rstrip()]
         assert not offenders, f"{spec.case.case_id}/{name.value}: {offenders[:3]}"
+
+
+def test_no_form_cells_collide(spec):
+    import re
+
+    collision = re.compile(r"[a-z0-9][A-Z][A-Z ]{2,}:")
+    for name, body in packet_text(spec).items():
+        offenders = [line for line in body.split("\n") if collision.search(line)]
+        assert not offenders, f"{spec.case.case_id}/{name.value}: {offenders[:2]}"

@@ -48,6 +48,7 @@ _GL_QUESTIONS = (
     ("ANY PRODUCTS SOLD UNDER THE APPLICANT'S OWN LABEL?", True),
     ("ANY DELIVERY BY OWN VEHICLES?", True),
     ("ANY ALCOHOL SOLD OR SERVED?", False),
+    ("ANY PREMISES LEASED TO OTHERS?", False),
 )
 
 
@@ -58,7 +59,7 @@ def render(risk: Risk, options: PacketOptions) -> str:
         "PRODUCTS AND COMPLETED OPERATIONS AGGREGATE": coverage.gl_general_aggregate_usd,
         "PERSONAL AND ADVERTISING INJURY": coverage.gl_each_occurrence_usd,
         "EACH OCCURRENCE": coverage.gl_each_occurrence_usd,
-        "DAMAGE TO RENTED PREMISES": 100_000,
+        "DAMAGE TO RENTED PREMISES": 0,
         "MEDICAL EXPENSE": 10_000,
     }
     lines: list[str] = [
@@ -67,10 +68,10 @@ def render(risk: Risk, options: PacketOptions) -> str:
         centred("(ATTACH TO COMMERCIAL INSURANCE APPLICATION)"),
         rule(),
         row(
-            cell("AGENCY", options.agency, 48),
-            cell("CARRIER", risk.prior_carriers[1].carrier, 30),
-            cell("NAIC", "19201", 18),
+            cell("AGENCY", options.agency, 56),
+            cell("NAIC", options.target_naic, 40),
         ),
+        row(cell("CARRIER", options.target_carrier, 96)),
         row(
             cell("NAMED INSURED(S)", risk.applicant.name, 56),
             cell("EFFECTIVE DATE", us_date(risk.policy.effective_date), 40),

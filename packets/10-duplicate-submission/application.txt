@@ -2,8 +2,9 @@
                                 COMMERCIAL INSURANCE APPLICATION
                                  APPLICANT INFORMATION SECTION
 ================================================================================================
-AGENCY: Harbridge Insurance Brokers             CARRIER: Meridian Mutual      DATE: 12/14/2026
-AGENCY CUSTOMER ID: HRB-004418                  NAIC CODE: 24171              UNDERWRITER:
+AGENCY: Harbridge Insurance Brokers                     DATE: 12/14/2026
+CARRIER: Northgate Specialty Insurance Company          NAIC CODE: 31887
+AGENCY CUSTOMER ID: HRB-004418                          UNDERWRITER:
 POLICIES OR PROGRAM REQUESTED ------------------------------------------------------------------
 INDICATE SECTIONS ATTACHED
 [X] PROPERTY                                    [X] COMMERCIAL GENERAL LIABILITY
@@ -63,6 +64,9 @@ OCCURRENCE                                            CLAIM       PAID      RESE
 --------------------------------------------------------------------------------------------
 01/14/2024  PROPERTY  Burst supply line in the Hoboke 01/16/2024  12,000    0         CLSD
 03/03/2025  GL        Customer slipped on a wet floor 03/11/2025  4,000     26,000    OPEN
+REMARKS/PROCESSING INSTRUCTIONS ----------------------------------------------------------------
+Business auto and workers compensation are placed separately and are not part of this
+submission. All premises are owner occupied.
 SIGNATURE --------------------------------------------------------------------------------------
 THE UNDERSIGNED IS AN AUTHORIZED REPRESENTATIVE OF THE APPLICANT AND CERTIFIES THAT THE ANSWERS
 ARE TRUE, CORRECT AND COMPLETE TO THE BEST OF HIS/HER KNOWLEDGE.

@@ -2,7 +2,8 @@
                               COMMERCIAL GENERAL LIABILITY SECTION
                           (ATTACH TO COMMERCIAL INSURANCE APPLICATION)
 ================================================================================================
-AGENCY: Harbridge Insurance Brokers             CARRIER: Callaghan Indemnity  NAIC: 19201
+AGENCY: Harbridge Insurance Brokers                     NAIC: 31887
+CARRIER: Northgate Specialty Insurance Company
 NAMED INSURED(S): Halsey Street Bakery LLC              EFFECTIVE DATE: 01/01/2027
 COVERAGE ---------------------------------------------------------------------------------------
 [X] COMMERCIAL GENERAL LIABILITY                [X] OCCURRENCE        [ ] CLAIMS MADE
@@ -12,7 +13,7 @@ GENERAL AGGREGATE                                                2,000,000
 PRODUCTS AND COMPLETED OPERATIONS AGGREGATE                      2,000,000
 PERSONAL AND ADVERTISING INJURY                                  1,000,000
 EACH OCCURRENCE                                                  1,000,000
-DAMAGE TO RENTED PREMISES                                          100,000
+DAMAGE TO RENTED PREMISES                                                0
 MEDICAL EXPENSE                                                     10,000
 DEDUCTIBLES ------------------------------------------------------------------------------------
 PROPERTY DAMAGE DEDUCTIBLE: 1,000               PER: CLAIM
@@ -45,6 +46,7 @@ ANY WORK PERFORMED AT HEIGHT OR BELOW GROUND?                               [ ] 
 ANY PRODUCTS SOLD UNDER THE APPLICANT'S OWN LABEL?                          [X]  [ ]
 ANY DELIVERY BY OWN VEHICLES?                                               [X]  [ ]
 ANY ALCOHOL SOLD OR SERVED?                                                 [ ]  [X]
+ANY PREMISES LEASED TO OTHERS?                                              [ ]  [X]
 REMARKS ----------------------------------------------------------------------------------------
 Products are baked goods sold at the applicant's own outlets and delivered to third party cafes
 within a 40 mile radius.

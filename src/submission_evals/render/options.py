@@ -9,7 +9,9 @@ class PacketOptions:
     agency: str = "Harbridge Insurance Brokers"
     broker_name: str = "Dana Whitfield"
     broker_email: str = "d.whitfield@harbridge.example"
-    underwriter_email: str = "newbusiness@meridian-mutual.example"
+    target_carrier: str = "Northgate Specialty Insurance Company"
+    target_naic: str = "31887"
+    underwriter_email: str = "newbusiness@northgate-specialty.example"
     submitted_on: date = date(2026, 12, 7)
     agency_customer_id: str = "HRB-004418"
     state_total_in_email: bool = True

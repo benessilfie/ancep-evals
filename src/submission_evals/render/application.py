@@ -99,14 +99,16 @@ def render(risk: Risk, options: PacketOptions) -> str:
         centred("APPLICANT INFORMATION SECTION"),
         rule(),
         row(
-            cell("AGENCY", options.agency, 48),
-            cell("CARRIER", risk.prior_carriers[0].carrier, 30),
-            cell("DATE", us_date(options.submitted_on), 18),
+            cell("AGENCY", options.agency, 56),
+            cell("DATE", us_date(options.submitted_on), 40),
         ),
         row(
-            cell("AGENCY CUSTOMER ID", options.agency_customer_id, 48),
-            cell("NAIC CODE", "24171", 30),
-            cell("UNDERWRITER", "", 18),
+            cell("CARRIER", options.target_carrier, 56),
+            cell("NAIC CODE", options.target_naic, 40),
+        ),
+        row(
+            cell("AGENCY CUSTOMER ID", options.agency_customer_id, 56),
+            cell("UNDERWRITER", "", 40),
         ),
         band("policies or program requested"),
         "INDICATE SECTIONS ATTACHED",
@@ -251,6 +253,11 @@ def render(risk: Risk, options: PacketOptions) -> str:
 
     lines.extend(
         [
+            band("remarks/processing instructions"),
+            *wrap(
+                "Business auto and workers compensation are placed separately and are not "
+                "part of this submission. All premises are owner occupied."
+            ),
             band("signature"),
             *wrap(
                 "THE UNDERSIGNED IS AN AUTHORIZED REPRESENTATIVE OF THE APPLICANT AND "

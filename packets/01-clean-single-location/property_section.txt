@@ -2,7 +2,8 @@
                                         PROPERTY SECTION
                           (ATTACH TO COMMERCIAL INSURANCE APPLICATION)
 ================================================================================================
-AGENCY: Harbridge Insurance Brokers             CARRIER: Meridian Mutual      NAIC: 24171
+AGENCY: Harbridge Insurance Brokers                     NAIC: 31887
+CARRIER: Northgate Specialty Insurance Company
 NAMED INSURED(S): Halsey Street Bakery LLC                  EFFECTIVE DATE: 01/01/2027
 PREMISES INFORMATION ---------------------------------------------------------------------------
 PREMISES #: 1     BUILDING #: 1     STREET ADDRESS: 18 Washington Street, Hoboken, NJ 07030

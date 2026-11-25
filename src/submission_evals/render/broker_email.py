@@ -21,11 +21,14 @@ class Message:
 def _covering_message(risk: Risk, options: PacketOptions, total: int | None) -> Message:
     applicant = risk.applicant
     cities = sorted({location.city for location in risk.locations})
+    where = cities[0] if len(cities) == 1 else f"{', '.join(cities[:-1])} and {cities[-1]}"
+    noun = "location" if risk.location_count == 1 else "locations"
+    inception = risk.policy.effective_date
     body = wrap(
         f"Morning, new business submission attached for {applicant.name}, "
-        f"{risk.location_count} retail bakery locations across "
-        f"{', '.join(cities[:-1])} and {cities[-1]}, property and general liability, "
-        f"incepting {risk.policy.effective_date.day} {risk.policy.effective_date.strftime('%B')}."
+        f"{risk.location_count} retail bakery {noun} in {where}, "
+        f"property and general liability, incepting "
+        f"{inception.day} {inception.strftime('%B')}."
     )
     body.append("")
     second = (
