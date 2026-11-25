@@ -9,7 +9,7 @@ import uuid
 import zipfile
 from collections import defaultdict, deque
 from collections.abc import AsyncIterator
-from typing import Any
+from typing import Any, NamedTuple
 
 import anthropic
 from fastapi import FastAPI, HTTPException, Request
@@ -26,13 +26,26 @@ from submission_evals.grade import grade
 from submission_evals.prompt import SYSTEM, system_blocks
 from submission_evals.truth import DocumentName
 
-LIVE_MODEL = "claude-haiku-5-5"
 LIVE_EFFORT = "medium"
 MAX_TOKENS = 32_000
 MAX_FILES = 12
 MAX_BYTES = 400_000
-RUNS_PER_HOUR = int(os.environ.get("DEMO_RUNS_PER_HOUR", "12"))
-RUNS_PER_DAY = int(os.environ.get("DEMO_RUNS_PER_DAY", "36"))
+
+
+class ModelLimit(NamedTuple):
+    label: str
+    note: str
+    per_hour: int
+    per_day: int
+    usd: float
+
+
+LIVE_MODELS: dict[str, ModelLimit] = {
+    "claude-haiku-5-5": ModelLimit("Haiku 5.5", "fastest, cheapest", 12, 36, 0.057),
+    "claude-sonnet-5-5": ModelLimit("Sonnet 5.5", "the middle one", 6, 12, 0.085),
+    "claude-opus-5-5": ModelLimit("Opus 5.5", "most capable", 6, 12, 0.452),
+}
+DEFAULT_MODEL = "claude-haiku-5-5"
 
 app = FastAPI(title="submission intake evals")
 app.add_middleware(
@@ -43,33 +56,61 @@ app.add_middleware(
 )
 
 SPECS = {spec.case.case_id: spec for spec in all_specs()}
-_recent: dict[str, deque[float]] = defaultdict(deque)
-_today: deque[float] = deque()
+_recent: dict[tuple[str, str], deque[float]] = defaultdict(deque)
+_today: dict[str, deque[float]] = defaultdict(deque)
 _runs: dict[str, dict[str, Any]] = {}
 
 
-def _allow(ip: str) -> str | None:
+def _prune(bucket: deque[float], now: float, window: float) -> None:
+    while bucket and now - bucket[0] > window:
+        bucket.popleft()
+
+
+def _remaining(model: str) -> dict[str, int]:
+    limit = LIVE_MODELS[model]
     now = time.time()
-    hour = _recent[ip]
-    while hour and now - hour[0] > 3600:
-        hour.popleft()
-    while _today and now - _today[0] > 86_400:
-        _today.popleft()
-    if len(_today) >= RUNS_PER_DAY:
+    _prune(_today[model], now, 86_400)
+    return {"today": max(0, limit.per_day - len(_today[model])), "perDay": limit.per_day}
+
+
+def _allow(ip: str, model: str) -> str | None:
+    limit = LIVE_MODELS[model]
+    now = time.time()
+    hour = _recent[(ip, model)]
+    _prune(hour, now, 3600)
+    _prune(_today[model], now, 86_400)
+    if len(_today[model]) >= limit.per_day:
         return (
-            f"That is the {RUNS_PER_DAY} live runs this demo allows in a day. "
-            "The 90 recorded runs are still here."
+            f"{limit.label} has used its {limit.per_day} live runs for today. "
+            "Another model may still have room, and the 90 recorded runs are always here."
         )
-    if len(hour) >= RUNS_PER_HOUR:
-        return f"That is {RUNS_PER_HOUR} runs in an hour from this address. Try again later."
+    if len(hour) >= limit.per_hour:
+        return (
+            f"That is {limit.per_hour} {limit.label} runs in an hour from this address. "
+            "Try another model or come back later."
+        )
     hour.append(now)
-    _today.append(now)
+    _today[model].append(now)
     return None
 
 
 @app.get("/api/health")
 def health() -> dict[str, Any]:
-    return {"ok": True, "model": LIVE_MODEL, "runs_today": len(_today)}
+    return {
+        "ok": True,
+        "default": DEFAULT_MODEL,
+        "models": [
+            {
+                "id": model,
+                "label": limit.label,
+                "note": limit.note,
+                "usd": limit.usd,
+                "perHour": limit.per_hour,
+                **_remaining(model),
+            }
+            for model, limit in LIVE_MODELS.items()
+        ],
+    }
 
 
 @app.get("/api/packets")
@@ -111,11 +152,15 @@ def download(case_id: str) -> StreamingResponse:
 @app.post("/api/runs")
 async def create_run(request: Request) -> dict[str, str]:
     client_ip = request.client.host if request.client else "unknown"
-    refusal = _allow(client_ip)
+
+    form = await request.form()
+    requested = form.get("model")
+    model = requested if isinstance(requested, str) and requested in LIVE_MODELS else DEFAULT_MODEL
+
+    refusal = _allow(client_ip, model)
     if refusal:
         raise HTTPException(429, refusal)
 
-    form = await request.form()
     packet_id = form.get("packet_id")
     packet: dict[DocumentName, str] = {}
     unknown: list[dict] = []
@@ -150,6 +195,7 @@ async def create_run(request: Request) -> dict[str, str]:
         "packet": packet,
         "packet_id": packet_id if isinstance(packet_id, str) else None,
         "unknown": unknown,
+        "model": model,
     }
     return {"run_id": run_id}
 
@@ -188,13 +234,13 @@ async def _stream(run_id: str) -> AsyncIterator[str]:
         }
     )
 
-    yield _sse("stage", {"stage": "reading", "model": LIVE_MODEL})
+    yield _sse("stage", {"stage": "reading", "model": state["model"]})
     started = time.monotonic()
 
     try:
         client = anthropic.AsyncAnthropic()
         async with client.messages.stream(
-            model=LIVE_MODEL,
+            model=state["model"],
             max_tokens=MAX_TOKENS,
             system=system_blocks(),
             messages=[{"role": "user", "content": blocks}],

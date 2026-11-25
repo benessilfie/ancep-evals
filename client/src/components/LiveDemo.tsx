@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { BlankRecord } from "@/components/BlankRecord"
 import { PacketBrowser } from "@/components/PacketBrowser"
 import { RunVerdict, type Graded } from "@/components/RunVerdict"
@@ -24,6 +24,16 @@ interface Finding {
 
 type Phase = "idle" | "starting" | "reading" | "extracted" | "checking" | "done" | "error"
 
+interface LiveModel {
+  id: string
+  label: string
+  note: string
+  usd: number
+  perHour: number
+  today: number
+  perDay: number
+}
+
 export function LiveDemo({ data }: { data: EvalData }) {
   const [packetId, setPacketId] = useState(data.cases[0].id)
   const [phase, setPhase] = useState<Phase>("idle")
@@ -41,8 +51,22 @@ export function LiveDemo({ data }: { data: EvalData }) {
     findings: [],
   })
   const { runs, save } = useRunHistory()
+  const [models, setModels] = useState<LiveModel[]>([])
+  const [model, setModel] = useState<string | null>(null)
 
   useEffect(() => () => source.current?.close(), [])
+
+  const loadModels = useCallback(() => {
+    fetch(`${API}/api/health`)
+      .then((r) => r.json())
+      .then((d) => {
+        setModels(d.models ?? [])
+        setModel((m) => m ?? d.default ?? null)
+      })
+      .catch(() => setModels([]))
+  }, [])
+
+  useEffect(loadModels, [loadModels])
 
   const start = async () => {
     source.current?.close()
@@ -58,11 +82,13 @@ export function LiveDemo({ data }: { data: EvalData }) {
 
     const body = new FormData()
     const uploadedNow = Boolean(files && files.length > 0)
+    const chosenLabel = models.find((m) => m.id === model)?.label ?? "Haiku 5.5"
     if (files && files.length > 0) {
       for (const file of Array.from(files)) body.append("files", file)
     } else {
       body.append("packet_id", packetId)
     }
+    if (model) body.append("model", model)
 
     let runId: string
     try {
@@ -104,15 +130,17 @@ export function LiveDemo({ data }: { data: EvalData }) {
       setMeta((m) => ({ ...m, seconds: d.seconds }))
       setGraded(d.graded ?? null)
       setPhase("done")
+      loadModels()
       const taken = collected.current
       save({
         id: runId,
         at: Date.now(),
         packetId: uploadedNow ? null : packetId,
         label: uploadedNow
-          ? `${taken.fields.length ? "your documents" : "your upload"}`
+          ? "your documents"
           : (data.cases.find((c) => c.id === packetId)?.short ?? packetId),
         seconds: d.seconds,
+        model: chosenLabel,
         passed: d.graded ? d.graded.passed : null,
         raised: taken.fields.filter((f) => f.answer.status === "flagged").length,
         blocking: d.blocking ?? 0,
@@ -132,6 +160,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
   const running = phase === "starting" || phase === "reading" || phase === "checking"
   const answers = new Map(fields.map((f) => [f.field, f.answer]))
   const selectedCase: EvalCase | undefined = data.cases.find((c) => c.id === packetId)
+  const chosen = models.find((m) => m.id === model)
 
   const restore = (run: PastRun) => {
     source.current?.close()
@@ -151,11 +180,57 @@ export function LiveDemo({ data }: { data: EvalData }) {
       <aside className="w-[22rem] shrink-0 overflow-y-auto border-r border-rule bg-paper-sunk/40 px-5 py-5">
         <h2 className="text-[0.9375rem] font-semibold">Run one yourself</h2>
         <p className="mt-2 text-[0.8125rem] leading-relaxed text-ink-soft">
-          Pick a packet, read what is in it, then send it to {" "}
-          <span className="font-mono text-[0.75rem]">claude-haiku-5-5</span> and comes back
-          with a record, then the checks run against the documents you supplied. No ground
-          truth needed.
+          Pick a packet and a model, read what is in the packet, then send it over. The
+          model fills in the record and the checks run against the documents it was given,
+          so an upload of your own works the same way.
         </p>
+
+        {models.length > 0 && (
+          <div className="mt-5">
+            <span className="field-label">model</span>
+            <div className="mt-1.5 grid grid-cols-3 gap-1.5">
+              {models.map((m) => {
+                const out = m.today === 0
+                const on = m.id === model
+                return (
+                  <button
+                    key={m.id}
+                    type="button"
+                    disabled={running || out}
+                    onClick={() => setModel(m.id)}
+                    title={out ? `${m.label} has used its ${m.perDay} runs today` : m.note}
+                    className={cn(
+                      "pressable rounded-field border px-2 py-2 text-center transition-colors",
+                      on
+                        ? "border-ink bg-ink text-paper"
+                        : "border-rule bg-white hover:border-ink-faint",
+                      out && "opacity-40"
+                    )}
+                  >
+                    <span className="block text-[0.8125rem] leading-tight font-medium">
+                      {m.label.replace(" 5.5", "")}
+                    </span>
+                    <span
+                      className={cn(
+                        "mt-0.5 block font-mono text-[0.625rem]",
+                        on ? "text-paper/70" : "text-ink-faint"
+                      )}
+                    >
+                      {out ? "spent" : `${m.today} left`}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+            {chosen && (
+              <p className="mt-2 text-[0.75rem] leading-relaxed text-ink-faint">
+                {chosen.note}. About {Math.round(chosen.usd * 100)} cents a run, capped at{" "}
+                {chosen.perHour} an hour from one address and {chosen.perDay} a day in
+                total.
+              </p>
+            )}
+          </div>
+        )}
 
         <div className="mt-5">
           <label className="field-label" htmlFor="packet">packet</label>
@@ -226,8 +301,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
         </button>
 
         <p className="mt-3 text-[0.6875rem] leading-relaxed text-ink-faint">
-          About half a cent a run. Twelve an hour from one address, thirty six a day in
-          total, so the demo cannot run up a bill.
+          Each model has its own cap, so the demo cannot run up a bill.
         </p>
 
         {runs.length > 0 && (
@@ -253,7 +327,14 @@ export function LiveDemo({ data }: { data: EvalData }) {
                     >
                       {run.passed === null ? "yours" : run.passed ? "right" : "wrong"}
                     </span>
-                    <span className="flex-1 truncate text-[0.8125rem]">{run.label}</span>
+                    <span className="min-w-0 flex-1 truncate text-[0.8125rem]">
+                      {run.label}
+                      {run.model && (
+                        <span className="ml-1.5 font-mono text-[0.625rem] text-ink-faint">
+                          {run.model.replace(" 5.5", "")}
+                        </span>
+                      )}
+                    </span>
                     <span className="shrink-0 font-mono text-[0.625rem] text-ink-faint">
                       {timeAgo(run.at)}
                     </span>
@@ -279,7 +360,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
                   : "[border-bottom-color:transparent] text-ink-soft hover:text-ink"
               )}
             >
-              {key === "packet" ? "the documents" : "the record"}
+              {key === "packet" ? "the documents" : "the result"}
             </button>
           ))}
         </div>
