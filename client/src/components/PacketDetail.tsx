@@ -37,14 +37,15 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
           {evalCase.title}
         </p>
 
-        <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <div className="mt-3">
           <span className="field-label">3 runs per model, they are not deterministic</span>
+          <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">
           {MODELS.map((label) => {
             const runs = evalCase.trials.filter((t) => t.modelLabel.startsWith(label))
             if (runs.length === 0) return null
             return (
               <span key={label} className="flex items-center gap-1.5">
-                <span className="text-[0.75rem] text-ink-soft">{label}</span>
+                <span className="w-[3.25rem] shrink-0 text-[0.75rem] text-ink-soft">{label}</span>
                 {runs.map((t) => (
                   <button
                     key={`${t.model}-${t.rep}`}
@@ -52,7 +53,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
                     onClick={() => setTrial(t)}
                     title={`${t.modelLabel} run ${t.rep + 1} of ${runs.length}`}
                     className={cn(
-                      "rounded-field border px-2 py-1 font-mono text-[0.6875rem] transition-colors",
+                      "pressable rounded-field border px-2 py-1 font-mono text-[0.6875rem] transition-colors",
                       t === trial
                         ? "border-ink bg-ink text-paper"
                         : t.passed
@@ -66,6 +67,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
               </span>
             )
           })}
+          </div>
         </div>
       </div>
 
