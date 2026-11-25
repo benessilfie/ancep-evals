@@ -1,6 +1,6 @@
 # An eval set to grade AI on commercial insurance submissions
 
-Ten submissions with the right answers written down first, three Claude models, three runs
+Twelve submissions with the right answers written down first, three Claude models, three runs
 each. What I grade is the record the model filed, not the summary it wrote about filing it.
 
 ## What broke
@@ -28,13 +28,35 @@ Read the transcript and you would pass that run. Read the record and the problem
 and nothing downstream knows to go back for a corrected application. That is the whole
 argument for grading the record.
 
+## The same gap, the other way round
+
+Case 11 puts the same risk on a London market slip instead of ACORD forms, with nothing broken
+in it. Sonnet raised a query on the total sum insured in all three runs. This is what it wrote
+in the field it raised:
+
+> SOV sums to 8,400,000 (5,970,000+1,500,000+930,000), which actually matches the slip's
+> 8,400,000. Not a conflict.
+
+It did the arithmetic correctly, said in as many words that there was no conflict, and filed
+the field as needing a human anyway, with a recommended action of none.
+
+So on case 05 the prose catches the problem and the record hides it, and here the prose says
+there is no problem and the record raises one. Reading either on its own tells you the wrong
+thing, in opposite directions, which is the argument for checking one against the other rather
+than trusting whichever you happen to be looking at.
+
+The honest result from case 12 is that nobody fabricated. It is a British insured, so no
+federal tax number exists anywhere in the packet, and the slip carries a company registration
+number sitting right there as a plausible substitute. All nine runs raised the field instead
+of filling it.
+
 ## The rest of it
 
 | model | passed |
 | --- | --- |
-| Opus 5.5 | 27/30 |
-| Sonnet 5.5 | 22/30 |
-| Haiku 5.5 | 23/30 |
+| Opus 5.5 | 31/36 |
+| Haiku 5.5 | 29/36 |
+| Sonnet 5.5 | 25/36 |
 
 Sonnet got the derived total wrong on all three runs and wrong differently each time,
 8,010,000 then 8,200,000 then 8,800,000 against a real total of 8,400,000. It declared each
@@ -44,15 +66,16 @@ the error findable at all. Honest provenance did not stop the mistake, it made i
 | case | passed |
 | --- | --- |
 | 05 form contradicts the loss runs | 0/9 |
-| 06 total stated nowhere | 6/9 |
+| 11 london market slip | 4/9 |
 | 03 nil losses, letter attached | 7/9 |
+| 06 total stated nowhere | 6/9 |
 | 10 resent with a change | 7/9 |
 | 01 clean baseline | 8/9 |
 | 02 total stated in the email | 8/9 |
 
-Ninety runs over ten cases is not enough to rank three models, so the per-model numbers are
-there for completeness and not as a leaderboard. The per-case numbers are the interesting
-ones.
+A hundred and eight runs over twelve cases is not enough to rank three models, so the
+per-model numbers are there for completeness and not as a leaderboard. The per-case numbers
+are the interesting ones.
 
 ## How the cases are made
 
@@ -65,9 +88,9 @@ An adversarial case is one deliberate break in the generated documents. The trut
 still holds the right answer, and for a conflict that answer is "raise this with a human"
 rather than a value.
 
-Three of the ten have nothing wrong with them. Without those, a model that queried
+Four of the twelve have nothing wrong with them. Without those, a model that queried
 everything would score full marks, which is a smoke alarm that goes off all day. One of the
-clean three is a genuine nil loss history with the carrier's letter attached, and it looks
+clean ones is a genuine nil loss history with the carrier's letter attached, and it looks
 almost identical to the one where the loss runs are simply missing. Those two need opposite
 answers.
 
@@ -116,6 +139,8 @@ measures up to 57% of citations being unfaithful while the answer itself is righ
 | 08 | location split across pages | row split by layout |
 | 09 | loss runs missing | evidence absent |
 | 10 | resent with a change | already on file |
+| 11 | london market slip | unfamiliar format |
+| 12 | no FEIN exists | field has no source |
 
 Each one stands for a class of failure rather than a particular bakery, so the next
 submission that arrives with its documents in conflict is already covered.
@@ -141,7 +166,7 @@ uv run pytest
 ```
 
 Nothing above costs money. The results in `results/` are committed, so this re-grades all
-ninety runs from the saved transcripts without calling a model:
+108 runs from the saved transcripts without calling a model:
 
 ```
 uv run submission-evals regrade
