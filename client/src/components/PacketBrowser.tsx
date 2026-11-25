@@ -58,7 +58,7 @@ export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-      <div className="shrink-0 border-b-[6px] border-rule-soft px-4 py-3 lg:hidden">
+      <div className="shrink-0 border-b border-rule-soft px-4 py-3 lg:hidden">
         <Select value={current.name} onValueChange={setOpen}>
           <SelectTrigger className="pressable w-full rounded-field border border-rule bg-white px-2.5 py-2 text-left text-[0.8125rem]">
             <SelectValue />
