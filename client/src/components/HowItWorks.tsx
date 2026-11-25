@@ -33,10 +33,11 @@ export function HowItWorks({
           <h1 className="max-w-[26ch] text-[1.75rem] leading-[1.15] font-semibold tracking-[-0.02em]">
             Grading AI on insurance submissions
           </h1>
-          <p className="mt-2 max-w-[58ch] text-[1rem] leading-relaxed text-ink-soft">
-            Ten commercial insurance files with the right answers written down in advance,
-            three Claude models, ninety graded records. Six steps, about two minutes, then
-            you can run one yourself.
+          <p className="mt-2 max-w-[62ch] text-[1rem] leading-relaxed text-ink-soft">
+            An eval set is a fixed suite of test cases where the right answers are written
+            down in advance, that you point a model at and score. This one is about
+            commercial insurance paperwork, and it takes about two minutes to walk
+            through.
           </p>
         </div>
 
@@ -119,15 +120,15 @@ function buildSteps(
             A broker sends an insurer a pile of paperwork and somebody has to read all of
             it and type the facts into a system, and that job is going to AI now.
           </p>
-          <p className="text-ink">
-            This is an eval set for that job, so a fixed suite of test cases with the right
-            answers written down in advance, that you point a model at and score.
-          </p>
           <p>
-            Ten fake submissions, three Claude models, three goes at each one, which is{" "}
-            {data.totals.trials} graded records in total. What I score is the record they filed,
-            not the summary they wrote about filing it, because a model that gets this
-            wrong still describes its work in fluent, confident prose.
+            So I built ten fake submissions where I already know every right answer, gave
+            them to three Claude models, three goes at each one, which is{" "}
+            {data.totals.trials} graded records in total.
+          </p>
+          <p className="text-ink">
+            What I score is the record they filed, not the summary they wrote about filing
+            it, because a model that gets this wrong still describes its work in fluent,
+            confident prose and the summary tells you nothing.
           </p>
         </Prose>
       ),
