@@ -144,7 +144,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
               <span className="field-label self-center pr-2">output</span>
               <TabsTrigger
                 value="__record"
-                className="rounded-none border-0 border-b-2 border-transparent bg-transparent px-2 py-1.5 text-[0.75rem] font-medium text-ink shadow-none data-[state=active]:border-carbon data-[state=active]:bg-transparent data-[state=active]:text-carbon data-[state=active]:shadow-none"
+                className="rounded-none px-2 py-1.5 text-[0.75rem] font-medium text-ink [border-width:0_0_2px_0] [border-bottom-color:transparent] [border-style:solid] data-[state=active]:[border-bottom-color:var(--color-carbon)] data-[state=active]:text-carbon"
               >
                 the record it filed
               </TabsTrigger>
@@ -158,7 +158,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
                 <TabsTrigger
                   key={doc.name}
                   value={doc.name}
-                  className="rounded-none border-0 border-b-2 border-transparent bg-transparent px-2 py-1.5 text-[0.75rem] text-ink-soft shadow-none data-[state=active]:border-carbon data-[state=active]:bg-transparent data-[state=active]:text-carbon data-[state=active]:shadow-none"
+                  className="rounded-none px-2 py-1.5 text-[0.75rem] text-ink-soft [border-width:0_0_2px_0] [border-bottom-color:transparent] [border-style:solid] data-[state=active]:[border-bottom-color:var(--color-carbon)] data-[state=active]:text-carbon"
                 >
                   {DOC_NAMES[doc.name] ?? doc.name}
                 </TabsTrigger>
