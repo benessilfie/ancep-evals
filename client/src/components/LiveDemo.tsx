@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
-import { money } from "@/components/RecordTable"
-import type { Answer, EvalData } from "@/types"
+import { BlankRecord } from "@/components/BlankRecord"
+import { PacketBrowser } from "@/components/PacketBrowser"
+import type { Answer, EvalCase, EvalData } from "@/types"
 import { cn } from "@/lib/utils"
 
 const API = import.meta.env.VITE_API ?? "http://127.0.0.1:8000"
@@ -14,16 +15,6 @@ interface Finding {
 
 type Phase = "idle" | "starting" | "reading" | "extracted" | "checking" | "done" | "error"
 
-const FIELD_LABELS: Record<string, string> = {
-  applicant_name: "named insured",
-  applicant_fein: "FEIN",
-  total_insured_value_usd: "total sum insured",
-  loss_count_5y: "claims in 5 years",
-  total_incurred_5y_usd: "incurred in 5 years",
-  location_count: "locations",
-  policy_effective_date: "inception",
-}
-
 export function LiveDemo({ data }: { data: EvalData }) {
   const [packetId, setPacketId] = useState(data.cases[0].id)
   const [phase, setPhase] = useState<Phase>("idle")
@@ -32,6 +23,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
   const [findings, setFindings] = useState<Finding[]>([])
   const [meta, setMeta] = useState<{ seconds?: number; tokens?: number }>({})
   const [files, setFiles] = useState<FileList | null>(null)
+  const [pane, setPane] = useState<"packet" | "record">("packet")
   const source = useRef<EventSource | null>(null)
 
   useEffect(() => () => source.current?.close(), [])
@@ -43,6 +35,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
     setMeta({})
     setMessage(null)
     setPhase("starting")
+    setPane("record")
 
     const body = new FormData()
     if (files && files.length > 0) {
@@ -98,6 +91,8 @@ export function LiveDemo({ data }: { data: EvalData }) {
   }
 
   const running = phase === "starting" || phase === "reading" || phase === "checking"
+  const answers = new Map(fields.map((f) => [f.field, f.answer]))
+  const selectedCase: EvalCase | undefined = data.cases.find((c) => c.id === packetId)
   const blocking = findings.filter((f) => f.severity === "blocking")
 
   return (
@@ -128,12 +123,6 @@ export function LiveDemo({ data }: { data: EvalData }) {
               </option>
             ))}
           </select>
-          <a
-            href={`${API}/api/packets/${packetId}/download`}
-            className="mt-2 inline-block font-mono text-micro text-carbon underline-offset-2 hover:underline"
-          >
-            download these documents
-          </a>
         </div>
 
         <div className="mt-5">
@@ -177,85 +166,83 @@ export function LiveDemo({ data }: { data: EvalData }) {
         </p>
       </aside>
 
-      <main className="min-w-0 flex-1 overflow-y-auto px-6 py-5">
-        <Progress phase={phase} meta={meta} count={fields.length} />
+      <section className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <div className="flex shrink-0 items-center gap-1 border-b border-rule px-5 pt-2">
+          {(["packet", "record"] as const).map((key) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setPane(key)}
+              className={cn(
+                "px-2 py-1.5 text-[0.75rem] [border-style:solid] [border-width:0_0_2px_0]",
+                pane === key
+                  ? "[border-bottom-color:var(--color-carbon)] font-medium text-carbon"
+                  : "[border-bottom-color:transparent] text-ink-soft hover:text-ink"
+              )}
+            >
+              {key === "packet" ? "the documents" : "the record"}
+            </button>
+          ))}
+        </div>
 
-        {message && (
-          <div className="mt-4 border-l-2 border-stamp bg-stamp-wash px-4 py-3 text-[0.875rem] leading-relaxed text-stamp">
-            {message}
-          </div>
-        )}
+        {pane === "packet" && selectedCase && !files?.length ? (
+          <PacketBrowser key={selectedCase.id} evalCase={selectedCase} />
+        ) : (
+          <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
+            <Progress phase={phase} meta={meta} count={fields.length} />
 
-        {findings.length > 0 && (
-          <section className="mt-6">
-            <h3 className="text-[0.9375rem] font-semibold">
-              {blocking.length > 0
-                ? `${blocking.length} thing${blocking.length === 1 ? "" : "s"} a human needs to see`
-                : "Nothing blocking"}
-            </h3>
-            <ul className="mt-3 space-y-2">
-              {findings.map((f, i) => (
-                <li
-                  key={i}
-                  className={cn(
-                    "border-l-2 px-4 py-2.5",
-                    f.severity === "blocking"
-                      ? "border-stamp bg-stamp-wash"
-                      : "border-rule bg-white"
-                  )}
-                >
-                  <div className="flex items-baseline gap-2">
-                    <span
+            {message && (
+              <div className="mt-4 border-l-2 border-stamp bg-stamp-wash px-4 py-3 text-[0.875rem] leading-relaxed text-stamp">
+                {message}
+              </div>
+            )}
+
+            {findings.length > 0 && (
+              <section className="mt-6">
+                <h3 className="text-[0.9375rem] font-semibold">
+                  {blocking.length > 0
+                    ? `${blocking.length} thing${blocking.length === 1 ? "" : "s"} a human needs to see`
+                    : "Nothing blocking"}
+                </h3>
+                <ul className="mt-3 space-y-2">
+                  {findings.map((f, i) => (
+                    <li
+                      key={i}
                       className={cn(
-                        "font-mono text-[0.625rem]",
-                        f.severity === "blocking" ? "text-stamp" : "text-ink-faint"
+                        "border-l-2 px-4 py-2.5",
+                        f.severity === "blocking"
+                          ? "border-stamp bg-stamp-wash"
+                          : "border-rule bg-white"
                       )}
                     >
-                      {f.severity}
-                    </span>
-                    {f.field && (
-                      <span className="font-mono text-[0.6875rem] text-ink-soft">
-                        {f.field}
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-1 text-[0.875rem] leading-snug">{f.message}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+                      <div className="flex items-baseline gap-2">
+                        <span
+                          className={cn(
+                            "font-mono text-[0.625rem]",
+                            f.severity === "blocking" ? "text-stamp" : "text-ink-faint"
+                          )}
+                        >
+                          {f.severity}
+                        </span>
+                        {f.field && (
+                          <span className="font-mono text-[0.6875rem] text-ink-soft">
+                            {f.field}
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-1 text-[0.875rem] leading-snug">{f.message}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
-        {fields.length > 0 && (
-          <section className="mt-7">
-            <h3 className="text-[0.9375rem] font-semibold">The record it filed</h3>
-            <table className="mt-3 w-full border-collapse text-left">
-              <tbody>
-                {fields.map(({ field, answer }) => (
-                  <tr key={field} className="border-b border-rule-soft align-top">
-                    <td className="w-[16rem] py-2 pr-4 text-[0.8125rem]">
-                      {FIELD_LABELS[field] ?? field.replace(/_/g, " ")}
-                    </td>
-                    <td className="py-2 pr-4 font-mono text-[0.75rem]">
-                      {answer.status === "flagged" ? (
-                        <span className="text-carbon">raised for a human</span>
-                      ) : (
-                        money(answer.value)
-                      )}
-                    </td>
-                    <td className="py-2 pr-4 font-mono text-[0.75rem] text-ink-faint">
-                      {answer.status === "flagged" ? "—" : answer.mode}
-                    </td>
-                    <td className="py-2 font-mono text-[0.75rem] text-ink-faint">
-                      {answer.sources?.[0]?.document ?? "—"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </section>
+            <div className="mt-7">
+              <BlankRecord answers={answers} running={running} />
+            </div>
+          </div>
         )}
-      </main>
+      </section>
     </div>
   )
 }
