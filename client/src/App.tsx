@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { HowItWorks } from "@/components/HowItWorks"
 import { LiveDemo } from "@/components/LiveDemo"
 import { PacketDetail } from "@/components/PacketDetail"
 import { PacketList } from "@/components/PacketList"
@@ -9,7 +10,7 @@ const DEFAULT_CASE = "05-application-contradicts-loss-runs"
 export default function App() {
   const [data, setData] = useState<EvalData | null>(null)
   const [selected, setSelected] = useState(DEFAULT_CASE)
-  const [view, setView] = useState<"live" | "recorded">("live")
+  const [view, setView] = useState<"start" | "live" | "recorded">("live")
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}eval.json`)
@@ -41,7 +42,7 @@ export default function App() {
           </div>
           <div className="flex items-center gap-5">
             <div className="flex rounded-control border border-rule bg-white p-0.5">
-              {(["live", "recorded"] as const).map((mode) => (
+              {(["start", "live", "recorded"] as const).map((mode) => (
                 <button
                   key={mode}
                   type="button"
@@ -53,7 +54,7 @@ export default function App() {
                       : "text-ink-soft hover:text-ink")
                   }
                 >
-                  {mode === "live" ? "Live demo" : "Findings"}
+                  {mode === "start" ? "Start here" : mode === "live" ? "Live demo" : "Findings"}
                 </button>
               ))}
             </div>
@@ -71,7 +72,9 @@ export default function App() {
         </div>
       </header>
 
-      {view === "recorded" ? (
+      {view === "start" ? (
+        <HowItWorks data={data} onGo={setView} />
+      ) : view === "recorded" ? (
         <div className="flex min-h-0 flex-1">
           <PacketList
             cases={data.cases}
