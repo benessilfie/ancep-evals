@@ -172,3 +172,13 @@ def test_a_single_spurious_flag_fails_a_case(control_case):
     verdict = grade(control_case, produced)
     assert verdict.flag_counts["spurious_flag"] == 1
     assert not verdict.case_passed
+
+
+def test_a_read_claim_must_match_a_whole_token_not_a_substring():
+    from submission_evals.grade import appears_as_token
+
+    assert appears_as_token("8,400,000", "total sum insured is $8,400,000. Revenue is")
+    assert appears_as_token("40", "NO. OF FULL TIME EMPLOYEES: 40")
+    assert not appears_as_token("400", "building value 1,400,000")
+    assert not appears_as_token("40", "square feet 4,000")
+    assert not appears_as_token("", "anything at all")

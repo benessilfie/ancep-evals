@@ -27,6 +27,21 @@ _WHITESPACE = re.compile(r"\s+")
 _ENTITY_NOISE = re.compile(r"\b(inc|llc|ltd|corp|co|company|incorporated|limited)\b")
 
 
+def appears_as_token(needle: str, haystack: str) -> bool:
+    if not needle.strip():
+        return False
+    pattern = rf"(?<![\w,]){re.escape(needle)}(?![\w,])"
+    return re.search(pattern, haystack) is not None
+
+
+def is_nil(value: Any) -> bool:
+    if isinstance(value, bool):
+        return False
+    if isinstance(value, int):
+        return value == 0
+    return not str(value).strip()
+
+
 def normalise_text(value: Any) -> str:
     return _WHITESPACE.sub(" ", str(value).strip().casefold())
 
@@ -222,9 +237,10 @@ def grade_provenance(
         packet_text is not None
         and source.mode == SourceMode.READ
         and field not in LITERAL_CHECK_EXEMPT
+        and not is_nil(value)
     ):
         body = packet_text.get(source.document, "")
-        if not any(form in body for form in renderings(field, value)):
+        if not any(appears_as_token(form, body) for form in renderings(field, value)):
             return ProvenanceVerdict(
                 structural=True,
                 resolvable=True,
