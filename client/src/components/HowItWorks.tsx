@@ -33,10 +33,8 @@ export function HowItWorks({
           <h1 className="max-w-[24ch] text-[1.875rem] leading-[1.12] font-semibold tracking-[-0.02em]">
             An eval set to grade AI on commercial insurance submissions
           </h1>
-          <p className="mt-3 max-w-[64ch] text-[1.0625rem] leading-relaxed text-ink-soft">
-            Ten submissions with the right answers written down first, so I can grade the
-            record a model files instead of the summary it writes about filing it. Six
-            steps, about two minutes, then you can run one yourself.
+          <p className="mt-2.5 text-[1rem] text-ink-soft">
+            Six steps, about two minutes, then you can run one yourself.
           </p>
         </div>
 
