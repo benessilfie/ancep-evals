@@ -10,7 +10,7 @@ const DEFAULT_CASE = "05-application-contradicts-loss-runs"
 export default function App() {
   const [data, setData] = useState<EvalData | null>(null)
   const [selected, setSelected] = useState(DEFAULT_CASE)
-  const [view, setView] = useState<"start" | "live" | "recorded">("live")
+  const [view, setView] = useState<"start" | "live" | "recorded">("start")
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}eval.json`)
@@ -34,10 +34,12 @@ export default function App() {
     <div className="flex h-dvh flex-col overflow-hidden">
       <header className="shrink-0 border-b border-rule">
         <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2 px-5 py-3">
-          <div className="flex items-baseline gap-4">
-            <span className="font-mono text-[0.8125rem]">submission intake evals</span>
-            <span className="hidden text-[0.875rem] text-ink-soft sm:inline">
-              Graded on the record the model filed, not the summary it wrote.
+          <div className="flex items-baseline gap-3">
+            <span className="text-[0.875rem] font-medium">
+              Grading AI on insurance submissions
+            </span>
+            <span className="hidden text-[0.8125rem] text-ink-soft lg:inline">
+              on what it filed, not what it said it did
             </span>
           </div>
           <div className="flex items-center gap-5">

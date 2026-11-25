@@ -30,11 +30,13 @@ export function HowItWorks({
     <div className="min-h-0 flex-1 overflow-y-auto">
       <div className="mx-auto w-full max-w-[64rem] px-6 py-10">
         <div className="mb-7">
-          <h1 className="text-[1.5rem] leading-snug font-semibold tracking-[-0.02em]">
-            Submission intake evals
+          <h1 className="max-w-[26ch] text-[1.75rem] leading-[1.15] font-semibold tracking-[-0.02em]">
+            Grading AI on insurance submissions
           </h1>
-          <p className="mt-1 text-[0.9375rem] text-ink-soft">
-            Six steps, about two minutes, then you can run one yourself.
+          <p className="mt-2 max-w-[58ch] text-[1rem] leading-relaxed text-ink-soft">
+            Ten commercial insurance files with the right answers written down in advance,
+            three Claude models, ninety graded records. Six steps, about two minutes, then
+            you can run one yourself.
           </p>
         </div>
 
