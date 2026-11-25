@@ -7,6 +7,19 @@ import { cn } from "@/lib/utils"
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`
 
+const FAILURE_CLASS: Record<string, string> = {
+  "01-clean-single-location": "nothing wrong",
+  "02-clean-total-stated": "nothing wrong",
+  "03-clean-no-losses-letter": "nothing wrong",
+  "04-stale-thread": "superseded value",
+  "05-application-contradicts-loss-runs": "documents conflict",
+  "06-derived-total": "no stated total",
+  "07-loss-run-column-mislabel": "arithmetic does not close",
+  "08-sov-page-break": "row split by layout",
+  "09-missing-loss-runs": "evidence absent",
+  "10-duplicate-submission": "already on file",
+}
+
 interface StepView {
   title: string
   body: React.ReactNode
@@ -157,7 +170,7 @@ function buildSteps(
         </Prose>
       ),
       aside: (
-        <Panel label="the ten submissions">
+        <Panel label="ten submissions, eight classes of failure">
           <ul className="divide-y divide-rule-soft">
             {data.cases.map((c) => (
               <li key={c.id} className="flex items-center gap-3 px-4 py-2">
@@ -167,11 +180,11 @@ function buildSteps(
                 <span className="flex-1 truncate text-[0.8125rem]">{c.short}</span>
                 <span
                   className={cn(
-                    "font-mono text-[0.625rem]",
-                    c.kind === "control" ? "text-seal" : "text-ink-faint"
+                    "shrink-0 font-mono text-[0.625rem]",
+                    c.kind === "control" ? "text-seal" : "text-stamp/70"
                   )}
                 >
-                  {c.kind === "control" ? "nothing wrong" : "one thing broken"}
+                  {FAILURE_CLASS[c.id] ?? ""}
                 </span>
               </li>
             ))}
@@ -189,8 +202,13 @@ function buildSteps(
           </p>
           <p>
             So I did it the other way round. I wrote down what is true first, then a
-            program printed the paperwork out of that record, which means the answer key
-            came free and a trap is just me breaking one thing on purpose.
+            program printed the paperwork out of that record, and a trap is just me
+            breaking one thing on purpose.
+          </p>
+          <p className="text-ink">
+            Which means a new case costs minutes, not days. Each one stands for a class of
+            failure rather than a particular bakery, so the next submission that arrives
+            with its documents in conflict is already covered.
           </p>
         </Prose>
       ),
@@ -219,11 +237,20 @@ function buildSteps(
       title: "What I check",
       body: (
         <Prose>
-          <p>Three things on every field, and the middle one is the whole point.</p>
           <p>
-            Every answer has to carry its provenance, so the agent names the document and
+            Every answer carries its provenance. The agent names the document it used and
             says whether it read the value or worked it out, and I check that claim against
             the document it named.
+          </p>
+          <p className="text-ink">
+            That makes two kinds of check. Some need the answer key. Most need nothing at
+            all, because they are laws rather than questions: paid plus outstanding equals
+            incurred, a total equals the sum of its rows, a cited figure appears in the
+            document cited.
+          </p>
+          <p>
+            The second kind runs on a submission nobody has prepared an answer for, which
+            is the kind you can actually put in front of real traffic.
           </p>
         </Prose>
       ),
