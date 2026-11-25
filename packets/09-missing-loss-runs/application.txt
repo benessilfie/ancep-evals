@@ -58,12 +58,11 @@ GENERAL LIABILITY   Callaghan Indemnity Company         CI-GL-77301       01/01/
 LOSS HISTORY -----------------------------------------------------------------------------------
 ENTER ALL CLAIMS OR LOSSES (REGARDLESS OF FAULT AND WHETHER OR NOT INSURED) OR OCCURRENCES THAT
 MAY GIVE RISE TO CLAIMS FOR THE PRIOR 5 YEARS (3 YEARS IN KS & NY)
-CHK HERE IF NONE: [ ]                           SEE ATTACHED LOSS SUMMARY: [ ]
+CHK HERE IF NONE: [ ]                           SEE ATTACHED LOSS SUMMARY: [X]
 DATE OF     LINE      TYPE/DESCRIPTION OF OCCURRENCE  DATE OF     AMOUNT    AMOUNT    CLAIM
 OCCURRENCE                                            CLAIM       PAID      RESERVED  STATU
 --------------------------------------------------------------------------------------------
-01/14/2024  PROPERTY  Burst supply line in the Hoboke 01/16/2024  12,000    0         CLSD
-03/03/2025  GL        Customer slipped on a wet floor 03/11/2025  4,000     26,000    OPEN
+
 REMARKS/PROCESSING INSTRUCTIONS ----------------------------------------------------------------
 Business auto and workers compensation are placed separately and are not part of this
 submission. All premises are owner occupied.

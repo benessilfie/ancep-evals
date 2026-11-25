@@ -241,21 +241,6 @@ def grade_provenance(
             detail="claimed read for a value that appears nowhere and can only be derived",
         )
     if (
-        expectation is not None
-        and expectation.source_document is not None
-        and source.document != expectation.source_document
-    ):
-        return ProvenanceVerdict(
-            structural=True,
-            resolvable=True,
-            semantic=False,
-            detail=(
-                f"cited {source.document.value}, "
-                f"correct document is {expectation.source_document.value}"
-            ),
-        )
-
-    if (
         packet_text is not None
         and answer.mode == SourceMode.READ
         and field not in LITERAL_CHECK_EXEMPT

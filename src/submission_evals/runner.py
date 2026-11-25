@@ -28,7 +28,7 @@ class RunConfig:
     models: tuple[str, ...] = ("claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5")
     reps: int = 3
     effort: str = "high"
-    max_tokens: int = 16_000
+    max_tokens: int = 32_000
     concurrency: int = 6
     case_timeout_s: float = 600.0
     max_attempts: int = 4
@@ -123,13 +123,18 @@ class Runner:
         last: Exception | None = None
         for _ in range(self.config.max_attempts):
             try:
-                return await self.client.messages.parse(
+                return await self.client.messages.create(
                     model=model,
                     max_tokens=self.config.max_tokens,
                     system=system_blocks(),
                     messages=[{"role": "user", "content": user_content(spec)}],
-                    output_format=ExtractedSubmission,
-                    output_config={"effort": self.config.effort},
+                    output_config={
+                        "effort": self.config.effort,
+                        "format": {
+                            "type": "json_schema",
+                            "schema": ExtractedSubmission.model_json_schema(),
+                        },
+                    },
                 )
             except RETRYABLE as error:
                 last = error
@@ -173,6 +178,18 @@ class Runner:
         stop_reason = getattr(response, "stop_reason", None)
         usage = _usage_dict(response.usage)
         refused = stop_reason == "refusal"
+        truncated = stop_reason == "max_tokens"
+
+        if truncated:
+            await self._error(
+                case.case_id,
+                model,
+                rep,
+                "truncated",
+                attempt,
+                f"hit max_tokens at {usage['output_tokens']} output tokens",
+            )
+            return None
 
         if refused:
             metrics = dict.fromkeys(_grade_metrics_keys(), 0.0)
@@ -180,10 +197,17 @@ class Runner:
             status = "refusal"
             verdict = None
         else:
-            produced = response.parsed_output
+            body = "".join(block.text for block in response.content if block.type == "text")
+            try:
+                produced = ExtractedSubmission.model_validate_json(body)
+            except ValidationError as error:
+                await self._error(
+                    case.case_id, model, rep, "unparseable", attempt, str(error)[:400]
+                )
+                return None
             verdict = grade(case, produced, packet_text=packet_text(spec))
             metrics = _grade_metrics(verdict)
-            status = "truncated" if stop_reason == "max_tokens" else "ok"
+            status = "ok"
 
         row = {
             "prompt_id": case.case_id,

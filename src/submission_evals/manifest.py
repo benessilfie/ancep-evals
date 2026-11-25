@@ -8,7 +8,7 @@ ATTACHMENT_NAMES = {
     DocumentName.PROPERTY_SECTION: "property section",
     DocumentName.LIABILITY_SECTION: "general liability section",
     DocumentName.SOV: "statement of values",
-    DocumentName.NO_LOSSES_LETTER: "no losses letter from the expiring property carrier",
+    DocumentName.NO_LOSSES_LETTER: "no losses letters from both expiring carriers",
 }
 
 

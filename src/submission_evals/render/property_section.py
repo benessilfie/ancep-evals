@@ -34,9 +34,9 @@ _SUBJECT_COLUMNS = (
 )
 
 
-def _subject_rows(location: Location, coverage: Coverage) -> list[str]:
+def _subject_rows(location: Location, coverage: Coverage, options: PacketOptions) -> list[str]:
     subjects = (
-        ("BUILDING", location.building_value_usd, "4"),
+        ("BUILDING", _building_value(location, options), "4"),
         ("BUSINESS PERSONAL PROPERTY", location.bpp_value_usd, "4"),
         ("BUSINESS INCOME", location.business_income_value_usd, ""),
     )
@@ -55,6 +55,12 @@ def _subject_rows(location: Location, coverage: Coverage) -> list[str]:
         )
         for name, amount, guard in subjects
     ]
+
+
+def _building_value(location, options: PacketOptions) -> int:
+    if options.stale_location_values and location.loc_no == 1:
+        return location.building_value_usd - 500_000
+    return location.building_value_usd
 
 
 def render(risk: Risk, options: PacketOptions) -> str:
@@ -90,7 +96,7 @@ def render(risk: Risk, options: PacketOptions) -> str:
                 ),
                 cell("BLDG DESCRIPTION", location.occupancy, 96).rstrip(),
                 *table_header(_SUBJECT_COLUMNS),
-                *_subject_rows(location, coverage),
+                *_subject_rows(location, coverage, options),
                 row(
                     cell("CONSTRUCTION TYPE", _CONSTRUCTION[location.construction_class], 46),
                     cell("DISTANCE TO HYDRANT", "180 FT", 26),

@@ -97,7 +97,7 @@
       "incurred_usd": 30000
     }
   ],
-  "no_losses_letter": null,
+  "no_losses_letters": [],
   "loss_run_valuation_date": "2026-11-30",
   "total_insured_value_usd": 1850000,
   "location_count": 1,

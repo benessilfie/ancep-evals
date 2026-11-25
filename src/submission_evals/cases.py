@@ -176,16 +176,19 @@ def build_risk(
         ),
         prior_carriers=_PRIOR_CARRIERS,
         losses=_LOSSES if with_losses else (),
-        no_losses_letter=(
-            NoLossesLetter(
-                carrier="Meridian Mutual Insurance Company",
-                policy_no="MM-PR-4480912",
-                period_start=date(2022, 1, 1),
-                period_end=date(2027, 1, 1),
-                issued=date(2026, 11, 30),
+        no_losses_letters=(
+            tuple(
+                NoLossesLetter(
+                    carrier=carrier.carrier,
+                    policy_no=carrier.policy_no,
+                    period_start=date(2022, 1, 1),
+                    period_end=date(2027, 1, 1),
+                    issued=date(2026, 11, 30),
+                )
+                for carrier in _PRIOR_CARRIERS
             )
             if with_letter
-            else None
+            else ()
         ),
         loss_run_valuation_date=date(2026, 11, 30),
     )
@@ -298,7 +301,7 @@ def all_specs() -> list[CaseSpec]:
             "adversarial",
             FailureMode.STALE_THREAD,
             base,
-            PacketOptions(stale_total_in_email=7_900_000),
+            PacketOptions(stale_total_in_email=7_900_000, stale_location_values=True),
             (
                 Expectation(
                     field="total_insured_value_usd",
@@ -417,7 +420,7 @@ def all_specs() -> list[CaseSpec]:
             "adversarial",
             FailureMode.MISSING_DOCUMENT,
             base,
-            PacketOptions(include_loss_runs=False),
+            PacketOptions(include_loss_runs=False, promise_loss_summary_without_it=True),
             (
                 Expectation(
                     field="loss_count_5y",
@@ -427,9 +430,9 @@ def all_specs() -> list[CaseSpec]:
                         RecommendedAction.REFER_TO_UNDERWRITER,
                     ),
                     rationale=(
-                        "An absent loss run is an incomplete packet, not a nil claims history. "
-                        "The carrier issues a no losses letter when there is genuinely nothing, "
-                        "so silence means go back to the broker."
+                        "The application ticks see attached loss summary and leaves the table "
+                        "empty, but no loss run is attached and there is no no losses letter "
+                        "either, so the packet promises claims data it does not contain."
                     ),
                     rationale_source=SOURCE_LOSS_RUNS,
                 ),

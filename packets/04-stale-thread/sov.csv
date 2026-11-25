@@ -1,5 +1,5 @@
 Loc,Street,City,State,Zip,Construction Class,Year Built,Stories,Square Feet,Building,Business Personal Property,Business Income,Occupancy,Sprinklered,Protection Class
-1,18 Washington Street,Hoboken,NJ,07030,2,1962,1,4200,1200000,400000,250000,"Bakery, retail with on-site baking",Y,4
+1,18 Washington Street,Hoboken,NJ,07030,2,1962,1,4200,700000,400000,250000,"Bakery, retail with on-site baking",Y,4
 2,7 Palisade Avenue,Jersey City,NJ,07306,2,1998,1,2100,650000,180000,120000,"Bakery, retail with on-site baking",Y,4
 3,214 Central Avenue,Jersey City,NJ,07307,2,2004,1,5600,1500000,250000,150000,"Bakery, retail with on-site baking",Y,4
 4,41 Bergenline Avenue,Union City,NJ,07087,2,2011,1,3100,780000,220000,140000,"Bakery, retail with on-site baking",Y,4

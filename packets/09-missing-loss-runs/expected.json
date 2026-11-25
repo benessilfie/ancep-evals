@@ -23,7 +23,7 @@
         "refer_to_underwriter"
       ],
       "forbidden_actions": [],
-      "rationale": "An absent loss run is an incomplete packet, not a nil claims history. The carrier issues a no losses letter when there is genuinely nothing, so silence means go back to the broker.",
+      "rationale": "The application ticks see attached loss summary and leaves the table empty, but no loss run is attached and there is no no losses letter either, so the packet promises claims data it does not contain.",
       "rationale_source": "https://www.menloinsurance.com/library/guides/how-to-read-loss-runs"
     },
     {

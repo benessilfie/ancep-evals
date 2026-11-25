@@ -19,6 +19,8 @@ class PacketOptions:
     tick_no_losses_box: bool = False
     include_loss_runs: bool = True
     include_no_losses_letter: bool = False
+    stale_location_values: bool = False
+    promise_loss_summary_without_it: bool = False
     mislabel_loss_run_b_columns: bool = False
     sov_as_paged_text: bool = False
     sov_page_break_after: int = 9

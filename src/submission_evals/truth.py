@@ -147,7 +147,7 @@ class Risk(Frozen):
     coverage: Coverage
     prior_carriers: tuple[PriorCarrier, ...]
     losses: tuple[Loss, ...]
-    no_losses_letter: NoLossesLetter | None = None
+    no_losses_letters: tuple[NoLossesLetter, ...] = ()
     loss_run_valuation_date: date | None = None
 
     @computed_field

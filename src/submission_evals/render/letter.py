@@ -5,11 +5,8 @@ from submission_evals.render.options import PacketOptions, long_date, us_date
 from submission_evals.truth import Risk
 
 
-def render(risk: Risk, options: PacketOptions) -> str:
-    letter = risk.no_losses_letter
-    if letter is None:
-        raise ValueError("no_losses_letter is not set on this risk")
-    lines = [
+def _one(risk: Risk, letter) -> list[str]:
+    return [
         letter.carrier.upper(),
         "Commercial Lines Claims Services",
         "4400 Cadwell Plaza, Hartford CT 06103",
@@ -40,4 +37,14 @@ def render(risk: Risk, options: PacketOptions) -> str:
         "Claims Services Manager",
         letter.carrier,
     ]
+
+
+def render(risk: Risk, options: PacketOptions) -> str:
+    if not risk.no_losses_letters:
+        raise ValueError("no_losses_letters is empty on this risk")
+    lines: list[str] = []
+    for index, letter in enumerate(risk.no_losses_letters):
+        if index:
+            lines.extend(["", "=" * 96, ""])
+        lines.extend(_one(risk, letter))
     return document(lines)

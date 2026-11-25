@@ -211,7 +211,11 @@ def render(risk: Risk, options: PacketOptions) -> str:
             )
         )
 
-    declared = () if options.tick_no_losses_box else risk.losses
+    declared = (
+        ()
+        if options.tick_no_losses_box or options.promise_loss_summary_without_it
+        else risk.losses
+    )
     lines.extend(
         [
             band("loss history"),
@@ -224,7 +228,10 @@ def render(risk: Risk, options: PacketOptions) -> str:
                 cell("CHK HERE IF NONE", box(options.tick_no_losses_box), 48),
                 cell(
                     "SEE ATTACHED LOSS SUMMARY",
-                    box(options.include_loss_runs and not options.tick_no_losses_box),
+                    box(
+                        options.promise_loss_summary_without_it
+                        or (options.include_loss_runs and not options.tick_no_losses_box)
+                    ),
                     46,
                 ),
             ),

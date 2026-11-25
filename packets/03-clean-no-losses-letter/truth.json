@@ -162,13 +162,22 @@
     }
   ],
   "losses": [],
-  "no_losses_letter": {
-    "carrier": "Meridian Mutual Insurance Company",
-    "policy_no": "MM-PR-4480912",
-    "period_start": "2022-01-01",
-    "period_end": "2027-01-01",
-    "issued": "2026-11-30"
-  },
+  "no_losses_letters": [
+    {
+      "carrier": "Meridian Mutual Insurance Company",
+      "policy_no": "MM-PR-4480912",
+      "period_start": "2022-01-01",
+      "period_end": "2027-01-01",
+      "issued": "2026-11-30"
+    },
+    {
+      "carrier": "Callaghan Indemnity Company",
+      "policy_no": "CI-GL-77301",
+      "period_start": "2022-01-01",
+      "period_end": "2027-01-01",
+      "issued": "2026-11-30"
+    }
+  ],
   "loss_run_valuation_date": "2026-11-30",
   "total_insured_value_usd": 8400000,
   "location_count": 6,
