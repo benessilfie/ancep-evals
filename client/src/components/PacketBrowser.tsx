@@ -1,5 +1,12 @@
 import { useState } from "react"
 import { DOC_MARKS } from "@/components/Marks"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import type { EvalCase } from "@/types"
 import { cn } from "@/lib/utils"
 
@@ -47,12 +54,50 @@ export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {
     ordered.find((d) => d.name === "application")?.name ?? ordered[0].name
   )
   const current = ordered.find((d) => d.name === open) ?? ordered[0]
+  const position = ordered.findIndex((d) => d.name === current.name) + 1
 
   return (
     <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
+      <div className="shrink-0 border-b-[6px] border-rule-soft px-4 py-3 lg:hidden">
+        <Select value={current.name} onValueChange={setOpen}>
+          <SelectTrigger className="pressable w-full rounded-field border border-rule bg-white px-2.5 py-2 text-left text-[0.8125rem]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent
+            position="popper"
+            sideOffset={4}
+            className="pop z-50 max-h-[20rem] w-[var(--radix-select-trigger-width)] overflow-y-auto rounded-field border border-rule bg-white p-1 shadow-[0_10px_30px_-14px_rgba(22,23,26,0.4)]"
+          >
+            {ordered.map((doc) => {
+              const Mark = DOC_MARKS[doc.name]
+              return (
+                <SelectItem
+                  key={doc.name}
+                  value={doc.name}
+                  className="cursor-pointer rounded-field px-2.5 py-2 text-[0.8125rem] outline-none focus:bg-paper-sunk data-[state=checked]:bg-carbon-wash data-[state=checked]:font-medium data-[state=checked]:text-carbon"
+                >
+                  <span className="flex w-full items-center gap-2.5">
+                    {Mark ? <Mark className="h-4 w-5 shrink-0 text-rule" /> : null}
+                    <span className="min-w-0 flex-1 truncate">
+                      {NAMES[doc.name] ?? doc.name}
+                    </span>
+                    <span className="shrink-0 font-mono text-[0.625rem] text-ink-faint">
+                      {doc.body.split("\n").length}
+                    </span>
+                  </span>
+                </SelectItem>
+              )
+            })}
+          </SelectContent>
+        </Select>
+        <p className="mt-1.5 font-mono text-[0.6875rem] text-ink-faint">
+          document {position} of {ordered.length}
+        </p>
+      </div>
+
       <nav
         aria-label="documents in this packet"
-        className="w-full shrink-0 border-b-[6px] border-rule-soft py-2 lg:w-[16rem] lg:overflow-y-auto lg:border-r lg:border-b-0 lg:border-r-rule-soft"
+        className="hidden w-[16rem] shrink-0 overflow-y-auto border-r border-rule-soft py-2 lg:block"
       >
         <ul>
           {ordered.map((doc) => {
