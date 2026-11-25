@@ -131,7 +131,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
                 <SelectItem
                   key={c.id}
                   value={c.id}
-                  className="cursor-pointer rounded-field px-2 py-2 text-[0.8125rem] outline-none focus:bg-carbon-wash focus:text-carbon data-[state=checked]:font-medium"
+                  className="cursor-pointer rounded-field px-2.5 py-2 text-[0.8125rem] outline-none focus:bg-paper-sunk data-[state=checked]:bg-carbon-wash data-[state=checked]:font-medium data-[state=checked]:text-carbon data-[state=checked]:shadow-[inset_2px_0_0_var(--color-carbon)]"
                 >
                   <span className="flex items-baseline gap-2">
                     <span className="font-mono text-[0.6875rem] text-ink-faint">
