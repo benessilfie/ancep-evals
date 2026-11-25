@@ -42,19 +42,21 @@ def test_every_read_field_actually_appears_in_the_packet(spec):
         expectation = case.expectation_for(field)
         if expectation is not None and expectation.outcome == "flagged":
             continue
-        if expectation is not None and expectation.source_mode == SourceMode.DERIVED:
-            continue
-        if expectation is None and field in DERIVED_BY_NATURE:
+        default_document, default_mode = DEFAULT_SOURCES[field]
+        mode = (
+            expectation.source_mode
+            if expectation is not None and expectation.source_mode is not None
+            else default_mode
+        )
+        if mode == SourceMode.DERIVED or field in DERIVED_BY_NATURE:
             continue
         wanted = expected_value(case, field)
         if is_nil(wanted):
             continue
         forms = renderings(field, wanted)
-        cited, default_mode = DEFAULT_SOURCES[field]
+        cited = default_document
         if expectation is not None and expectation.source_document is not None:
             cited = expectation.source_document
-        elif expectation is None and default_mode == SourceMode.DERIVED:
-            continue
         if cited not in text:
             continue
         if not any(appears_as_token(form, text[cited]) for form in forms):

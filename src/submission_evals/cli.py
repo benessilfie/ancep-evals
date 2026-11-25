@@ -129,6 +129,32 @@ def sweep(
 
 
 @app.command()
+def regrade(results: Path = Path("results")) -> None:
+    from submission_evals.extract import ExtractedSubmission
+    from submission_evals.runner import _grade_metrics
+
+    path = results / "results.jsonl"
+    rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+    rewritten = 0
+    for row in rows:
+        trace = results / "traces" / (
+            f"{row['prompt_id']}_{row['requested_model']}_rep{row['rep']}.json"
+        )
+        if not trace.exists():
+            continue
+        turns = json.loads(trace.read_text())
+        body = next(t["content"] for t in reversed(turns) if t["role"] == "assistant")
+        produced = ExtractedSubmission.model_validate_json(body)
+        spec = spec_by_id(row["prompt_id"])
+        verdict = grade(spec.case, produced, packet_text=packet_text(spec))
+        row["grade"] = _grade_metrics(verdict)
+        row["verdict"] = verdict.model_dump(mode="json")
+        rewritten += 1
+    path.write_text("".join(json.dumps(row) + "\n" for row in rows))
+    typer.echo(f"re-graded {rewritten} trials from committed traces, no model calls")
+
+
+@app.command()
 def summarise(results: Path = Path("results")) -> None:
     path = results / "results.jsonl"
     if not path.exists():

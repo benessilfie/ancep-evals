@@ -391,6 +391,17 @@ def all_specs() -> list[CaseSpec]:
                     ),
                     rationale_source=SOURCE_INCURRED,
                 ),
+                Expectation(
+                    field="total_incurred_5y_usd",
+                    outcome="extracted",
+                    flag_also_acceptable=True,
+                    rationale=(
+                        "Once a column is known to be mislabelled the incurred figure is also "
+                        "in doubt, so flagging it as well is defensible, though the incurred "
+                        "column itself still reconciles."
+                    ),
+                    rationale_source=SOURCE_INCURRED,
+                ),
             ),
             corruption="swap_paid_for_incurred",
         ),

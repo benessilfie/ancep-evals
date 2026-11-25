@@ -8,5 +8,3 @@ __pycache__/
 
 BRIEF.md
 notes/
-results/traces/
-results/errors.jsonl
