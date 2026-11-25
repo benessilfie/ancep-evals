@@ -25,8 +25,8 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
   )
 
   return (
-    <main className="flex min-w-0 flex-1 flex-col lg:overflow-hidden">
-      <div className="shrink-0 border-b border-rule-soft px-6 py-4">
+    <main className="flex min-w-0 flex-1 flex-col gap-3 lg:gap-0 lg:overflow-hidden">
+      <div className="shrink-0 rounded-field border border-rule bg-paper px-4 py-4 lg:rounded-none lg:border-0 lg:border-b lg:border-rule-soft lg:px-6">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <h1 className="text-[1.0625rem] leading-snug font-semibold tracking-[-0.01em]">
             {evalCase.short || evalCase.title}
@@ -71,8 +71,8 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
         </div>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-        <section className="flex min-w-0 flex-1 flex-col lg:overflow-hidden lg:border-r lg:border-rule-soft">
+      <div className="flex min-h-0 flex-1 flex-col gap-3 lg:flex-row lg:gap-0">
+        <section className="flex min-w-0 flex-1 flex-col rounded-field border border-rule bg-paper lg:rounded-none lg:border-0 lg:border-r lg:border-rule-soft lg:overflow-hidden">
           <Evidence evalCase={evalCase} />
 
           <Tabs
@@ -123,7 +123,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
           </Tabs>
         </section>
 
-        <aside className="order-first w-full shrink-0 border-b border-rule-soft px-5 py-4 lg:order-none lg:w-[26rem] lg:overflow-y-auto lg:border-b-0">
+        <aside className="order-first w-full shrink-0 rounded-field border border-rule bg-paper px-5 py-4 lg:order-none lg:w-[26rem] lg:rounded-none lg:border-0 lg:overflow-y-auto">
           <TrialPanel trial={trial} />
 
           {trial.notes.length > 0 && (

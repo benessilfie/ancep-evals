@@ -81,7 +81,7 @@ export default function App() {
       {view === "start" ? (
         <HowItWorks data={data} onGo={setView} />
       ) : view === "recorded" ? (
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:flex-row lg:overflow-hidden">
+        <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto bg-paper-sunk/70 p-3 lg:flex-row lg:gap-0 lg:bg-transparent lg:p-0 lg:overflow-hidden">
           <PacketPicker cases={data.cases} selected={current.id} onSelect={setSelected} />
           <PacketList
             cases={data.cases}

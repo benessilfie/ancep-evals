@@ -18,7 +18,7 @@ export function PacketPicker({
   onSelect: (id: string) => void
 }) {
   return (
-    <div className="shrink-0 border-b border-rule bg-paper-sunk/40 px-4 py-3 lg:hidden">
+    <div className="shrink-0 rounded-field border border-rule bg-paper px-4 py-3 lg:hidden">
       <label className="field-label" htmlFor="packet-picker">
         packet
       </label>
