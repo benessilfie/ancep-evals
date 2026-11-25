@@ -29,6 +29,15 @@ export function HowItWorks({
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
       <div className="mx-auto w-full max-w-[64rem] px-6 py-10">
+        <div className="mb-7">
+          <h1 className="text-[1.5rem] leading-snug font-semibold tracking-[-0.02em]">
+            Submission intake evals
+          </h1>
+          <p className="mt-1 text-[0.9375rem] text-ink-soft">
+            Six steps, about two minutes, then you can run one yourself.
+          </p>
+        </div>
+
         <nav className="flex flex-wrap items-center gap-x-2 gap-y-2">
           {steps.map((s, i) => (
             <button
@@ -108,14 +117,15 @@ function buildSteps(
             A broker sends an insurer a pile of paperwork and somebody has to read all of
             it and type the facts into a system, and that job is going to AI now.
           </p>
-          <p>
-            So I built ten fake submissions where I already know every right answer, gave
-            them to three Claude models three times each, and graded the record they filed
-            rather than the summary they wrote about filing it.
-          </p>
           <p className="text-ink">
-            Models that get this wrong still describe their work in fluent, confident
-            prose, so the summary tells you nothing.
+            This is an eval set for that job, so a fixed suite of test cases with the right
+            answers written down in advance, that you point a model at and score.
+          </p>
+          <p>
+            Ten fake submissions, three Claude models, three goes at each one, which is{" "}
+            {data.totals.trials} graded records in total. What I score is the record they filed,
+            not the summary they wrote about filing it, because a model that gets this
+            wrong still describes its work in fluent, confident prose.
           </p>
         </Prose>
       ),
