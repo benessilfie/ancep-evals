@@ -26,8 +26,12 @@ def _covering_message(risk: Risk, options: PacketOptions, total: int | None) -> 
     inception = risk.policy.effective_date
     body = wrap(
         f"Morning, new business submission attached for {applicant.name}, "
-        f"{risk.location_count} retail bakery {noun} in {where}, "
-        f"property and general liability, incepting "
+        + (
+            f"{risk.location_count} retail bakery {noun} in {where}, "
+            if options.state_location_count_in_email
+            else f"retail bakery outlets in {where} per the attached schedule, "
+        )
+        + f"property and general liability, incepting "
         f"{inception.day} {inception.strftime('%B')}."
     )
     body.append("")

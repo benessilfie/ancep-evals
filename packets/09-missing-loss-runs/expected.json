@@ -18,6 +18,8 @@
       "outcome": "flagged",
       "source_mode": null,
       "source_document": null,
+      "flag_also_acceptable": false,
+      "wrong_values": [],
       "allowed_actions": [
         "query_broker",
         "refer_to_underwriter"
@@ -31,6 +33,8 @@
       "outcome": "flagged",
       "source_mode": null,
       "source_document": null,
+      "flag_also_acceptable": false,
+      "wrong_values": [],
       "allowed_actions": [
         "query_broker",
         "refer_to_underwriter"
@@ -38,6 +42,36 @@
       "forbidden_actions": [],
       "rationale": "There is no loss run, so there is no valuation date to read.",
       "rationale_source": "https://sortspoke.com/blog/what-is-a-loss-run-report"
+    },
+    {
+      "field": "total_paid_5y_usd",
+      "outcome": "flagged",
+      "source_mode": null,
+      "source_document": null,
+      "flag_also_acceptable": false,
+      "wrong_values": [],
+      "allowed_actions": [
+        "query_broker",
+        "refer_to_underwriter"
+      ],
+      "forbidden_actions": [],
+      "rationale": "With no claims document in the packet the five year totals cannot be established, and zero is not supported by anything.",
+      "rationale_source": "https://www.menloinsurance.com/library/guides/how-to-read-loss-runs"
+    },
+    {
+      "field": "total_incurred_5y_usd",
+      "outcome": "flagged",
+      "source_mode": null,
+      "source_document": null,
+      "flag_also_acceptable": false,
+      "wrong_values": [],
+      "allowed_actions": [
+        "query_broker",
+        "refer_to_underwriter"
+      ],
+      "forbidden_actions": [],
+      "rationale": "With no claims document in the packet the five year totals cannot be established, and zero is not supported by anything.",
+      "rationale_source": "https://www.menloinsurance.com/library/guides/how-to-read-loss-runs"
     }
   ]
 }

@@ -20,6 +20,8 @@
       "outcome": "extracted",
       "source_mode": "derived",
       "source_document": "records_on_file",
+      "flag_also_acceptable": false,
+      "wrong_values": [],
       "allowed_actions": [],
       "forbidden_actions": [],
       "rationale": "Clearance checks whether the same risk is already in the system before a submission is worked, because opening a second record on one risk distorts the pipeline and the broker of record position.",

@@ -20,9 +20,13 @@
       "outcome": "extracted",
       "source_mode": "read",
       "source_document": "broker_email",
+      "flag_also_acceptable": true,
+      "wrong_values": [
+        "7900000"
+      ],
       "allowed_actions": [],
       "forbidden_actions": [],
-      "rationale": "The newest message in a forwarded chain is at the top but the newest fact is further down, and the corrected total is the one that binds.",
+      "rationale": "The newest message in a forwarded chain is at the top but the newest fact is further down. Taking the corrected total or flagging the conflict are both defensible; carrying the stale figure is not.",
       "rationale_source": "https://www.independentagent.com/vu_resource/helping-your-clients-maintain-accurate-statements-of-value/"
     }
   ]

@@ -20,6 +20,8 @@
       "outcome": "extracted",
       "source_mode": "derived",
       "source_document": "sov",
+      "flag_also_acceptable": false,
+      "wrong_values": [],
       "allowed_actions": [],
       "forbidden_actions": [],
       "rationale": "The property section carries amounts per subject of insurance per building and has no total field at all, so a total can only be summed and must be recorded as derived.",

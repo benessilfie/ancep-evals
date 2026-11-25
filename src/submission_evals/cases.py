@@ -181,7 +181,7 @@ def build_risk(
                 NoLossesLetter(
                     carrier=carrier.carrier,
                     policy_no=carrier.policy_no,
-                    period_start=date(2022, 1, 1),
+                    period_start=date(2021, 1, 1),
                     period_end=date(2027, 1, 1),
                     issued=date(2026, 11, 30),
                 )
@@ -308,9 +308,12 @@ def all_specs() -> list[CaseSpec]:
                     outcome="extracted",
                     source_mode=SourceMode.READ,
                     source_document=DocumentName.BROKER_EMAIL,
+                    flag_also_acceptable=True,
+                    wrong_values=("7900000",),
                     rationale=(
                         "The newest message in a forwarded chain is at the top but the newest "
-                        "fact is further down, and the corrected total is the one that binds."
+                        "fact is further down. Taking the corrected total or flagging the "
+                        "conflict are both defensible; carrying the stale figure is not."
                     ),
                     rationale_source=SOURCE_SOV,
                 ),
@@ -398,7 +401,11 @@ def all_specs() -> list[CaseSpec]:
             "adversarial",
             FailureMode.SOV_PAGE_BREAK,
             wide,
-            PacketOptions(sov_as_paged_text=True, sov_page_break_after=13),
+            PacketOptions(
+                sov_as_paged_text=True,
+                sov_page_break_after=13,
+                state_location_count_in_email=False,
+            ),
             (
                 Expectation(
                     field="location_count",
@@ -445,6 +452,22 @@ def all_specs() -> list[CaseSpec]:
                     ),
                     rationale="There is no loss run, so there is no valuation date to read.",
                     rationale_source=SOURCE_LOSS_RUN_FORMATS,
+                ),
+                *(
+                    Expectation(
+                        field=money_field,
+                        outcome="flagged",
+                        allowed_actions=(
+                            RecommendedAction.QUERY_BROKER,
+                            RecommendedAction.REFER_TO_UNDERWRITER,
+                        ),
+                        rationale=(
+                            "With no claims document in the packet the five year totals cannot "
+                            "be established, and zero is not supported by anything."
+                        ),
+                        rationale_source=SOURCE_LOSS_RUNS,
+                    )
+                    for money_field in ("total_paid_5y_usd", "total_incurred_5y_usd")
                 ),
             ),
             corruption="drop_loss_runs",

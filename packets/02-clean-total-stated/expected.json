@@ -20,6 +20,8 @@
       "outcome": "extracted",
       "source_mode": "read",
       "source_document": "broker_email",
+      "flag_also_acceptable": false,
+      "wrong_values": [],
       "allowed_actions": [],
       "forbidden_actions": [],
       "rationale": "The broker states the total sum insured in the covering email, so the figure was read and not computed.",

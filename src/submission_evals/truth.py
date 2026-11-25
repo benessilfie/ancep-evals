@@ -196,6 +196,8 @@ class Expectation(Frozen):
     outcome: Literal["extracted", "flagged"]
     source_mode: SourceMode | None = None
     source_document: DocumentName | None = None
+    flag_also_acceptable: bool = False
+    wrong_values: tuple[str, ...] = ()
     allowed_actions: tuple[RecommendedAction, ...] = ()
     forbidden_actions: tuple[RecommendedAction, ...] = ()
     rationale: str

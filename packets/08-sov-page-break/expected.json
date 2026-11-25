@@ -20,6 +20,8 @@
       "outcome": "extracted",
       "source_mode": "derived",
       "source_document": "sov",
+      "flag_also_acceptable": false,
+      "wrong_values": [],
       "allowed_actions": [],
       "forbidden_actions": [],
       "rationale": "Column headers appear on the first page only and rows continue underneath, so a split row is read as missing or counted twice.",

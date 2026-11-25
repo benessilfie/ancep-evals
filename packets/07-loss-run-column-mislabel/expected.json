@@ -20,6 +20,8 @@
       "outcome": "flagged",
       "source_mode": null,
       "source_document": null,
+      "flag_also_acceptable": false,
+      "wrong_values": [],
       "allowed_actions": [
         "query_broker",
         "refer_to_underwriter"

@@ -287,8 +287,11 @@ def grade_field(
         decision: FlagDecision = (
             "correctly_flagged" if actual_outcome == "flagged" else "missed_flag"
         )
+    elif actual_outcome == "flagged":
+        flag_allowed = expectation is not None and expectation.flag_also_acceptable
+        decision = "correctly_flagged" if flag_allowed else "spurious_flag"
     else:
-        decision = "spurious_flag" if actual_outcome == "flagged" else "correctly_not_flagged"
+        decision = "correctly_not_flagged"
 
     if answer.flagged:
         action_ok: bool | None = None
@@ -319,6 +322,9 @@ def grade_field(
 
     wanted = expected_value(case, field)
     value_correct = values_match(field, wanted, answer.value)
+    wrong = expectation.wrong_values if expectation else ()
+    if any(values_match(field, bad, answer.value) for bad in wrong):
+        value_correct = False
     provenance = grade_provenance(case, field, answer, packet_text, value_correct)
     return FieldVerdict(
         field=field,
