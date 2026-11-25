@@ -2,6 +2,13 @@ import { useState } from "react"
 import { Evidence } from "@/components/Evidence"
 import { RecordTable, humanise } from "@/components/RecordTable"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import type { EvalCase, FieldVerdict, Trial } from "@/types"
 import { cn } from "@/lib/utils"
 
@@ -23,6 +30,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
   const [trial, setTrial] = useState<Trial>(
     evalCase.trials.find((t) => !t.passed) ?? evalCase.trials[0]
   )
+  const [tab, setTab] = useState("__record")
 
   return (
     <main className="flex min-w-0 flex-1 flex-col gap-3 lg:gap-0 lg:overflow-hidden">
@@ -76,10 +84,43 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
           <Evidence evalCase={evalCase} />
 
           <Tabs
-            defaultValue="__record"
+            value={tab}
+            onValueChange={setTab}
             className="flex min-h-0 flex-1 flex-col gap-0"
           >
-            <TabsList className="h-auto w-full shrink-0 flex-wrap justify-start gap-x-0.5 gap-y-1 rounded-none border-b border-rule bg-transparent px-4 pt-2 pb-0 group-data-[orientation=horizontal]/tabs:h-auto sm:px-5">
+            <div className="shrink-0 border-b border-rule px-4 py-3 lg:hidden">
+              <Select value={tab} onValueChange={setTab}>
+                <SelectTrigger className="pressable w-full rounded-field border border-rule bg-white px-2.5 py-2 text-left text-[0.8125rem]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent
+                  position="popper"
+                  sideOffset={4}
+                  className="pop z-50 max-h-[20rem] w-[var(--radix-select-trigger-width)] overflow-y-auto rounded-field border border-rule bg-white p-1 shadow-[0_10px_30px_-14px_rgba(22,23,26,0.4)]"
+                >
+                  <SelectItem
+                    value="__record"
+                    className="cursor-pointer rounded-field px-2.5 py-2 text-[0.8125rem] outline-none focus:bg-paper-sunk data-[state=checked]:bg-carbon-wash data-[state=checked]:font-medium data-[state=checked]:text-carbon"
+                  >
+                    the record it filed
+                  </SelectItem>
+                  {evalCase.documents.map((doc) => (
+                    <SelectItem
+                      key={doc.name}
+                      value={doc.name}
+                      className="cursor-pointer rounded-field px-2.5 py-2 text-[0.8125rem] outline-none focus:bg-paper-sunk data-[state=checked]:bg-carbon-wash data-[state=checked]:font-medium data-[state=checked]:text-carbon"
+                    >
+                      {DOC_NAMES[doc.name] ?? doc.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <TabsList
+              style={{ height: "auto" }}
+              className="hidden w-full shrink-0 flex-wrap justify-start gap-x-0.5 gap-y-1 rounded-none border-b border-rule bg-transparent px-5 pt-2 pb-0 lg:flex"
+            >
               <span className="field-label hidden self-center pr-2 sm:inline">output</span>
               <TabsTrigger
                 value="__record"
