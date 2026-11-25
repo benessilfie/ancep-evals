@@ -6,7 +6,7 @@ AGENCY: Harbridge Insurance Brokers             CARRIER: Callaghan Indemnity  NA
 NAMED INSURED(S): Halsey Street Bakery LLC              EFFECTIVE DATE: 01/01/2027
 COVERAGE ---------------------------------------------------------------------------------------
 [X] COMMERCIAL GENERAL LIABILITY                [X] OCCURRENCE        [ ] CLAIMS MADE
-RETRO DATE:                             
+RETRO DATE:
 LIMITS OF INSURANCE ----------------------------------------------------------------------------
 GENERAL AGGREGATE                                                2,000,000
 PRODUCTS AND COMPLETED OPERATIONS AGGREGATE                      2,000,000
@@ -39,4 +39,4 @@ within a 40 mile radius.
 SYNTHETIC DOCUMENT. Generated for an evaluation set. Not an ACORD form and not produced by,
 affiliated with or endorsed by ACORD. Field names follow industry usage. No real applicant,
 carrier or policy is described.
-COMMERCIAL GENERAL LIABILITY SECTION (synthetic)                                                
+COMMERCIAL GENERAL LIABILITY SECTION (synthetic)

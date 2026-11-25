@@ -4,6 +4,7 @@ from submission_evals.render.layout import (
     band,
     cell,
     centred,
+    document,
     footer,
     money,
     row,
@@ -130,4 +131,4 @@ def render(risk: Risk, options: PacketOptions) -> str:
             *footer("PROPERTY SECTION"),
         ]
     )
-    return "\n".join(lines) + "\n"
+    return document(lines)

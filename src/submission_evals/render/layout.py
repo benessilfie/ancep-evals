@@ -78,5 +78,9 @@ SYNTHETIC_FOOTER = (
 )
 
 
+def document(lines: list[str]) -> str:
+    return "\n".join(line.rstrip() for line in lines) + "\n"
+
+
 def footer(form_name: str) -> list[str]:
-    return [rule("-"), *wrap(SYNTHETIC_FOOTER), f"{form_name} (synthetic)".ljust(WIDTH)]
+    return [rule("-"), *wrap(SYNTHETIC_FOOTER), f"{form_name} (synthetic)"]

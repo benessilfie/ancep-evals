@@ -5,6 +5,7 @@ from submission_evals.render.layout import (
     box,
     cell,
     centred,
+    document,
     footer,
     money,
     row,
@@ -135,4 +136,4 @@ def render(risk: Risk, options: PacketOptions) -> str:
             *footer("COMMERCIAL GENERAL LIABILITY SECTION"),
         ]
     )
-    return "\n".join(lines) + "\n"
+    return document(lines)

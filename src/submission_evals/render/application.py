@@ -5,6 +5,7 @@ from submission_evals.render.layout import (
     box,
     cell,
     centred,
+    document,
     footer,
     money,
     row,
@@ -267,7 +268,7 @@ def render(risk: Risk, options: PacketOptions) -> str:
             *footer("COMMERCIAL INSURANCE APPLICATION"),
         ]
     )
-    return "\n".join(lines) + "\n"
+    return document(lines)
 
 
 def _slug(name: str) -> str:

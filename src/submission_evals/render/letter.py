@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from submission_evals.render.layout import wrap
+from submission_evals.render.layout import document, wrap
 from submission_evals.render.options import PacketOptions, long_date, us_date
 from submission_evals.truth import Risk
 
@@ -40,4 +40,4 @@ def render(risk: Risk, options: PacketOptions) -> str:
         "Claims Services Manager",
         f"{letter.carrier} Insurance Company",
     ]
-    return "\n".join(lines) + "\n"
+    return document(lines)

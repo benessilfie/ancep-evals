@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import date
 
 from submission_evals.manifest import attachment_lines
-from submission_evals.render.layout import money, wrap
+from submission_evals.render.layout import document, money, wrap
 from submission_evals.render.options import PacketOptions
 from submission_evals.truth import Risk
 
@@ -149,7 +149,7 @@ def render(risk: Risk, options: PacketOptions) -> str:
             lines.append("")
             lines.append("> " * depth + "-----Original Message-----")
         lines.extend(_render_message(message, depth))
-    return "\n".join(lines) + "\n"
+    return document(lines)
 
 
 def inception_day(value: date) -> str:

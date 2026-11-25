@@ -24,4 +24,4 @@ Values per the attached statement of values.
 SYNTHETIC DOCUMENT. Generated for an evaluation set. Not an ACORD form and not produced by,
 affiliated with or endorsed by ACORD. Field names follow industry usage. No real applicant,
 carrier or policy is described.
-PROPERTY SECTION (synthetic)                                                                    
+PROPERTY SECTION (synthetic)

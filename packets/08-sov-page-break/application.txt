@@ -80,4 +80,4 @@ PRODUCER'S SIGNATURE: Dana Whitfield            NATIONAL PRODUCER NUMBER: 188422
 SYNTHETIC DOCUMENT. Generated for an evaluation set. Not an ACORD form and not produced by,
 affiliated with or endorsed by ACORD. Field names follow industry usage. No real applicant,
 carrier or policy is described.
-COMMERCIAL INSURANCE APPLICATION (synthetic)                                                    
+COMMERCIAL INSURANCE APPLICATION (synthetic)

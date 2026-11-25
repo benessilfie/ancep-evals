@@ -145,3 +145,11 @@ def test_the_email_lists_what_is_actually_attached(spec):
     for name in absent:
         if name in ATTACHMENT_NAMES:
             assert ATTACHMENT_NAMES[name] not in email
+
+
+def test_rendering_is_idempotent_and_leaves_no_trailing_whitespace(spec):
+    first = packet_text(spec)
+    assert first == packet_text(spec)
+    for name, body in first.items():
+        offenders = [line for line in body.split("\n") if line != line.rstrip()]
+        assert not offenders, f"{spec.case.case_id}/{name.value}: {offenders[:3]}"

@@ -4,7 +4,7 @@ import csv
 import io
 from datetime import date
 
-from submission_evals.render.layout import money, table_row
+from submission_evals.render.layout import document, money, table_row
 from submission_evals.render.options import PacketOptions, carrier_date, us_date
 from submission_evals.truth import Loss, PriorCarrier, Risk
 
@@ -139,7 +139,7 @@ def render_callaghan(risk: Risk, carrier: PriorCarrier, options: PacketOptions) 
             "AND ARE SUBJECT TO CHANGE. FIGURES ARE GROSS OF ANY RECOVERY.",
         ]
     )
-    return "\n".join(lines) + "\n"
+    return document(lines)
 
 
 _RENDERERS = {"property": render_meridian, "general liability": render_callaghan}

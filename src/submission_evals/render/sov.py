@@ -3,7 +3,7 @@ from __future__ import annotations
 import csv
 import io
 
-from submission_evals.render.layout import money, table_header, table_row
+from submission_evals.render.layout import document, money, table_header, table_row
 from submission_evals.render.options import PacketOptions, us_date
 from submission_evals.truth import Risk
 
@@ -115,7 +115,7 @@ def render_paged_text(risk: Risk, options: PacketOptions) -> str:
         lines.append(table_row(_row_values(location), _PAGED_COLUMNS))
 
     lines.append("")
-    return "\n".join(lines) + "\n"
+    return document(lines)
 
 
 def render(risk: Risk, options: PacketOptions) -> tuple[str, str]:
