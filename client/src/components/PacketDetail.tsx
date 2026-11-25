@@ -121,7 +121,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
           </Tabs>
         </section>
 
-        <aside className="w-[21rem] shrink-0 overflow-y-auto px-5 py-4">
+        <aside className="w-[26rem] shrink-0 overflow-y-auto px-5 py-4">
           <TrialPanel trial={trial} />
 
           {trial.notes.length > 0 && (
@@ -261,7 +261,15 @@ function TrialPanel({ trial }: { trial: Trial }) {
       >
         <div
           className={cn(
-            "text-[1.25rem] leading-none font-semibold tracking-[-0.01em]",
+            "field-label",
+            trial.passed ? "text-seal/70" : "text-stamp/70"
+          )}
+        >
+          eval result
+        </div>
+        <div
+          className={cn(
+            "mt-1 text-[1.375rem] leading-none font-semibold tracking-[-0.01em]",
             trial.passed ? "text-seal" : "text-stamp"
           )}
         >
