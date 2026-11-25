@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 from pathlib import Path
 
 import typer
@@ -11,6 +12,18 @@ from submission_evals.cases import all_specs, spec_by_id
 from submission_evals.generate import packet_text, write_all
 from submission_evals.grade import grade
 from submission_evals.runner import RunConfig, Runner
+
+
+def load_env(path: Path = Path(".env")) -> None:
+    if not path.exists():
+        return
+    for line in path.read_text().splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, value = stripped.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
+
 
 app = typer.Typer(add_completion=False, help="Grade an agent on commercial insurance intake.")
 
@@ -64,6 +77,7 @@ def run(
     results: Path = Path("results"),
     force: bool = False,
 ) -> None:
+    load_env()
     config = RunConfig(
         models=tuple(model) if model else RunConfig.models,
         reps=reps,
