@@ -153,9 +153,8 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            A broker asking an insurer to quote sends over a pile of documents. That
-            package is called a submission, and somebody has to read all of it and type the
-            facts into a system. That job is going to AI now.
+            A broker sends an insurer a submission and somebody has to read all of it and
+            type the facts into a system, and that job is going to AI now.
           </p>
           <p className="text-[1.0625rem] text-ink">
             This checks whether the AI actually did that job right, instead of taking its
