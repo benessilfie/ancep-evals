@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from submission_evals.extract import (
     DEFAULT_SOURCES,
     GRADED_FIELDS,
+    LITERAL_CHECK_EXEMPT,
     Answer,
     ExtractedSubmission,
 )
@@ -65,7 +66,12 @@ def citation_is_honest(
 ) -> list[Finding]:
     findings = []
     for field, answer in _answers(produced).items():
-        if answer.flagged or answer.mode != SourceMode.READ or is_nil(answer.value):
+        if (
+            answer.flagged
+            or answer.mode != SourceMode.READ
+            or is_nil(answer.value)
+            or field in LITERAL_CHECK_EXEMPT
+        ):
             continue
         source = answer.source
         if source is None or source.document not in packet:

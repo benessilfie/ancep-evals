@@ -49,7 +49,8 @@ def test_the_unraised_conflict_is_caught_without_ground_truth():
 def test_a_mislabelled_loss_column_is_caught_arithmetically():
     spec = SPECS["07-loss-run-column-mislabel"]
     produced = oracle(spec.case)
-    produced.losses[0].paid_usd = produced.losses[0].incurred_usd
+    row = next(r for r in produced.losses if r.reserved_usd > 0)
+    row.paid_usd = row.incurred_usd
     findings = run_all(produced, packet_text(spec))
     assert any(f.check == "loss_row_does_not_reconcile" for f in findings)
 

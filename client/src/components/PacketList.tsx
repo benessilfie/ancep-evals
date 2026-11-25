@@ -17,13 +17,14 @@ export function PacketList({ cases, models, selected, onSelect }: Props) {
   return (
     <nav
       aria-label="packets"
-      className="hidden w-[19rem] shrink-0 overflow-y-auto border-r border-rule bg-paper-sunk/40 lg:block"
+      className="hidden w-[22rem] shrink-0 overflow-y-auto border-r border-rule bg-paper-sunk/40 lg:block"
     >
       <div className="sticky top-0 flex items-center gap-2 border-b border-rule-soft bg-paper-sunk/90 px-4 py-2 backdrop-blur">
         <span className="field-label flex-1">packet</span>
+        <span className="field-label mr-1">runs passed</span>
         {models.map((m) => (
-          <span key={m.id} className="field-label w-7 text-center">
-            {m.label.slice(0, 1)}
+          <span key={m.id} className="field-label w-12 text-center">
+            {m.label.replace(" 5.5", "")}
           </span>
         ))}
       </div>
@@ -76,7 +77,7 @@ export function PacketList({ cases, models, selected, onSelect }: Props) {
                         key={m.id}
                         title={`${m.label}: ${passed} of ${total}`}
                         className={cn(
-                          "w-7 text-center font-mono text-[0.6875rem] tabular-nums",
+                          "w-12 text-center font-mono text-[0.6875rem] tabular-nums",
                           passed === 0 && "font-semibold text-stamp",
                           passed > 0 && passed < total && "text-stamp/70",
                           passed === total && "text-ink-faint"
