@@ -202,7 +202,7 @@ function buildSteps(
           </p>
           <p>
             So I start from the answers. I decide the facts first, then generate the
-            paperwork from them.
+            documents from them.
           </p>
           <p>
             To make a hard case, I break one thing in the paperwork. The facts never
@@ -241,19 +241,18 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            Every answer carries its provenance. The agent names the document it used and
-            says whether it read the value or worked it out, and I check that claim against
-            the document it named.
-          </p>
-          <p className="text-ink">
-            That makes two kinds of check. Some need the answer key. Most need nothing at
-            all, because they are laws rather than questions: paid plus outstanding equals
-            incurred, a total equals the sum of its rows, a cited figure appears in the
-            document cited.
+            Every answer has to say where it came from. Which document, and whether the
+            agent read the value off the page or worked it out. Then I check that claim
+            against the document it named.
           </p>
           <p>
-            The second kind runs on a submission nobody has prepared an answer for, which
-            is the kind you can actually put in front of real traffic.
+            Most of these checks need no answer key. Paid plus outstanding has to equal
+            incurred. A total has to equal the sum of its rows. A figure it says it read
+            has to actually be in the document it pointed at.
+          </p>
+          <p className="text-ink">
+            Those hold for any submission, not just the ten I wrote. That is the half you
+            could put into production.
           </p>
         </Prose>
       ),
