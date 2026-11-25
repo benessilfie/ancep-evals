@@ -176,7 +176,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
           type="button"
           onClick={start}
           disabled={running}
-          className="pressable mt-6 w-full rounded-control bg-ink px-4 py-3 text-[0.9375rem] font-medium text-paper transition-colors hover:bg-carbon disabled:opacity-60"
+          className="pressable mt-6 w-full rounded-control bg-ink px-4 py-3 text-[0.9375rem] font-medium text-paper transition-colors hover:bg-ink-lift disabled:opacity-60"
         >
           {running ? "running…" : "Run the checks"}
         </button>

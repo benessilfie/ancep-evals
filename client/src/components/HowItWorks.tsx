@@ -77,7 +77,7 @@ export function HowItWorks({
             <button
               type="button"
               onClick={() => setStep((s) => s + 1)}
-              className="pressable rounded-control bg-ink px-5 py-2 text-[0.8125rem] font-medium text-paper transition-colors hover:bg-carbon"
+              className="pressable rounded-control bg-ink px-5 py-2 text-[0.8125rem] font-medium text-paper transition-colors hover:bg-ink-lift"
             >
               Next
             </button>
@@ -85,7 +85,7 @@ export function HowItWorks({
             <button
               type="button"
               onClick={() => onGo("live")}
-              className="pressable rounded-control bg-ink px-5 py-2 text-[0.8125rem] font-medium text-paper transition-colors hover:bg-carbon"
+              className="pressable rounded-control bg-ink px-5 py-2 text-[0.8125rem] font-medium text-paper transition-colors hover:bg-ink-lift"
             >
               Open the live demo
             </button>
@@ -391,7 +391,7 @@ function Card({
     <button
       type="button"
       onClick={onClick}
-      className="pressable rounded-control border border-rule bg-white px-5 py-4 text-left transition-colors hover:border-carbon"
+      className="pressable rounded-control border border-rule bg-white px-5 py-4 text-left transition-colors hover:border-ink-faint"
     >
       <div className="flex items-center gap-2.5">
         {mark}
