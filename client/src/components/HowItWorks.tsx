@@ -123,13 +123,13 @@ function buildSteps(
             then you point a model at them and score what comes back.
           </p>
           <p>
-            This one is ten fake submissions put to three Claude models, three goes at
-            each, so {data.totals.trials} graded records in total.
+            This one is ten fake submissions put to three Claude models, three separate
+            runs each, so {data.totals.trials} graded records in total.
           </p>
           <p className="text-ink">
-            What I score is the record they filed, not the summary they wrote about filing
-            it, because a model that gets this wrong still describes its work in fluent,
-            confident prose and the summary tells you nothing.
+            Each model fills in the same twenty one fields, and those filled in fields are
+            what I grade. Not the paragraph it writes about what it did, because a model
+            that fills a field in wrong still writes a confident, convincing paragraph.
           </p>
         </Prose>
       ),
