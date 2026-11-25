@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useMarker } from "@/lib/marker"
 import { Evidence } from "@/components/Evidence"
 import { FormMark, LedgerMark, PaperMark, ScheduleMark, SealMark } from "@/components/Marks"
@@ -27,6 +27,19 @@ export function HowItWorks({
   const current = steps[step]
   const last = step === steps.length - 1
   const { track, style } = useMarker<HTMLElement>(current.title)
+  const body = useRef<HTMLDivElement>(null)
+  const [floor, setFloor] = useState<number>()
+
+  useLayoutEffect(() => {
+    const height = body.current?.offsetHeight
+    if (height) setFloor((seen) => (seen === undefined || height > seen ? height : seen))
+  }, [step])
+
+  useEffect(() => {
+    const remeasure = () => setFloor(undefined)
+    window.addEventListener("resize", remeasure)
+    return () => window.removeEventListener("resize", remeasure)
+  }, [])
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
@@ -67,7 +80,11 @@ export function HowItWorks({
           ))}
         </nav>
 
-        <div className="mt-9 grid gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
+        <div
+          ref={body}
+          style={{ minHeight: floor }}
+          className="mt-9 grid gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start"
+        >
           <div>{current.body}</div>
           <div className="min-w-0">{current.aside}</div>
         </div>
