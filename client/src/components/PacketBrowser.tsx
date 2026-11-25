@@ -49,10 +49,10 @@ export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {
   const current = ordered.find((d) => d.name === open) ?? ordered[0]
 
   return (
-    <div className="flex min-h-0 flex-1">
+    <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
       <nav
         aria-label="documents in this packet"
-        className="w-[16rem] shrink-0 overflow-y-auto border-r border-rule-soft py-2"
+        className="w-full shrink-0 border-b border-rule-soft py-2 lg:w-[16rem] lg:overflow-y-auto lg:border-r lg:border-b-0"
       >
         <ul>
           {ordered.map((doc) => {
@@ -102,7 +102,7 @@ export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {
         </p>
       </nav>
 
-      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+      <div className="flex min-w-0 flex-1 flex-col lg:overflow-hidden">
         <div className="shrink-0 border-b border-rule-soft px-5 py-3">
           <div className="flex items-baseline justify-between gap-4">
             <h3 className="text-[0.9375rem] font-semibold">
@@ -116,7 +116,7 @@ export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {
             {WHAT[current.name]}
           </p>
         </div>
-        <div className="min-h-0 flex-1 overflow-auto bg-white">
+        <div className="min-h-0 flex-1 overflow-x-auto bg-white lg:overflow-auto">
           <pre className="paper-doc p-5 text-[0.6875rem] leading-[1.65]">{current.body}</pre>
         </div>
       </div>

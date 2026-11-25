@@ -3,6 +3,7 @@ import { HowItWorks } from "@/components/HowItWorks"
 import { LiveDemo } from "@/components/LiveDemo"
 import { PacketDetail } from "@/components/PacketDetail"
 import { PacketList } from "@/components/PacketList"
+import { PacketPicker } from "@/components/PacketPicker"
 import type { EvalData } from "@/types"
 
 const DEFAULT_CASE = "05-application-contradicts-loss-runs"
@@ -33,24 +34,27 @@ export default function App() {
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
       <header className="shrink-0 border-b border-rule">
-        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2 px-5 py-3">
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2.5 px-4 py-2.5 sm:px-5 sm:py-3">
           <div className="flex items-baseline gap-3">
-            <span className="text-[0.875rem] font-medium">
-              An eval set to grade AI on commercial insurance submissions
+            <span className="text-[0.875rem] leading-snug font-medium">
+              <span className="sm:hidden">An eval set for insurance submissions</span>
+              <span className="hidden sm:inline">
+                An eval set to grade AI on commercial insurance submissions
+              </span>
             </span>
             <span className="hidden text-[0.8125rem] text-ink-soft lg:inline">
               graded on what the model filed, not what it said it did
             </span>
           </div>
-          <div className="flex items-center gap-5">
-            <div className="flex rounded-control border border-rule bg-white p-0.5">
+          <div className="flex w-full items-center gap-5 sm:w-auto">
+            <div className="flex w-full rounded-control border border-rule bg-white p-0.5 sm:w-auto">
               {(["start", "live", "recorded"] as const).map((mode) => (
                 <button
                   key={mode}
                   type="button"
                   onClick={() => setView(mode)}
                   className={
-                    "pressable rounded-[3px] px-3.5 py-1.5 text-[0.8125rem] transition-colors " +
+                    "pressable flex-1 rounded-[3px] px-3.5 py-1.5 text-[0.8125rem] transition-colors sm:flex-none " +
                     (view === mode
                       ? "bg-ink text-paper"
                       : "text-ink-soft hover:text-ink")
@@ -61,7 +65,7 @@ export default function App() {
               ))}
             </div>
           </div>
-          <div className="flex items-center gap-5 font-mono text-micro text-ink-faint">
+          <div className="hidden items-center gap-5 font-mono text-micro text-ink-faint md:flex">
             <span>
               <span className="text-stamp">{unbeaten}</span>{" "}
               {unbeaten === 1 ? "packet" : "packets"} no model passed
@@ -77,7 +81,8 @@ export default function App() {
       {view === "start" ? (
         <HowItWorks data={data} onGo={setView} />
       ) : view === "recorded" ? (
-        <div className="flex min-h-0 flex-1">
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:flex-row lg:overflow-hidden">
+          <PacketPicker cases={data.cases} selected={current.id} onSelect={setSelected} />
           <PacketList
             cases={data.cases}
             models={data.models}

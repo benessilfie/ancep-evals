@@ -47,8 +47,8 @@ export function RecordTable({ trial }: { trial: Trial }) {
         <tr className="border-b border-rule">
           <th className="field-label px-5 py-2 font-normal">field</th>
           <th className="field-label px-3 py-2 font-normal">value</th>
-          <th className="field-label px-3 py-2 font-normal">how</th>
-          <th className="field-label px-3 py-2 font-normal">from</th>
+          <th className="field-label hidden px-3 py-2 font-normal sm:table-cell">how</th>
+          <th className="field-label hidden px-3 py-2 font-normal md:table-cell">from</th>
         </tr>
       </thead>
       <tbody>
@@ -85,10 +85,10 @@ export function RecordTable({ trial }: { trial: Trial }) {
                   </span>
                 )}
               </td>
-              <td className="px-3 py-2 font-mono text-[0.75rem] text-ink-soft">
+              <td className="hidden px-3 py-2 font-mono text-[0.75rem] text-ink-soft sm:table-cell">
                 {answer.status === "flagged" ? "" : answer.mode}
               </td>
-              <td className="px-3 py-2 font-mono text-[0.75rem] text-ink-soft">
+              <td className="hidden px-3 py-2 font-mono text-[0.75rem] text-ink-soft md:table-cell">
                 {answer.sources?.[0]?.document ?? ""}
               </td>
             </tr>

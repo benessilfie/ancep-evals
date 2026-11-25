@@ -25,7 +25,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
   )
 
   return (
-    <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
+    <main className="flex min-w-0 flex-1 flex-col lg:overflow-hidden">
       <div className="shrink-0 border-b border-rule-soft px-6 py-4">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <h1 className="text-[1.0625rem] leading-snug font-semibold tracking-[-0.01em]">
@@ -69,8 +69,8 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
         </div>
       </div>
 
-      <div className="flex min-h-0 flex-1">
-        <section className="flex min-w-0 flex-1 flex-col overflow-hidden border-r border-rule-soft">
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
+        <section className="flex min-w-0 flex-1 flex-col lg:overflow-hidden lg:border-r lg:border-rule-soft">
           <Evidence evalCase={evalCase} />
 
           <Tabs
@@ -103,7 +103,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
             </TabsList>
             <TabsContent
               value="__record"
-              className="min-h-0 flex-1 overflow-auto bg-white"
+              className="min-h-0 flex-1 overflow-x-auto bg-white lg:overflow-auto"
             >
               <RecordTable trial={trial} />
             </TabsContent>
@@ -111,7 +111,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
               <TabsContent
                 key={doc.name}
                 value={doc.name}
-                className="min-h-0 flex-1 overflow-auto bg-white"
+                className="min-h-0 flex-1 overflow-x-auto bg-white lg:overflow-auto"
               >
                 <pre className="paper-doc p-5 text-[0.6875rem] leading-[1.65]">
                   {doc.body}
@@ -121,7 +121,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
           </Tabs>
         </section>
 
-        <aside className="w-[26rem] shrink-0 overflow-y-auto px-5 py-4">
+        <aside className="order-first w-full shrink-0 border-b border-rule-soft px-5 py-4 lg:order-none lg:w-[26rem] lg:overflow-y-auto lg:border-b-0">
           <TrialPanel trial={trial} />
 
           {trial.notes.length > 0 && (

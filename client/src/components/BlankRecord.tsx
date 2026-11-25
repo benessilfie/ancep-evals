@@ -66,7 +66,7 @@ export function BlankRecord({ answers, running }: Props) {
                 key={field}
                 className="border-b border-rule-soft align-baseline transition-colors duration-500"
               >
-                <td className="w-[17rem] py-2.5 pr-4 text-[0.8125rem]">
+                <td className="w-[9rem] py-2.5 pr-4 text-[0.8125rem] sm:w-[17rem]">
                   <span className={answer ? "text-ink" : "text-ink-faint"}>{label}</span>
                 </td>
                 <td className="py-2.5 pr-4">
@@ -91,10 +91,10 @@ export function BlankRecord({ answers, running }: Props) {
                     />
                   )}
                 </td>
-                <td className="w-[6rem] py-2.5 pr-4 font-mono text-[0.75rem] text-ink-faint">
+                <td className="hidden w-[6rem] py-2.5 pr-4 font-mono text-[0.75rem] text-ink-faint sm:table-cell">
                   {answer && answer.status !== "flagged" ? answer.mode : ""}
                 </td>
-                <td className="w-[9rem] py-2.5 font-mono text-[0.75rem] text-ink-faint">
+                <td className="hidden w-[9rem] py-2.5 font-mono text-[0.75rem] text-ink-faint md:table-cell">
                   {answer?.sources?.[0]?.document ?? ""}
                 </td>
               </tr>

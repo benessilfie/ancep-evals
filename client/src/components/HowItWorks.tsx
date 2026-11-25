@@ -56,7 +56,7 @@ export function HowItWorks({
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
-      <div className="mx-auto w-full max-w-[64rem] px-6 py-10">
+      <div className="mx-auto w-full max-w-[64rem] px-4 py-8 sm:px-6 sm:py-10">
         <div className="mb-7">
           <h1 className="max-w-[24ch] text-[1.875rem] leading-[1.12] font-semibold tracking-[-0.02em]">
             An eval set to grade AI on commercial insurance submissions
