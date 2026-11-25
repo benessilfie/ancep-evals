@@ -123,7 +123,7 @@ class Runner:
         last: Exception | None = None
         for _ in range(self.config.max_attempts):
             try:
-                return await self.client.messages.create(
+                async with self.client.messages.stream(
                     model=model,
                     max_tokens=self.config.max_tokens,
                     system=system_blocks(),
@@ -135,7 +135,8 @@ class Runner:
                             "schema": ExtractedSubmission.model_json_schema(),
                         },
                     },
-                )
+                ) as stream:
+                    return await stream.get_final_message()
             except RETRYABLE as error:
                 last = error
                 attempt.retries += 1
