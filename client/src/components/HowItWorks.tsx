@@ -63,7 +63,7 @@ export function HowItWorks({
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
       <div className="mx-auto w-full max-w-[64rem] px-4 py-8 sm:px-6 sm:py-10">
-        <div className="mb-7">
+        <div className={cn("mb-7", step > 0 && "hidden md:block")}>
           <h1 className="max-w-[24ch] text-[1.875rem] leading-[1.12] font-semibold tracking-[-0.02em]">
             An eval set to grade AI on commercial insurance submissions
           </h1>
@@ -73,11 +73,13 @@ export function HowItWorks({
           </p>
         </div>
 
-        <div className="flex items-baseline gap-2.5 md:hidden">
-          <span className="font-mono text-[0.6875rem] text-ink-faint">
-            {step + 1} of {steps.length}
-          </span>
-          <span className="text-[0.9375rem] font-medium">{current.title}</span>
+        <div className="md:hidden">
+          <div className="font-mono text-[0.6875rem] tracking-[0.06em] text-ink-faint uppercase">
+            step {step + 1} of {steps.length}
+          </div>
+          <h2 className="mt-1 text-[1.375rem] leading-tight font-semibold tracking-[-0.02em]">
+            {current.title}
+          </h2>
         </div>
 
         <nav
@@ -113,7 +115,7 @@ export function HowItWorks({
         <div
           ref={body}
           style={wide ? { minHeight: floor } : undefined}
-          className="mt-9 grid gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start"
+          className="mt-6 grid gap-8 md:mt-9 md:gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start"
         >
           <div>{current.body}</div>
           <div className="min-w-0">{current.aside}</div>
