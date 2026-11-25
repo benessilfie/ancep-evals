@@ -153,8 +153,9 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            A broker sends an insurer a pile of paperwork. Somebody has to read all of it
-            and type the facts into a system, and that job is going to AI now.
+            A broker asking an insurer to quote sends over a pile of documents. That
+            package is called a submission, and somebody has to read all of it and type the
+            facts into a system. That job is going to AI now.
           </p>
           <p className="text-[1.0625rem] text-ink">
             This checks whether the AI actually did that job right, instead of taking its
@@ -198,15 +199,15 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            The usual way is to take real files and pay someone who knows insurance to mark
-            up the right answers. That takes days, and expertise I do not have.
+            The usual way is to take real submissions and pay someone who knows insurance
+            to mark up the right answers. That takes days, and expertise I do not have.
           </p>
           <p>
             So I start from the answers. I decide the facts first, then generate the
             documents from them.
           </p>
           <p>
-            To make a hard case, I break one thing in the paperwork. The facts never
+            To make a hard case, I break one thing in the documents. The facts never
             change, so I always know what the right answer was.
           </p>
           <p className="text-ink">
@@ -225,7 +226,7 @@ function buildSteps(
           />
           <Flow
             mark={<FormMark className="h-9 w-11 text-rule" />}
-            head="then the paperwork, printed from them"
+            head="then the documents, printed from them"
             body={`${sample.documents.length} documents. The broker's email, the application and its property and liability sections, the schedule of values, loss runs from both prior carriers.`}
           />
           <Flow
@@ -291,7 +292,7 @@ function buildSteps(
             So on the clean {controls.length}, raising a query counts against it.
           </p>
           <p>
-            Two of the files look almost identical and need opposite answers. One client
+            Two of them look almost identical and need opposite answers. One client
             genuinely has no claims and the insurer sent a letter confirming it, so the
             agent should record zero. The other is missing its claims record entirely, so
             the agent should go back and ask.
@@ -328,7 +329,7 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            The hardest one is the file where the signed form says no claims and the
+            The hardest one is the submission where the signed form says no claims and the
             attached insurer records show two.
           </p>
           <p className="text-ink">
@@ -356,8 +357,8 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            The live demo sends one of the files, a packet, to a model and fills in the
-            twenty one fields while you watch.
+            The live demo sends one submission, which the app calls a packet, to a model
+            and fills in the twenty one fields while you watch.
           </p>
           <p>
             Findings has the {data.totals.trials} runs I already did: every packet, every
