@@ -151,8 +151,7 @@ def build_risk(
             description=(
                 "Retail bakery, on-site baking and a delivery fleet"
                 if location_count == 1
-                else f"Retail bakery chain, {location_count} outlets with on-site baking "
-                "at every outlet and a delivery fleet"
+                else "Retail bakery chain, on-site baking at every outlet and a delivery fleet"
             ),
             sic_code="5461",
             naics_code="311811",
@@ -405,6 +404,7 @@ def all_specs() -> list[CaseSpec]:
                 sov_as_paged_text=True,
                 sov_page_break_after=13,
                 state_location_count_in_email=False,
+                premises_by_schedule=True,
             ),
             (
                 Expectation(

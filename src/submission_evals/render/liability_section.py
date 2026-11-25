@@ -99,20 +99,37 @@ def render(risk: Risk, options: PacketOptions) -> str:
             *table_header(_HAZARD_COLUMNS),
         ]
     )
-    exposure_per_site = coverage.gl_exposure_usd // max(risk.location_count, 1)
-    for location in risk.locations:
+    if options.premises_by_schedule:
         lines.append(
             table_row(
                 (
-                    location.loc_no,
+                    "ALL",
                     "BAKERIES - RETAIL WITH BAKING ON PREMISES",
                     "10100",
                     coverage.gl_premium_basis,
-                    money(exposure_per_site),
+                    money(coverage.gl_exposure_usd),
                 ),
                 _HAZARD_COLUMNS,
             )
         )
+        lines.extend(
+            wrap("ONE CLASSIFICATION APPLIES TO EVERY LOCATION ON THE ATTACHED SCHEDULE.")
+        )
+    else:
+        exposure_per_site = coverage.gl_exposure_usd // max(risk.location_count, 1)
+        for location in risk.locations:
+            lines.append(
+                table_row(
+                    (
+                        location.loc_no,
+                        "BAKERIES - RETAIL WITH BAKING ON PREMISES",
+                        "10100",
+                        coverage.gl_premium_basis,
+                        money(exposure_per_site),
+                    ),
+                    _HAZARD_COLUMNS,
+                )
+            )
     lines.extend(
         [
             "-" * 88,

@@ -25,22 +25,12 @@ PREMISES INFORMATION -----------------------------------------------------------
 LOC# BLD# STREET, CITY, COUNTY, STATE, ZIP+4                    CITY LIMITS INTEREST  %OCC
 -------------------------------------------------------------------------------------------
 1    1    18 Washington Street, Hoboken, Hudson, NJ 07030       INSIDE      OWNER     100
-2    1    7 Palisade Avenue, Jersey City, Hudson, NJ 07306      INSIDE      OWNER     100
-3    1    214 Central Avenue, Jersey City, Hudson, NJ 07307     INSIDE      OWNER     100
-4    1    41 Bergenline Avenue, Union City, Hudson, NJ 07087    INSIDE      OWNER     100
-5    1    3 Kennedy Boulevard, Bayonne, Hudson, NJ 07002        INSIDE      OWNER     100
-6    1    90 Port Street, Newark, Hudson, NJ 07114              INSIDE      OWNER     100
-7    1    52 Observer Highway, Hoboken, Hudson, NJ 07030        INSIDE      OWNER     100
-8    1    8 Journal Square, Jersey City, Hudson, NJ 07306       INSIDE      OWNER     100
-9    1    301 Broadway, Bayonne, Hudson, NJ 07002               INSIDE      OWNER     100
-10   1    77 Ferry Street, Newark, Hudson, NJ 07105             INSIDE      OWNER     100
-11   1    14 Summit Avenue, Union City, Hudson, NJ 07087        INSIDE      OWNER     100
-12   1    190 Grand Street, Jersey City, Hudson, NJ 07302       INSIDE      OWNER     100
-13   1    6 Willow Terrace, Hoboken, Hudson, NJ 07030           INSIDE      OWNER     100
-14   1    45 Raymond Boulevard, Newark, Hudson, NJ 07102        INSIDE      OWNER     100
+
+ALL INSURED LOCATIONS AND VALUES PER THE ATTACHED STATEMENT OF VALUES. THE PREMISES ABOVE IS THE
+PRINCIPAL LOCATION ONLY.
 NATURE OF BUSINESS -----------------------------------------------------------------------------
 DESCRIPTION OF PRIMARY OPERATIONS:
-  Retail bakery chain, 14 outlets with on-site baking at every outlet and a delivery fleet
+  Retail bakery chain, on-site baking at every outlet and a delivery fleet
 SIC: 5461               NAICS: 311811             ANNUAL REVENUES: 9,400,000
 NO. OF FULL TIME EMPLOYEES: 40          NO. OF PART TIME EMPLOYEES: 0
 GENERAL INFORMATION ----------------------------------------------------------------------------

@@ -22,6 +22,7 @@ class PacketOptions:
     stale_location_values: bool = False
     promise_loss_summary_without_it: bool = False
     state_location_count_in_email: bool = True
+    premises_by_schedule: bool = False
     mislabel_loss_run_b_columns: bool = False
     sov_as_paged_text: bool = False
     sov_page_break_after: int = 9

@@ -159,7 +159,8 @@ def render(risk: Risk, options: PacketOptions) -> str:
         *table_header(_PREMISES_COLUMNS),
     ]
 
-    for location in risk.locations:
+    scheduled = risk.locations[:1] if options.premises_by_schedule else risk.locations
+    for location in scheduled:
         lines.append(
             table_row(
                 (
@@ -172,6 +173,15 @@ def render(risk: Risk, options: PacketOptions) -> str:
                     "100",
                 ),
                 _PREMISES_COLUMNS,
+            )
+        )
+
+    if options.premises_by_schedule:
+        lines.append("")
+        lines.extend(
+            wrap(
+                "ALL INSURED LOCATIONS AND VALUES PER THE ATTACHED STATEMENT OF VALUES. "
+                "THE PREMISES ABOVE IS THE PRINCIPAL LOCATION ONLY."
             )
         )
 

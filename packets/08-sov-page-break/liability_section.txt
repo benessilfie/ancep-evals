@@ -20,20 +20,8 @@ PROPERTY DAMAGE DEDUCTIBLE: 1,000               PER: CLAIM
 SCHEDULE OF HAZARDS ----------------------------------------------------------------------------
 LOC  CLASSIFICATION                            CLASS CODE  PREMIUM BASIS  EXPOSURE
 ----------------------------------------------------------------------------------------
-1    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-2    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-3    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-4    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-5    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-6    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-7    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-8    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-9    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-10   BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-11   BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-12   BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-13   BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
-14   BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              671,428
+ALL  BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              9,400,000
+ONE CLASSIFICATION APPLIES TO EVERY LOCATION ON THE ATTACHED SCHEDULE.
 ----------------------------------------------------------------------------------------
 TOTAL EXPOSURE                                                                 9,400,000
 

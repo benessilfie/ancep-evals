@@ -11,6 +11,7 @@ from submission_evals.render.layout import (
     rule,
     table_header,
     table_row,
+    wrap,
 )
 from submission_evals.render.options import PacketOptions, us_date
 from submission_evals.truth import Coverage, Location, Risk
@@ -81,7 +82,8 @@ def render(risk: Risk, options: PacketOptions) -> str:
         ),
     ]
 
-    for location in risk.locations:
+    scheduled = risk.locations[:1] if options.premises_by_schedule else risk.locations
+    for location in scheduled:
         lines.extend(
             [
                 band("premises information"),
@@ -120,6 +122,18 @@ def render(risk: Risk, options: PacketOptions) -> str:
                 row(
                     cell("BURGLAR ALARM TYPE", "CENTRAL STATION", 46),
                     cell("ROOF UPDATED", location.year_built + 12, 26),
+                ),
+            ]
+        )
+
+    if options.premises_by_schedule:
+        lines.extend(
+            [
+                band("additional premises"),
+                *wrap(
+                    "REMAINING INSURED LOCATIONS, VALUES, CONSTRUCTION AND PROTECTION PER THE "
+                    "ATTACHED STATEMENT OF VALUES. TERMS ABOVE APPLY TO EVERY SCHEDULED "
+                    "LOCATION."
                 ),
             ]
         )
