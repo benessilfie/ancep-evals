@@ -197,18 +197,21 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            Normally you would pay someone who knows insurance to read real files and mark
-            them up, which takes days and expertise I do not have.
+            The usual way is to take real files and pay someone who knows insurance to mark
+            up the right answers. That takes days, and expertise I do not have.
           </p>
           <p>
-            So I did it the other way round. I wrote down what is true first, then a
-            program printed the paperwork out of that record, and a trap is just me
-            breaking one thing on purpose.
+            So I start from the answers. I decide the facts first, then a program prints
+            the paperwork from them.
+          </p>
+          <p>
+            To make a hard case, I break one thing in the paperwork. The facts never
+            change, so I always know what the right answer was.
           </p>
           <p className="text-ink">
-            Which means a new case costs minutes, not days. Each one stands for a class of
-            failure rather than a particular bakery, so the next submission that arrives
-            with its documents in conflict is already covered.
+            A new case takes minutes this way. And each one is a type of problem, not one
+            particular bakery. The test is &ldquo;the documents disagree&rdquo;, so any
+            submission where that happens is already covered.
           </p>
         </Prose>
       ),
@@ -216,18 +219,18 @@ function buildSteps(
         <div className="space-y-3">
           <Flow
             mark={<PaperMark className="h-9 w-11 text-rule" />}
-            head="the truth record"
+            head="first, the facts"
             body={`A bakery, ${f?.locationCount ?? 6} shops, ${usd(f?.totalInsured ?? 8400000)} of property, ${f?.lossCount ?? 2} claims worth ${usd(f?.totalIncurred ?? 42000)} between them.`}
           />
           <Flow
             mark={<FormMark className="h-9 w-11 text-rule" />}
-            head="the paperwork, printed from it"
+            head="then the paperwork, printed from them"
             body={`${sample.documents.length} documents. The broker's email, the application and its property and liability sections, the schedule of values, loss runs from both prior carriers.`}
           />
           <Flow
             mark={<LedgerMark className="h-9 w-11 text-rule" />}
-            head="then one thing breaks"
-            body="Tick the no claims box on the signed form and leave the two real claims in the attached loss runs. The truth record still holds the right answer."
+            head="then break one thing"
+            body="Tick the no claims box on the signed form, and leave the two real claims in the attached loss runs. The facts above are untouched, so the right answer is still known."
             tone="stamp"
           />
         </div>
