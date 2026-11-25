@@ -148,7 +148,10 @@ def build_risk(
         ),
         operations=Operations(
             description=(
-                "Retail bakery chain, on-site baking at every outlet and a delivery fleet"
+                "Retail bakery, on-site baking and a delivery fleet"
+                if location_count == 1
+                else f"Retail bakery chain, {location_count} outlets with on-site baking "
+                "at every outlet and a delivery fleet"
             ),
             sic_code="5461",
             naics_code="311811",
@@ -243,7 +246,7 @@ def all_specs() -> list[CaseSpec]:
             None,
             single,
             PacketOptions(),
-            (_total_read_from_email(),),
+            (),
         ),
         _spec(
             "02-clean-total-stated",

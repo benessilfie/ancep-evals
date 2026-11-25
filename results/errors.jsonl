@@ -1,0 +1,1 @@
+{"prompt_id": "01-clean-single-location", "requested_model": "claude-haiku-5-5", "rep": 0, "failure": "api_error", "attempts": 1, "latency_s": 0.55, "detail": "400"}

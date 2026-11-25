@@ -1,6 +1,6 @@
-from typing import Annotated, Literal
+from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict
 
 from submission_evals.truth import DocumentName, RecommendedAction, SourceMode
 
@@ -11,27 +11,25 @@ class Strict(BaseModel):
 
 class SourceRef(Strict):
     document: DocumentName
-    mode: SourceMode
     locator: str
+
+
+class Answer(Strict):
+    status: Literal["extracted", "flagged"]
+    value: str
+    mode: SourceMode
+    sources: list[SourceRef]
     derived_from: list[str]
-
-
-class Extracted[T](Strict):
-    kind: Literal["extracted"]
-    value: T
-    source: SourceRef
-
-
-class Flagged(Strict):
-    kind: Literal["flagged"]
     reason: str
-    conflicting_sources: list[SourceRef]
     recommended_action: RecommendedAction
 
+    @property
+    def flagged(self) -> bool:
+        return self.status == "flagged"
 
-IntAnswer = Annotated[Extracted[int] | Flagged, Field(discriminator="kind")]
-StrAnswer = Annotated[Extracted[str] | Flagged, Field(discriminator="kind")]
-BoolAnswer = Annotated[Extracted[bool] | Flagged, Field(discriminator="kind")]
+    @property
+    def source(self) -> SourceRef | None:
+        return self.sources[0] if self.sources else None
 
 
 class LocationRow(Strict):
@@ -56,27 +54,27 @@ class LossRow(Strict):
 
 
 class ExtractedSubmission(Strict):
-    applicant_name: StrAnswer
-    applicant_fein: StrAnswer
-    applicant_entity_type: StrAnswer
-    mailing_address: StrAnswer
-    business_started: StrAnswer
-    annual_revenue_usd: IntAnswer
-    employee_count: IntAnswer
-    policy_effective_date: StrAnswer
-    policy_expiration_date: StrAnswer
-    location_count: IntAnswer
-    total_insured_value_usd: IntAnswer
-    property_coinsurance_pct: IntAnswer
-    property_valuation_basis: StrAnswer
-    gl_each_occurrence_usd: IntAnswer
-    gl_general_aggregate_usd: IntAnswer
-    prior_property_carrier: StrAnswer
-    loss_run_valuation_date: StrAnswer
-    loss_count_5y: IntAnswer
-    total_paid_5y_usd: IntAnswer
-    total_incurred_5y_usd: IntAnswer
-    is_update_of_prior_submission: BoolAnswer
+    applicant_name: Answer
+    applicant_fein: Answer
+    applicant_entity_type: Answer
+    mailing_address: Answer
+    business_started: Answer
+    annual_revenue_usd: Answer
+    employee_count: Answer
+    policy_effective_date: Answer
+    policy_expiration_date: Answer
+    location_count: Answer
+    total_insured_value_usd: Answer
+    property_coinsurance_pct: Answer
+    property_valuation_basis: Answer
+    gl_each_occurrence_usd: Answer
+    gl_general_aggregate_usd: Answer
+    prior_property_carrier: Answer
+    loss_run_valuation_date: Answer
+    loss_count_5y: Answer
+    total_paid_5y_usd: Answer
+    total_incurred_5y_usd: Answer
+    is_update_of_prior_submission: Answer
     locations: list[LocationRow]
     losses: list[LossRow]
     packet_notes: list[str]
@@ -160,3 +158,5 @@ DEFAULT_SOURCES: dict[str, tuple[DocumentName, SourceMode]] = {
 LITERAL_CHECK_EXEMPT: frozenset[str] = frozenset(
     {"mailing_address", "is_update_of_prior_submission"}
 )
+
+CODE_FIELDS: frozenset[str] = frozenset({"property_valuation_basis", "applicant_entity_type"})

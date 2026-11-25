@@ -26,7 +26,7 @@ LOC# BLD# STREET, CITY, COUNTY, STATE, ZIP+4                    CITY LIMITS INTE
 1    1    18 Washington Street, Hoboken, Hudson, NJ 07030       INSIDE      OWNER     100
 NATURE OF BUSINESS -----------------------------------------------------------------------------
 DESCRIPTION OF PRIMARY OPERATIONS:
-  Retail bakery chain, on-site baking at every outlet and a delivery fleet
+  Retail bakery, on-site baking and a delivery fleet
 SIC: 5461               NAICS: 311811             ANNUAL REVENUES: 9,400,000
 NO. OF FULL TIME EMPLOYEES: 40          NO. OF PART TIME EMPLOYEES: 0
 GENERAL INFORMATION ----------------------------------------------------------------------------

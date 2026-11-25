@@ -39,7 +39,7 @@ LOC# BLD# STREET, CITY, COUNTY, STATE, ZIP+4                    CITY LIMITS INTE
 14   1    45 Raymond Boulevard, Newark, Hudson, NJ 07102        INSIDE      OWNER     100
 NATURE OF BUSINESS -----------------------------------------------------------------------------
 DESCRIPTION OF PRIMARY OPERATIONS:
-  Retail bakery chain, on-site baking at every outlet and a delivery fleet
+  Retail bakery chain, 14 outlets with on-site baking at every outlet and a delivery fleet
 SIC: 5461               NAICS: 311811             ANNUAL REVENUES: 9,400,000
 NO. OF FULL TIME EMPLOYEES: 40          NO. OF PART TIME EMPLOYEES: 0
 GENERAL INFORMATION ----------------------------------------------------------------------------

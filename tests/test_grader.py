@@ -1,5 +1,11 @@
-from submission_evals.baselines import flag_everything, null_empty, oracle, plausible_liar
-from submission_evals.extract import GRADED_FIELDS, Extracted, SourceRef
+from submission_evals.baselines import (
+    flag_everything,
+    flagged,
+    null_empty,
+    oracle,
+    plausible_liar,
+)
+from submission_evals.extract import GRADED_FIELDS, Answer, SourceRef
 from submission_evals.grade import (
     expected_value,
     grade,
@@ -83,15 +89,14 @@ def test_read_claim_fails_when_the_document_does_not_contain_the_value(control_c
 
 def test_citing_a_document_not_in_the_packet_fails(control_case):
     produced = oracle(control_case)
-    produced.total_insured_value_usd = Extracted(
-        kind="extracted",
-        value=8_400_000,
-        source=SourceRef(
-            document=DocumentName.NO_LOSSES_LETTER,
-            mode=SourceMode.READ,
-            locator="page 1",
-            derived_from=[],
-        ),
+    produced.total_insured_value_usd = Answer(
+        status="extracted",
+        value="8400000",
+        mode=SourceMode.READ,
+        sources=[SourceRef(document=DocumentName.NO_LOSSES_LETTER, locator="page 1")],
+        derived_from=[],
+        reason="",
+        recommended_action=RecommendedAction.NONE,
     )
     verdict = grade(control_case, produced)
     total = next(f for f in verdict.fields if f.field == "total_insured_value_usd")
@@ -101,12 +106,14 @@ def test_citing_a_document_not_in_the_packet_fails(control_case):
 
 def test_derived_without_inputs_is_structurally_invalid(derived_case):
     produced = oracle(derived_case)
-    produced.total_insured_value_usd = Extracted(
-        kind="extracted",
-        value=8_400_000,
-        source=SourceRef(
-            document=DocumentName.SOV, mode=SourceMode.DERIVED, locator="rows", derived_from=[]
-        ),
+    produced.total_insured_value_usd = Answer(
+        status="extracted",
+        value="8400000",
+        mode=SourceMode.DERIVED,
+        sources=[SourceRef(document=DocumentName.SOV, locator="rows")],
+        derived_from=[],
+        reason="",
+        recommended_action=RecommendedAction.NONE,
     )
     verdict = grade(derived_case, produced)
     total = next(f for f in verdict.fields if f.field == "total_insured_value_usd")
@@ -161,13 +168,8 @@ def test_value_matching_is_normalised_not_literal(control_case):
 
 def test_a_single_spurious_flag_fails_a_case(control_case):
     produced = oracle(control_case)
-    from submission_evals.extract import Flagged
-
-    produced.employee_count = Flagged(
-        kind="flagged",
-        reason="headcount was not clear to me",
-        conflicting_sources=[],
-        recommended_action=RecommendedAction.QUERY_BROKER,
+    produced.employee_count = flagged(
+        "headcount was not clear to me", RecommendedAction.QUERY_BROKER, []
     )
     verdict = grade(control_case, produced)
     assert verdict.flag_counts["spurious_flag"] == 1

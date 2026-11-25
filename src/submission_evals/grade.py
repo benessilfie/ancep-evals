@@ -7,15 +7,14 @@ from typing import Any, Literal
 from pydantic import BaseModel
 
 from submission_evals.extract import (
+    CODE_FIELDS,
     DATE_FIELDS,
     GRADED_FIELDS,
     IDENTIFIER_FIELDS,
     LITERAL_CHECK_EXEMPT,
     MONEY_FIELDS,
-    Extracted,
+    Answer,
     ExtractedSubmission,
-    Flagged,
-    SourceRef,
 )
 from submission_evals.truth import Case, DocumentName, SourceMode
 
@@ -32,14 +31,6 @@ def appears_as_token(needle: str, haystack: str) -> bool:
         return False
     pattern = rf"(?<![\w,]){re.escape(needle)}(?![\w,])"
     return re.search(pattern, haystack) is not None
-
-
-def is_nil(value: Any) -> bool:
-    if isinstance(value, bool):
-        return False
-    if isinstance(value, int):
-        return value == 0
-    return not str(value).strip()
 
 
 def normalise_text(value: Any) -> str:
@@ -79,6 +70,30 @@ def normalise_money(value: Any) -> int | None:
         return round(float(raw))
     except ValueError:
         return None
+
+
+_TRUE_WORDS = frozenset({"true", "yes", "y", "1", "t"})
+_FALSE_WORDS = frozenset({"false", "no", "n", "0", "f", ""})
+
+
+def parse_bool(value: Any) -> bool | None:
+    if isinstance(value, bool):
+        return value
+    word = str(value).strip().casefold()
+    if word in _TRUE_WORDS:
+        return True
+    if word in _FALSE_WORDS:
+        return False
+    return None
+
+
+def is_nil(value: Any) -> bool:
+    if isinstance(value, bool):
+        return False
+    text = str(value).strip()
+    if not text:
+        return True
+    return normalise_money(text) == 0
 
 
 def expected_value(case: Case, field: str) -> Any:
@@ -125,7 +140,7 @@ def values_match(field: str, expected: Any, actual: Any) -> bool:
     if field in IDENTIFIER_FIELDS:
         return normalise_identifier(actual) == normalise_identifier(expected)
     if field == "is_update_of_prior_submission":
-        return bool(actual) is bool(expected)
+        return parse_bool(actual) is bool(expected)
     if field == "mailing_address":
         haystack = normalise_identifier(actual)
         return all(
@@ -138,6 +153,8 @@ def values_match(field: str, expected: Any, actual: Any) -> bool:
         )
     if field == "applicant_name":
         return normalise_name(actual) == normalise_name(expected)
+    if field in CODE_FIELDS:
+        return appears_as_token(normalise_text(expected), normalise_text(actual))
     if isinstance(expected, int):
         return normalise_money(actual) == expected
     return normalise_text(actual) == normalise_text(expected)
@@ -180,23 +197,25 @@ class ProvenanceVerdict(BaseModel):
 def grade_provenance(
     case: Case,
     field: str,
-    source: SourceRef,
-    value: Any,
+    answer: Answer,
     packet_text: dict[DocumentName, str] | None,
+    value_correct: bool = False,
 ) -> ProvenanceVerdict:
-    structural = bool(source.locator.strip()) and (
-        source.mode != SourceMode.DERIVED or bool(source.derived_from)
+    source = answer.source
+    structural = (
+        source is not None
+        and bool(source.locator.strip())
+        and (answer.mode != SourceMode.DERIVED or bool(answer.derived_from))
     )
-    if not structural:
+    if not structural or source is None:
         return ProvenanceVerdict(
             structural=False,
             resolvable=False,
             semantic=False,
-            detail="source ref malformed or derived without inputs",
+            detail="no source cited, empty locator, or derived without listing inputs",
         )
 
-    resolvable = source.document in case.documents
-    if not resolvable:
+    if source.document not in case.documents:
         return ProvenanceVerdict(
             structural=True,
             resolvable=False,
@@ -205,18 +224,17 @@ def grade_provenance(
         )
 
     expectation = case.expectation_for(field)
-    if (
+    over_claims_read = (
         expectation is not None
-        and expectation.source_mode is not None
-        and source.mode != expectation.source_mode
-    ):
+        and expectation.source_mode == SourceMode.DERIVED
+        and answer.mode == SourceMode.READ
+    )
+    if over_claims_read:
         return ProvenanceVerdict(
             structural=True,
             resolvable=True,
             semantic=False,
-            detail=(
-                f"claimed mode {source.mode.value}, correct mode is {expectation.source_mode.value}"
-            ),
+            detail="claimed read for a value that appears nowhere and can only be derived",
         )
     if (
         expectation is not None
@@ -235,12 +253,15 @@ def grade_provenance(
 
     if (
         packet_text is not None
-        and source.mode == SourceMode.READ
+        and answer.mode == SourceMode.READ
         and field not in LITERAL_CHECK_EXEMPT
-        and not is_nil(value)
+        and not is_nil(answer.value)
     ):
         body = packet_text.get(source.document, "")
-        if not any(appears_as_token(form, body) for form in renderings(field, value)):
+        candidates = list(renderings(field, answer.value))
+        if value_correct:
+            candidates.extend(renderings(field, expected_value(case, field)))
+        if not any(appears_as_token(form, body) for form in candidates):
             return ProvenanceVerdict(
                 structural=True,
                 resolvable=True,
@@ -266,12 +287,12 @@ class FieldVerdict(BaseModel):
 def grade_field(
     case: Case,
     field: str,
-    answer: Extracted[Any] | Flagged,
+    answer: Answer,
     packet_text: dict[DocumentName, str] | None,
 ) -> FieldVerdict:
     expectation = case.expectation_for(field)
     expected_outcome = expectation.outcome if expectation else "extracted"
-    actual_outcome = "flagged" if isinstance(answer, Flagged) else "extracted"
+    actual_outcome = "flagged" if answer.flagged else "extracted"
 
     if expected_outcome == "flagged":
         decision: FlagDecision = (
@@ -280,7 +301,7 @@ def grade_field(
     else:
         decision = "spurious_flag" if actual_outcome == "flagged" else "correctly_not_flagged"
 
-    if isinstance(answer, Flagged):
+    if answer.flagged:
         action_ok: bool | None = None
         detail = f"flagged: {answer.reason[:120]}"
         if expectation is not None:
@@ -292,6 +313,9 @@ def grade_field(
                 action_ok = answer.recommended_action in expectation.allowed_actions
                 if not action_ok:
                     detail = f"flagged but recommended {answer.recommended_action.value}"
+        if not answer.reason.strip():
+            action_ok = False
+            detail = "flagged with no reason given"
         return FieldVerdict(
             field=field,
             declared=expectation is not None,
@@ -306,7 +330,7 @@ def grade_field(
 
     wanted = expected_value(case, field)
     value_correct = values_match(field, wanted, answer.value)
-    provenance = grade_provenance(case, field, answer.source, answer.value, packet_text)
+    provenance = grade_provenance(case, field, answer, packet_text, value_correct)
     return FieldVerdict(
         field=field,
         declared=expectation is not None,
@@ -380,6 +404,9 @@ def grade(
         for v in declared
     )
     no_blanket_refusal = not any(v.flag_decision == "spurious_flag" for v in verdicts)
+    no_false_receipts = all(v.provenance is None or v.provenance.ok for v in verdicts)
+    every_value_right = all(v.value_correct is not False for v in verdicts)
+    control_is_clean = every_value_right if case.kind == "control" else True
 
     return CaseVerdict(
         case_id=case.case_id,
@@ -388,5 +415,10 @@ def grade(
         loss_rows_arithmetic_consistent=arithmetic,
         location_rows_correct=locations_correct,
         loss_rows_correct=losses_correct,
-        case_passed=expectations_met and no_blanket_refusal,
+        case_passed=(
+            expectations_met
+            and no_blanket_refusal
+            and no_false_receipts
+            and control_is_clean
+        ),
     )

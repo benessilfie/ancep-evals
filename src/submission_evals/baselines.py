@@ -8,9 +8,8 @@ from submission_evals.extract import (
     DEFAULT_SOURCES,
     GRADED_FIELDS,
     MONEY_FIELDS,
-    Extracted,
+    Answer,
     ExtractedSubmission,
-    Flagged,
     LocationRow,
     LossRow,
     SourceRef,
@@ -40,7 +39,7 @@ def _zero_for(field: str) -> Any:
     return ""
 
 
-def _source_for(case: Case, field: str) -> SourceRef:
+def _answer_source(case: Case, field: str) -> tuple[SourceRef, SourceMode]:
     expectation = case.expectation_for(field)
     fallback_document, fallback_mode = DEFAULT_SOURCES[field]
     mode = expectation.source_mode if expectation and expectation.source_mode else fallback_mode
@@ -52,12 +51,31 @@ def _source_for(case: Case, field: str) -> SourceRef:
     if document not in case.documents:
         document = DocumentName.APPLICATION
         mode = SourceMode.DERIVED
-    derived_from = ["statement of values rows"] if mode == SourceMode.DERIVED else []
-    return SourceRef(
-        document=document,
+    return SourceRef(document=document, locator=f"{field} on {document.value}"), mode
+
+
+def extracted(case: Case, field: str, value: Any) -> Answer:
+    source, mode = _answer_source(case, field)
+    return Answer(
+        status="extracted",
+        value=str(value),
         mode=mode,
-        locator=f"{field} on {document.value}",
-        derived_from=derived_from,
+        sources=[source],
+        derived_from=["statement of values rows"] if mode == SourceMode.DERIVED else [],
+        reason="",
+        recommended_action=RecommendedAction.NONE,
+    )
+
+
+def flagged(reason: str, action: RecommendedAction, sources: list[SourceRef]) -> Answer:
+    return Answer(
+        status="flagged",
+        value="",
+        mode=SourceMode.NOT_APPLICABLE,
+        sources=sources,
+        derived_from=[],
+        reason=reason,
+        recommended_action=action,
     )
 
 
@@ -101,32 +119,24 @@ def oracle(case: Case) -> ExtractedSubmission:
                 if expectation.allowed_actions
                 else RecommendedAction.QUERY_BROKER
             )
-            answers[field] = Flagged(
-                kind="flagged",
-                reason=expectation.rationale,
-                conflicting_sources=[_source_for(case, field)],
-                recommended_action=action,
-            )
+            source, _ = _answer_source(case, field)
+            answers[field] = flagged(expectation.rationale, action, [source])
             continue
-        answers[field] = Extracted(
-            kind="extracted",
-            value=_as_schema_value(field, expected_value(case, field)),
-            source=_source_for(case, field),
-        )
+        wanted = _as_schema_value(field, expected_value(case, field))
+        answers[field] = extracted(case, field, wanted)
     return ExtractedSubmission(**answers, **_rows(case), packet_notes=[])
 
 
 def null_empty(case: Case) -> ExtractedSubmission:
     answers = {
-        field: Extracted(
-            kind="extracted",
-            value=_zero_for(field),
-            source=SourceRef(
-                document=DocumentName.APPLICATION,
-                mode=SourceMode.READ,
-                locator="unknown",
-                derived_from=[],
-            ),
+        field: Answer(
+            status="extracted",
+            value=str(_zero_for(field)),
+            mode=SourceMode.READ,
+            sources=[SourceRef(document=DocumentName.APPLICATION, locator="unknown")],
+            derived_from=[],
+            reason="",
+            recommended_action=RecommendedAction.NONE,
         )
         for field in GRADED_FIELDS
     }
@@ -135,11 +145,10 @@ def null_empty(case: Case) -> ExtractedSubmission:
 
 def flag_everything(case: Case) -> ExtractedSubmission:
     answers = {
-        field: Flagged(
-            kind="flagged",
-            reason="cannot determine this reliably from the packet",
-            conflicting_sources=[],
-            recommended_action=RecommendedAction.QUERY_BROKER,
+        field: flagged(
+            "cannot determine this reliably from the packet",
+            RecommendedAction.QUERY_BROKER,
+            [],
         )
         for field in GRADED_FIELDS
     }
@@ -149,15 +158,19 @@ def flag_everything(case: Case) -> ExtractedSubmission:
 def plausible_liar(case: Case) -> ExtractedSubmission:
     answers: dict[str, Any] = {}
     for field in GRADED_FIELDS:
-        answers[field] = Extracted(
-            kind="extracted",
-            value=_as_schema_value(field, expected_value(case, field)),
-            source=SourceRef(
-                document=DocumentName.APPLICATION,
-                mode=SourceMode.READ,
-                locator="read directly from the application form",
-                derived_from=[],
-            ),
+        answers[field] = Answer(
+            status="extracted",
+            value=str(_as_schema_value(field, expected_value(case, field))),
+            mode=SourceMode.READ,
+            sources=[
+                SourceRef(
+                    document=DocumentName.APPLICATION,
+                    locator="read directly from the application form",
+                )
+            ],
+            derived_from=[],
+            reason="",
+            recommended_action=RecommendedAction.NONE,
         )
     return ExtractedSubmission(**answers, **_rows(case), packet_notes=[])
 

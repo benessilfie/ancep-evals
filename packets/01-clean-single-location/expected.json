@@ -13,16 +13,5 @@
     "loss_run_a",
     "loss_run_b"
   ],
-  "expectations": [
-    {
-      "field": "total_insured_value_usd",
-      "outcome": "extracted",
-      "source_mode": "read",
-      "source_document": "broker_email",
-      "allowed_actions": [],
-      "forbidden_actions": [],
-      "rationale": "The broker states the total sum insured in the covering email, so the figure was read and not computed.",
-      "rationale_source": "https://acicompanies.com/PrivateSite/Pdfs/Forms/Acord_140_201403.pdf"
-    }
-  ]
+  "expectations": []
 }

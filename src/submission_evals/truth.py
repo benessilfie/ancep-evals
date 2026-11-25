@@ -31,9 +31,11 @@ class DocumentName(StrEnum):
 class SourceMode(StrEnum):
     READ = "read"
     DERIVED = "derived"
+    NOT_APPLICABLE = "not_applicable"
 
 
 class RecommendedAction(StrEnum):
+    NONE = "none"
     QUERY_BROKER = "query_broker"
     REFER_TO_UNDERWRITER = "refer_to_underwriter"
     REJECT_SUBMISSION = "reject_submission"
