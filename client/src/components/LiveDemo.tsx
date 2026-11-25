@@ -49,6 +49,9 @@ export function LiveDemo({ data }: { data: EvalData }) {
   const { runs, save } = useRunHistory()
   const [models, setModels] = useState<LiveModel[]>([])
   const [model, setModel] = useState<string | null>(null)
+  const [showRuns, setShowRuns] = useState(
+    () => typeof window === "undefined" || window.matchMedia("(min-width: 1024px)").matches
+  )
   const [elapsed, setElapsed] = useState(0)
   const startedAt = useRef<number>(0)
   const restoring = useRef(false)
@@ -280,8 +283,20 @@ export function LiveDemo({ data }: { data: EvalData }) {
         </p>
 
         {runs.length > 0 && (
-          <div className="mt-7 border-t border-rule pt-5">
-            <div className="field-label">your runs</div>
+          <details
+            open={showRuns}
+            onToggle={(e) => setShowRuns(e.currentTarget.open)}
+            className="fold group mt-7 border-t border-rule pt-5"
+          >
+            <summary className="pressable flex cursor-pointer list-none items-center gap-1.5 text-[0.8125rem] text-ink-soft outline-none hover:text-ink focus-visible:text-carbon focus-visible:underline focus-visible:underline-offset-4">
+              <span
+                aria-hidden
+                className="font-mono text-[0.625rem] transition-transform group-open:rotate-90"
+              >
+                &gt;
+              </span>
+              your runs ({runs.length})
+            </summary>
             <ul className="mt-2 -mx-1.5">
               {runs.map((run) => (
                 <li key={run.id}>
@@ -317,7 +332,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </details>
         )}
       </aside>
 
