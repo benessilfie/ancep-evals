@@ -76,7 +76,7 @@ BUSINESS INCOME               90,000      90      RC         SPECIAL            
 CONSTRUCTION TYPE: JOISTED MASONRY            DISTANCE TO HYDRANT: 180 FTFIRE STAT: 1.2 MI
 PROT CL: 4    # STORIES: 1  # BASM'TS: 0  YR BUILT: 2015  TOTAL AREA: 1,800
 PREMISES FIRE PROTECTION: WET SPRINKLER SYSTEM THROUGHOUT     % SPRNK: 100
-BURGLAR ALARM TYPE: CENTRAL STATION           ROOF UPDATED: 2027
+BURGLAR ALARM TYPE: CENTRAL STATION           ROOF UPDATED: 2024
 ADDITIONAL INTEREST ----------------------------------------------------------------------------
 INTEREST: MORTGAGEE     NAME: Hudson Commercial Bank            INTEREST IN ITEM: LOCATION 1 BUILDING 1
 REMARKS ----------------------------------------------------------------------------------------

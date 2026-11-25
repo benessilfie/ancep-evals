@@ -121,7 +121,7 @@ def render(risk: Risk, options: PacketOptions) -> str:
                 ),
                 row(
                     cell("BURGLAR ALARM TYPE", "CENTRAL STATION", 46),
-                    cell("ROOF UPDATED", location.year_built + 12, 26),
+                    cell("ROOF UPDATED", min(location.year_built + 12, 2024), 26),
                 ),
             ]
         )

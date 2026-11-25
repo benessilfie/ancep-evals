@@ -23,6 +23,11 @@ FlagDecision = Literal["correctly_flagged", "correctly_not_flagged", "missed_fla
 
 _DATE_FORMATS = ("%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%B %d, %Y", "%d %B %Y", "%b %d, %Y")
 _NON_ALNUM = re.compile(r"[^a-z0-9]+")
+_CODE_SYNONYMS = {
+    "rc": ("rc", "replacement cost"),
+    "acv": ("acv", "actual cash value"),
+    "llc": ("llc", "limited liability company"),
+}
 _WHITESPACE = re.compile(r"\s+")
 _ENTITY_NOISE = re.compile(
     r"\b(inc|llc|ltd|corp|co|company|incorporated|limited|insurance|indemnity|mutual)\b"
@@ -158,7 +163,10 @@ def values_match(field: str, expected: Any, actual: Any) -> bool:
     if field in COMPANY_FIELDS:
         return normalise_name(actual) == normalise_name(expected)
     if field in CODE_FIELDS:
-        return appears_as_token(normalise_text(expected), normalise_text(actual))
+        code = normalise_text(expected)
+        actual_text = normalise_text(actual)
+        forms = _CODE_SYNONYMS.get(code, (code,))
+        return any(appears_as_token(form, actual_text) for form in forms)
     if isinstance(expected, int):
         return normalise_money(actual) == expected
     return normalise_text(actual) == normalise_text(expected)
