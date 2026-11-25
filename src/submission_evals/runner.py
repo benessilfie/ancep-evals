@@ -27,7 +27,7 @@ RETRYABLE = (
 class RunConfig:
     models: tuple[str, ...] = ("claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5")
     reps: int = 3
-    effort: str = "high"
+    effort: str = "medium"
     max_tokens: int = 32_000
     concurrency: int = 6
     case_timeout_s: float = 600.0

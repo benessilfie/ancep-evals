@@ -72,7 +72,7 @@ def run(
     case: str | None = None,
     model: list[str] = MODEL_OPTION,
     reps: int = 3,
-    effort: str = "high",
+    effort: str = "medium",
     concurrency: int = 6,
     results: Path = Path("results"),
     force: bool = False,
