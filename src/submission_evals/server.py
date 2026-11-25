@@ -43,7 +43,7 @@ class ModelLimit(NamedTuple):
 LIVE_MODELS: dict[str, ModelLimit] = {
     "claude-haiku-5-5": ModelLimit("Haiku 5.5", "fastest, cheapest", 12, 36, 0.057),
     "claude-sonnet-5-5": ModelLimit("Sonnet 5.5", "the middle one", 6, 12, 0.085),
-    "claude-opus-5-5": ModelLimit("Opus 5.5", "most capable", 6, 12, 0.452),
+    "claude-opus-5-5": ModelLimit("Opus 5.5", "most capable", 3, 6, 0.452),
 }
 DEFAULT_MODEL = "claude-haiku-5-5"
 
