@@ -207,6 +207,7 @@ class Expectation(Frozen):
 class Case(Frozen):
     case_id: str
     title: str
+    short: str = ""
     kind: Literal["control", "adversarial"]
     exercises: FailureMode | None
     risk: Risk

@@ -12,12 +12,14 @@ from collections.abc import AsyncIterator
 from typing import Any
 
 import anthropic
-from fastapi import FastAPI, HTTPException, Request, UploadFile
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from starlette.datastructures import UploadFile
 
 from submission_evals.cases import all_specs
 from submission_evals.checks import run_all
+from submission_evals.classify import assign
 from submission_evals.extract import GRADED_FIELDS, ExtractedSubmission
 from submission_evals.generate import build_packet
 from submission_evals.grade import grade
@@ -103,16 +105,8 @@ def download(case_id: str) -> StreamingResponse:
     )
 
 
-def _document_for(filename: str) -> DocumentName | None:
-    stem = filename.rsplit("/", 1)[-1].rsplit(".", 1)[0].lower()
-    for name in DocumentName:
-        if name.value == stem:
-            return name
-    return None
-
-
 @app.post("/api/runs")
-async def create_run(request: Request, files: list[UploadFile] | None = None) -> dict[str, str]:
+async def create_run(request: Request) -> dict[str, str]:
     client_ip = request.client.host if request.client else "unknown"
     refusal = _allow(client_ip)
     if refusal:
@@ -121,7 +115,7 @@ async def create_run(request: Request, files: list[UploadFile] | None = None) ->
     form = await request.form()
     packet_id = form.get("packet_id")
     packet: dict[DocumentName, str] = {}
-    unknown: list[str] = []
+    unknown: list[dict] = []
 
     if isinstance(packet_id, str) and packet_id:
         spec = SPECS.get(packet_id)
@@ -134,20 +128,18 @@ async def create_run(request: Request, files: list[UploadFile] | None = None) ->
             raise HTTPException(400, "send packet_id or at least one file")
         if len(uploads) > MAX_FILES:
             raise HTTPException(400, f"at most {MAX_FILES} files")
+        payload: list[tuple[str, bytes]] = []
         for upload in uploads:
             raw = await upload.read()
             if len(raw) > MAX_BYTES:
                 raise HTTPException(400, f"{upload.filename} is too large")
-            name = _document_for(upload.filename or "")
-            if name is None:
-                unknown.append(upload.filename or "unnamed")
-                continue
-            packet[name] = raw.decode("utf-8", errors="replace")
+            payload.append((upload.filename or "unnamed", raw))
+        packet, unknown = assign(payload)
         if not packet:
             raise HTTPException(
                 400,
-                "none of those filenames matched a document this reads. "
-                f"Expected names like: {', '.join(n.value for n in DocumentName)}",
+                "could not recognise any of those as submission documents. "
+                "Plain text, CSV and PDF are read; scans without a text layer are not.",
             )
 
     run_id = uuid.uuid4().hex[:12]

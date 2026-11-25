@@ -88,6 +88,7 @@ def build(results: Path) -> dict[str, Any]:
             {
                 "id": case.case_id,
                 "title": case.title,
+                "short": case.short,
                 "kind": case.kind,
                 "exercises": case.exercises.value if case.exercises else None,
                 "corruption": case.corruption,

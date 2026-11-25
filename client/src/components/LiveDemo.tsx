@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import { BlankRecord } from "@/components/BlankRecord"
 import { PacketBrowser } from "@/components/PacketBrowser"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import type { Answer, EvalCase, EvalData } from "@/types"
 import { cn } from "@/lib/utils"
 
@@ -100,29 +107,42 @@ export function LiveDemo({ data }: { data: EvalData }) {
       <aside className="w-[22rem] shrink-0 overflow-y-auto border-r border-rule bg-paper-sunk/40 px-5 py-5">
         <h2 className="text-[0.9375rem] font-semibold">Run one yourself</h2>
         <p className="mt-2 text-[0.8125rem] leading-relaxed text-ink-soft">
-          Pick a packet or upload your own documents. It goes to {" "}
+          Pick a packet, read what is in it, then send it to {" "}
           <span className="font-mono text-[0.75rem]">claude-haiku-5-5</span> and comes back
           with a record, then the checks run against the documents you supplied. No ground
           truth needed.
         </p>
 
         <div className="mt-5">
-          <label className="field-label" htmlFor="packet">
-            packet
-          </label>
-          <select
-            id="packet"
-            value={packetId}
-            disabled={running || !!files?.length}
-            onChange={(e) => setPacketId(e.target.value)}
-            className="mt-1.5 w-full rounded-field border border-rule bg-white px-2.5 py-2 text-[0.8125rem] disabled:opacity-50"
-          >
-            {data.cases.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.id.slice(0, 2)} · {c.title}
-              </option>
-            ))}
-          </select>
+          <label className="field-label" htmlFor="packet">packet</label>
+          <Select value={packetId} onValueChange={setPacketId} disabled={running}>
+            <SelectTrigger
+              id="packet"
+              className="pressable mt-1.5 w-full rounded-field border border-rule bg-white px-2.5 py-2 text-left text-[0.8125rem]"
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent
+              position="popper"
+              sideOffset={4}
+              className="pop z-50 max-h-[24rem] w-[var(--radix-select-trigger-width)] overflow-y-auto rounded-field border border-rule bg-white p-1 shadow-[0_10px_30px_-14px_rgba(22,23,26,0.4)]"
+            >
+              {data.cases.map((c) => (
+                <SelectItem
+                  key={c.id}
+                  value={c.id}
+                  className="cursor-pointer rounded-field px-2 py-2 text-[0.8125rem] outline-none focus:bg-carbon-wash focus:text-carbon data-[state=checked]:font-medium"
+                >
+                  <span className="flex items-baseline gap-2">
+                    <span className="font-mono text-[0.6875rem] text-ink-faint">
+                      {c.id.slice(0, 2)}
+                    </span>
+                    <span className="leading-snug">{c.short || c.title}</span>
+                  </span>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="mt-5">
@@ -156,7 +176,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
           type="button"
           onClick={start}
           disabled={running}
-          className="mt-6 w-full rounded-control bg-ink px-4 py-3 text-[0.9375rem] font-medium text-paper transition-colors hover:bg-carbon disabled:opacity-60"
+          className="pressable mt-6 w-full rounded-control bg-ink px-4 py-3 text-[0.9375rem] font-medium text-paper transition-colors hover:bg-carbon disabled:opacity-60"
         >
           {running ? "running…" : "Run the checks"}
         </button>

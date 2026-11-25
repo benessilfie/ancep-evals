@@ -9,7 +9,7 @@ const DEFAULT_CASE = "05-application-contradicts-loss-runs"
 export default function App() {
   const [data, setData] = useState<EvalData | null>(null)
   const [selected, setSelected] = useState(DEFAULT_CASE)
-  const [view, setView] = useState<"recorded" | "live">("recorded")
+  const [view, setView] = useState<"live" | "recorded">("live")
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}eval.json`)
@@ -41,19 +41,19 @@ export default function App() {
           </div>
           <div className="flex items-center gap-5">
             <div className="flex rounded-control border border-rule bg-white p-0.5">
-              {(["recorded", "live"] as const).map((mode) => (
+              {(["live", "recorded"] as const).map((mode) => (
                 <button
                   key={mode}
                   type="button"
                   onClick={() => setView(mode)}
                   className={
-                    "rounded-[3px] px-3 py-1 text-[0.75rem] transition-colors " +
+                    "pressable rounded-[3px] px-3.5 py-1.5 text-[0.8125rem] transition-colors " +
                     (view === mode
                       ? "bg-ink text-paper"
                       : "text-ink-soft hover:text-ink")
                   }
                 >
-                  {mode === "recorded" ? "the 90 recorded runs" : "run one yourself"}
+                  {mode === "live" ? "Live demo" : "Findings"}
                 </button>
               ))}
             </div>

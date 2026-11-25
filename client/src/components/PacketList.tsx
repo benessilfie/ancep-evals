@@ -40,7 +40,7 @@ export function PacketList({ cases, models, selected, onSelect }: Props) {
                 onClick={() => onSelect(evalCase.id)}
                 aria-current={active ? "true" : undefined}
                 className={cn(
-                  "flex w-full items-start gap-2 border-b border-rule-soft px-4 py-3 text-left transition-colors",
+                  "pressable flex w-full items-start gap-2 border-b border-rule-soft px-4 py-3 text-left transition-colors",
                   active
                     ? "bg-white shadow-[inset_3px_0_0_var(--color-carbon)]"
                     : "hover:bg-white/60"
@@ -66,7 +66,7 @@ export function PacketList({ cases, models, selected, onSelect }: Props) {
                       active ? "font-medium text-carbon" : "text-ink"
                     )}
                   >
-                    {evalCase.title}
+                    {evalCase.short || evalCase.title}
                   </span>
                 </span>
                 <span className="flex shrink-0 gap-2 pt-0.5">

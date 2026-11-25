@@ -66,6 +66,7 @@ export interface PacketDocument {
 export interface EvalCase {
   id: string
   title: string
+  short: string
   kind: "control" | "adversarial"
   exercises: string | null
   corruption: string | null

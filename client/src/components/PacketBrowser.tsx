@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { DOC_MARKS, GROUP_MARKS } from "@/components/Marks"
 import type { EvalCase, PacketDocument } from "@/types"
 import { cn } from "@/lib/utils"
 
@@ -43,7 +44,13 @@ export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {
           if (docs.length === 0) return null
           return (
             <div key={group.label} className="mb-4">
-              <div className="field-label px-2 pb-1">{group.label}</div>
+              <div className="flex items-center gap-1.5 px-2 pb-1">
+                {(() => {
+                  const Mark = GROUP_MARKS[group.label]
+                  return Mark ? <Mark className="h-4 w-5 text-rule" /> : null
+                })()}
+                <span className="field-label">{group.label}</span>
+              </div>
               <ul>
                 {docs.map((doc) => {
                   const active = doc.name === open
@@ -53,7 +60,7 @@ export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {
                         type="button"
                         onClick={() => setOpen(doc.name)}
                         className={cn(
-                          "w-full rounded-field px-2 py-1.5 text-left transition-colors",
+                          "pressable w-full rounded-field px-2 py-1.5 text-left transition-colors",
                           active ? "bg-carbon-wash" : "hover:bg-paper-sunk"
                         )}
                       >
@@ -83,8 +90,14 @@ export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {
       </nav>
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <div className="flex shrink-0 items-baseline justify-between gap-3 border-b border-rule-soft px-5 py-2">
-          <span className="font-mono text-[0.75rem]">{current.filename}</span>
+        <div className="flex shrink-0 items-center justify-between gap-3 border-b border-rule-soft px-5 py-2">
+          <span className="flex items-center gap-2">
+            {(() => {
+              const Mark = DOC_MARKS[current.name]
+              return Mark ? <Mark className="h-4 w-5 text-rule" /> : null
+            })()}
+            <span className="font-mono text-[0.75rem]">{current.filename}</span>
+          </span>
           <span className="font-mono text-micro text-ink-faint">
             {current.body.split("\n").length} lines
           </span>

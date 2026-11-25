@@ -67,10 +67,13 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
       <div className="shrink-0 border-b border-rule-soft px-6 py-4">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <h1 className="text-[1.0625rem] leading-snug font-semibold tracking-[-0.01em]">
-            {evalCase.title}
+            {evalCase.short || evalCase.title}
           </h1>
           <span className="font-mono text-micro text-ink-faint">{evalCase.id}</span>
         </div>
+        <p className="mt-1 max-w-[70ch] text-[0.8125rem] leading-snug text-ink-soft">
+          {evalCase.title}
+        </p>
 
         <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
           <span className="field-label">3 runs per model, they are not deterministic</span>

@@ -193,6 +193,18 @@ def build_risk(
     )
 
 
+SHORT_NAMES = {'01-clean-single-location': 'Clean baseline',
+    '02-clean-total-stated': 'Total stated in the email',
+    '03-clean-no-losses-letter': 'Nil losses, letter attached',
+    '04-stale-thread': 'Stale figure in the thread',
+    '05-application-contradicts-loss-runs': 'Form contradicts the loss runs',
+    '06-derived-total': 'Total stated nowhere',
+    '07-loss-run-column-mislabel': 'Mislabelled paid column',
+    '08-sov-page-break': 'Location split across pages',
+    '09-missing-loss-runs': 'Loss runs missing',
+    '10-duplicate-submission': 'Resent with a change'}
+
+
 def _spec(
     case_id: str,
     title: str,
@@ -209,6 +221,7 @@ def _spec(
         case=Case(
             case_id=case_id,
             title=title,
+            short=SHORT_NAMES[case_id],
             kind=kind,
             exercises=exercises,
             risk=risk,

@@ -26,6 +26,7 @@
   {
    "id": "01-clean-single-location",
    "title": "One location, every figure stated where you would expect it",
+   "short": "Clean baseline",
    "kind": "control",
    "exercises": null,
    "corruption": null,
@@ -5542,6 +5543,7 @@
   {
    "id": "02-clean-total-stated",
    "title": "Six locations and the broker states the total in the email",
+   "short": "Total stated in the email",
    "kind": "control",
    "exercises": null,
    "corruption": null,
@@ -11578,6 +11580,7 @@
   {
    "id": "03-clean-no-losses-letter",
    "title": "Genuinely no losses, with the carrier's no losses letter attached",
+   "short": "Nil losses, letter attached",
    "kind": "control",
    "exercises": null,
    "corruption": null,
@@ -17261,6 +17264,7 @@
   {
    "id": "04-stale-thread",
    "title": "The total is corrected three messages down a forwarded chain",
+   "short": "Stale figure in the thread",
    "kind": "adversarial",
    "exercises": "stale_thread",
    "corruption": "stale_total_at_top_of_thread",
@@ -23260,6 +23264,7 @@
   {
    "id": "05-application-contradicts-loss-runs",
    "title": "The none box is ticked while the attached loss runs show two claims",
+   "short": "Form contradicts the loss runs",
    "kind": "adversarial",
    "exercises": "application_contradicts_loss_runs",
    "corruption": "tick_no_losses_box",
@@ -29299,6 +29304,7 @@
   {
    "id": "06-derived-total",
    "title": "Case 02 with the total removed from every document",
+   "short": "Total stated nowhere",
    "kind": "adversarial",
    "exercises": "derived_number",
    "corruption": "strip_total_from_email",
@@ -35298,6 +35304,7 @@
   {
    "id": "07-loss-run-column-mislabel",
    "title": "One carrier's paid column actually holds the incurred figure",
+   "short": "Mislabelled paid column",
    "kind": "adversarial",
    "exercises": "loss_run_column_mislabel",
    "corruption": "swap_paid_for_incurred",
@@ -41216,6 +41223,7 @@
   {
    "id": "08-sov-page-break",
    "title": "The last location splits across a page break in the statement of values",
+   "short": "Location split across pages",
    "kind": "adversarial",
    "exercises": "sov_page_break",
    "corruption": "split_last_location_across_pages",
@@ -47913,6 +47921,7 @@
   {
    "id": "09-missing-loss-runs",
    "title": "No loss runs attached and no letter either",
+   "short": "Loss runs missing",
    "kind": "adversarial",
    "exercises": "missing_document",
    "corruption": "drop_loss_runs",
@@ -53672,6 +53681,7 @@
   {
    "id": "10-duplicate-submission",
    "title": "The same risk resent a week later with the revenue changed",
+   "short": "Resent with a change",
    "kind": "adversarial",
    "exercises": "duplicate_submission",
    "corruption": "resend_with_changed_revenue",

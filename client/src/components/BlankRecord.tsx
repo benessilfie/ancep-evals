@@ -1,5 +1,6 @@
 import type { Answer } from "@/types"
 import { money } from "@/components/RecordTable"
+import { PaperMark } from "@/components/Marks"
 import { cn } from "@/lib/utils"
 
 export const RECORD_FIELDS: { field: string; label: string }[] = [
@@ -26,25 +27,6 @@ export const RECORD_FIELDS: { field: string; label: string }[] = [
   { field: "is_update_of_prior_submission", label: "update of an earlier submission" },
 ]
 
-export function PaperMark() {
-  return (
-    <svg
-      viewBox="0 0 64 52"
-      aria-hidden
-      className="h-12 w-14 text-rule"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1"
-    >
-      <path d="M8 14h30l8 8v22H8z" />
-      <path d="M38 14v8h8" />
-      <path d="M14 10h30l8 8v22" opacity=".55" />
-      <path d="M20 6h30l8 8v22" opacity=".3" />
-      <path d="M14 30h20M14 36h14" opacity=".8" />
-    </svg>
-  )
-}
-
 interface Props {
   answers: Map<string, Answer>
   running: boolean
@@ -52,6 +34,28 @@ interface Props {
 
 export function BlankRecord({ answers, running }: Props) {
   const filled = answers.size
+  const started = running || filled > 0
+
+  if (!started) {
+    return (
+      <div className="max-w-[46rem]">
+        <PaperMark className="h-14 w-16 text-rule" />
+        <h3 className="mt-4 text-[1.0625rem] font-semibold">The record</h3>
+        <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-soft">
+          This is what the agent hands over: twenty-one fields that a broker&rsquo;s system
+          stores and an underwriter prices from. Every field carries the value, whether the
+          agent read it or worked it out, and which document it came from.
+        </p>
+        <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-soft">
+          It is the only thing worth grading. A model that gets this wrong will still
+          describe its work in fluent, confident prose.
+        </p>
+        <p className="mt-5 font-mono text-micro text-ink-faint">
+          press run and the fields fill in one at a time
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -61,9 +65,7 @@ export function BlankRecord({ answers, running }: Props) {
           <div>
             <div className="text-[0.9375rem] font-semibold">The record</div>
             <p className="mt-0.5 text-[0.8125rem] text-ink-soft">
-              {filled === 0
-                ? "Twenty-one fields, empty until a run fills them."
-                : `${filled} of ${RECORD_FIELDS.length} fields filled.`}
+              {filled} of {RECORD_FIELDS.length} fields filled.
             </p>
           </div>
         </div>
