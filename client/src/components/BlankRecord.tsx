@@ -1,6 +1,5 @@
 import type { Answer } from "@/types"
 import { money } from "@/components/RecordTable"
-import { PaperMark } from "@/components/Marks"
 import { cn } from "@/lib/utils"
 
 export const RECORD_FIELDS: { field: string; label: string }[] = [
@@ -27,6 +26,8 @@ export const RECORD_FIELDS: { field: string; label: string }[] = [
   { field: "is_update_of_prior_submission", label: "update of an earlier submission" },
 ]
 
+const RULE_WIDTHS = [68, 46, 34, 82, 40, 52, 28, 44, 44, 24, 58, 30, 36, 50, 50, 74, 46, 26, 48, 48, 38]
+
 interface Props {
   answers: Map<string, Answer>
   running: boolean
@@ -36,55 +37,34 @@ export function BlankRecord({ answers, running }: Props) {
   const filled = answers.size
   const started = running || filled > 0
 
-  if (!started) {
-    return (
-      <div className="max-w-[46rem]">
-        <PaperMark className="h-14 w-16 text-rule" />
-        <h3 className="mt-4 text-[1.0625rem] font-semibold">The record</h3>
-        <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-soft">
-          This is what the agent hands over: twenty-one fields that a broker&rsquo;s system
-          stores and an underwriter prices from. Every field carries the value, whether the
-          agent read it or worked it out, and which document it came from.
-        </p>
-        <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-soft">
-          It is the only thing worth grading. A model that gets this wrong will still
-          describe its work in fluent, confident prose.
-        </p>
-        <p className="mt-5 font-mono text-micro text-ink-faint">
-          press run and the fields fill in one at a time
-        </p>
-      </div>
-    )
-  }
-
   return (
     <div>
       <div className="flex items-end justify-between gap-4 border-b border-rule pb-3">
-        <div className="flex items-center gap-3">
-          <PaperMark />
-          <div>
-            <div className="text-[0.9375rem] font-semibold">The record</div>
-            <p className="mt-0.5 text-[0.8125rem] text-ink-soft">
-              {filled} of {RECORD_FIELDS.length} fields filled.
-            </p>
+        <div>
+          <div className="text-[0.9375rem] font-semibold">
+            {started ? "What it filed" : "Nothing has run yet"}
           </div>
+          <p className="mt-0.5 text-[0.8125rem] text-ink-soft">
+            {started
+              ? `${filled} of ${RECORD_FIELDS.length} fields, each one carrying where it came from.`
+              : `Twenty one fields, filled one at a time from the documents on the left.`}
+          </p>
         </div>
         {running && (
-          <span className="font-mono text-micro text-carbon">reading the documents…</span>
+          <span className="shrink-0 font-mono text-micro text-carbon">
+            reading the documents…
+          </span>
         )}
       </div>
 
       <table className="w-full border-collapse text-left">
         <tbody>
-          {RECORD_FIELDS.map(({ field, label }) => {
+          {RECORD_FIELDS.map(({ field, label }, i) => {
             const answer = answers.get(field)
             return (
               <tr
                 key={field}
-                className={cn(
-                  "border-b border-rule-soft align-baseline transition-colors duration-500",
-                  answer ? "bg-transparent" : "bg-paper-sunk/30"
-                )}
+                className="border-b border-rule-soft align-baseline transition-colors duration-500"
               >
                 <td className="w-[17rem] py-2.5 pr-4 text-[0.8125rem]">
                   <span className={answer ? "text-ink" : "text-ink-faint"}>{label}</span>
@@ -106,12 +86,13 @@ export function BlankRecord({ answers, running }: Props) {
                   ) : (
                     <span
                       aria-hidden
-                      className="block h-px w-full max-w-[22rem] bg-rule-soft"
+                      className={cn("block h-px bg-rule-soft", running && "animate-pulse")}
+                      style={{ width: `${RULE_WIDTHS[i]}%`, maxWidth: "22rem" }}
                     />
                   )}
                 </td>
                 <td className="w-[6rem] py-2.5 pr-4 font-mono text-[0.75rem] text-ink-faint">
-                  {answer ? (answer.status === "flagged" ? "" : answer.mode) : ""}
+                  {answer && answer.status !== "flagged" ? answer.mode : ""}
                 </td>
                 <td className="w-[9rem] py-2.5 font-mono text-[0.75rem] text-ink-faint">
                   {answer?.sources?.[0]?.document ?? ""}

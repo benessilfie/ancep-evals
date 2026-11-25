@@ -342,7 +342,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
                   : "[border-bottom-color:transparent] text-ink-soft hover:text-ink"
               )}
             >
-              {key === "packet" ? "what it was given" : "how it did"}
+              {key === "packet" ? "Documents" : "Verdict"}
             </button>
           ))}
         </div>
@@ -399,9 +399,8 @@ function Progress({
 }) {
   if (phase === "idle") {
     return (
-      <p className="text-[0.9375rem] leading-relaxed text-ink-soft">
-        Nothing running. Pick a packet on the left and press run, or drop in your own
-        documents.
+      <p className="text-[0.875rem] text-ink-faint">
+        Pick a packet on the left and press run.
       </p>
     )
   }
