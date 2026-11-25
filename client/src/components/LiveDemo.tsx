@@ -342,7 +342,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
                   : "[border-bottom-color:transparent] text-ink-soft hover:text-ink"
               )}
             >
-              {key === "packet" ? "the documents" : "the result"}
+              {key === "packet" ? "what it was given" : "how it did"}
             </button>
           ))}
         </div>
