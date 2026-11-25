@@ -246,13 +246,13 @@ function buildSteps(
             against the document it named.
           </p>
           <p>
-            Most of these checks need no answer key. Paid plus outstanding has to equal
-            incurred. A total has to equal the sum of its rows. A figure it says it read
-            has to actually be in the document it pointed at.
-          </p>
-          <p className="text-ink">
-            Those hold for any submission, not just the ten I wrote. That is the half you
-            could put into production.
+            <span className="text-ink">
+              Most of these checks need no answer key, so they work the same on a
+              submission I have never seen.
+            </span>{" "}
+            Paid plus outstanding has to equal incurred. A total has to equal the sum of
+            its rows. A figure it says it read has to actually be in the document it
+            pointed at.
           </p>
         </Prose>
       ),
