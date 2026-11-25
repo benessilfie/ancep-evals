@@ -86,9 +86,11 @@ def render_csv(risk: Risk, options: PacketOptions) -> str:
     return buffer.getvalue()
 
 
-def _page_header(risk: Risk, options: PacketOptions, page: int, with_columns: bool) -> list[str]:
+def _page_header(
+    risk: Risk, options: PacketOptions, page: int, with_columns: bool, feed: bool = False
+) -> list[str]:
     head = [
-        f"STATEMENT OF VALUES{'':>20}{risk.applicant.name}",
+        f"{chr(12) if feed else ''}STATEMENT OF VALUES{'':>20}{risk.applicant.name}",
         f"AS AT {us_date(options.submitted_on)}{'':>26}PAGE {page}",
         "",
     ]
@@ -107,8 +109,8 @@ def render_paged_text(risk: Risk, options: PacketOptions) -> str:
     split = risk.locations[break_after]
     values = _row_values(split)
     lines.append(table_row(values[:5], _LEFT_COLUMNS))
-    lines.extend(["", "\f"])
-    lines.extend(_page_header(risk, options, 2, with_columns=False))
+    lines.append("")
+    lines.extend(_page_header(risk, options, 2, with_columns=False, feed=True))
     lines.append(table_row(values[5:], _RIGHT_COLUMNS))
 
     for location in risk.locations[break_after + 1 :]:

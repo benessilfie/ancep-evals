@@ -120,7 +120,24 @@ def test_the_corruptions_actually_changed_the_documents():
 
     mislabel = by_id["07-loss-run-column-mislabel"]
     body = packet_text(mislabel)[DocumentName.LOSS_RUN_B]
-    assert "30,000      26,000" in body.replace("        ", "      ")
+    loss = next(
+        row for row in mislabel.case.risk.losses if row.carrier == "Callaghan Indemnity"
+    )
+    row = next(line for line in body.split("\n") if line.startswith(loss.claim_no))
+    paid, outstanding, incurred = (
+        int(token.replace(",", "")) for token in row.split()[-3:]
+    )
+    assert paid == loss.incurred_usd
+    assert paid != loss.paid_usd
+    assert outstanding == loss.reserved_usd
+    assert paid + outstanding != incurred
+
+    honest = packet_text(by_id["05-application-contradicts-loss-runs"])[DocumentName.LOSS_RUN_B]
+    honest_row = next(line for line in honest.split("\n") if line.startswith(loss.claim_no))
+    honest_paid, honest_outstanding, honest_incurred = (
+        int(token.replace(",", "")) for token in honest_row.split()[-3:]
+    )
+    assert honest_paid + honest_outstanding == honest_incurred
 
     paged = packet_text(by_id["08-sov-page-break"])
     assert "\f" in paged[DocumentName.SOV]

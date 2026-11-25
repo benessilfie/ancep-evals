@@ -18,8 +18,7 @@ LOC  STREET                  CITY          ST  ZIP    CON  BUILT  SQ FT   BUILDI
 13   6 Willow Terrace        Hoboken       NJ  07030  2    1958   1,600   520,000     140,000    90,000
 14   45 Raymond Boulevard    Newark        NJ  07102
 
-
-STATEMENT OF VALUES                    Halsey Street Bakery LLC
+STATEMENT OF VALUES                    Halsey Street Bakery LLC
 AS AT 12/07/2026                          PAGE 2
 
 2    2013   3,700   1,010,000   260,000    150,000
