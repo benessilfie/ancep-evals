@@ -53,8 +53,24 @@ export function LiveDemo({ data }: { data: EvalData }) {
   const [model, setModel] = useState<string | null>(null)
   const [elapsed, setElapsed] = useState(0)
   const startedAt = useRef<number>(0)
+  const restoring = useRef(false)
 
   useEffect(() => () => source.current?.close(), [])
+
+  useEffect(() => {
+    if (restoring.current) {
+      restoring.current = false
+      return
+    }
+    source.current?.close()
+    setFields([])
+    setFindings([])
+    setGraded(null)
+    setMeta({})
+    setMessage(null)
+    setElapsed(0)
+    setPhase("idle")
+  }, [packetId, files])
 
   useEffect(() => {
     if (phase !== "starting" && phase !== "reading" && phase !== "checking") return
@@ -175,6 +191,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
 
   const restore = (run: PastRun) => {
     source.current?.close()
+    if (run.packetId && run.packetId !== packetId) restoring.current = true
     setFields(run.fields)
     setFindings(run.findings)
     setGraded(run.passed === null ? null : { passed: run.passed, valueScore: 0, provenanceScore: 0 })
