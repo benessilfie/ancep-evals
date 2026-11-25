@@ -63,7 +63,27 @@ export interface PacketDocument {
   body: string
 }
 
+export interface LossFact {
+  claimNo: string
+  carrier: string
+  dateOfLoss: string
+  status: string
+  paid: number
+  reserved: number
+  incurred: number
+}
+
+export interface Facts {
+  lossCount: number
+  totalIncurred: number
+  totalPaid: number
+  locationCount: number
+  totalInsured: number
+  losses: LossFact[]
+}
+
 export interface EvalCase {
+  facts?: Facts
   id: string
   title: string
   short: string

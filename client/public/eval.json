@@ -30,6 +30,33 @@
    "kind": "control",
    "exercises": null,
    "corruption": null,
+   "facts": {
+    "lossCount": 2,
+    "totalIncurred": 42000,
+    "totalPaid": 16000,
+    "locationCount": 1,
+    "totalInsured": 1850000,
+    "losses": [
+     {
+      "claimNo": "884213",
+      "carrier": "Meridian Mutual Insurance Company",
+      "dateOfLoss": "14 Jan 2024",
+      "status": "closed",
+      "paid": 12000,
+      "reserved": 0,
+      "incurred": 12000
+     },
+     {
+      "claimNo": "901887",
+      "carrier": "Callaghan Indemnity Company",
+      "dateOfLoss": "03 Mar 2025",
+      "status": "open",
+      "paid": 4000,
+      "reserved": 26000,
+      "incurred": 30000
+     }
+    ]
+   },
    "pairedWith": null,
    "expectations": [],
    "documents": [
@@ -5547,6 +5574,33 @@
    "kind": "control",
    "exercises": null,
    "corruption": null,
+   "facts": {
+    "lossCount": 2,
+    "totalIncurred": 42000,
+    "totalPaid": 16000,
+    "locationCount": 6,
+    "totalInsured": 8400000,
+    "losses": [
+     {
+      "claimNo": "884213",
+      "carrier": "Meridian Mutual Insurance Company",
+      "dateOfLoss": "14 Jan 2024",
+      "status": "closed",
+      "paid": 12000,
+      "reserved": 0,
+      "incurred": 12000
+     },
+     {
+      "claimNo": "901887",
+      "carrier": "Callaghan Indemnity Company",
+      "dateOfLoss": "03 Mar 2025",
+      "status": "open",
+      "paid": 4000,
+      "reserved": 26000,
+      "incurred": 30000
+     }
+    ]
+   },
    "pairedWith": "06-derived-total",
    "expectations": [
     {
@@ -11584,6 +11638,14 @@
    "kind": "control",
    "exercises": null,
    "corruption": null,
+   "facts": {
+    "lossCount": 0,
+    "totalIncurred": 0,
+    "totalPaid": 0,
+    "locationCount": 6,
+    "totalInsured": 8400000,
+    "losses": []
+   },
    "pairedWith": "09-missing-loss-runs",
    "expectations": [
     {
@@ -17268,6 +17330,33 @@
    "kind": "adversarial",
    "exercises": "stale_thread",
    "corruption": "stale_total_at_top_of_thread",
+   "facts": {
+    "lossCount": 2,
+    "totalIncurred": 42000,
+    "totalPaid": 16000,
+    "locationCount": 6,
+    "totalInsured": 8400000,
+    "losses": [
+     {
+      "claimNo": "884213",
+      "carrier": "Meridian Mutual Insurance Company",
+      "dateOfLoss": "14 Jan 2024",
+      "status": "closed",
+      "paid": 12000,
+      "reserved": 0,
+      "incurred": 12000
+     },
+     {
+      "claimNo": "901887",
+      "carrier": "Callaghan Indemnity Company",
+      "dateOfLoss": "03 Mar 2025",
+      "status": "open",
+      "paid": 4000,
+      "reserved": 26000,
+      "incurred": 30000
+     }
+    ]
+   },
    "pairedWith": null,
    "expectations": [
     {
@@ -23268,6 +23357,33 @@
    "kind": "adversarial",
    "exercises": "application_contradicts_loss_runs",
    "corruption": "tick_no_losses_box",
+   "facts": {
+    "lossCount": 2,
+    "totalIncurred": 42000,
+    "totalPaid": 16000,
+    "locationCount": 6,
+    "totalInsured": 8400000,
+    "losses": [
+     {
+      "claimNo": "884213",
+      "carrier": "Meridian Mutual Insurance Company",
+      "dateOfLoss": "14 Jan 2024",
+      "status": "closed",
+      "paid": 12000,
+      "reserved": 0,
+      "incurred": 12000
+     },
+     {
+      "claimNo": "901887",
+      "carrier": "Callaghan Indemnity Company",
+      "dateOfLoss": "03 Mar 2025",
+      "status": "open",
+      "paid": 4000,
+      "reserved": 26000,
+      "incurred": 30000
+     }
+    ]
+   },
    "pairedWith": null,
    "expectations": [
     {
@@ -29308,6 +29424,33 @@
    "kind": "adversarial",
    "exercises": "derived_number",
    "corruption": "strip_total_from_email",
+   "facts": {
+    "lossCount": 2,
+    "totalIncurred": 42000,
+    "totalPaid": 16000,
+    "locationCount": 6,
+    "totalInsured": 8400000,
+    "losses": [
+     {
+      "claimNo": "884213",
+      "carrier": "Meridian Mutual Insurance Company",
+      "dateOfLoss": "14 Jan 2024",
+      "status": "closed",
+      "paid": 12000,
+      "reserved": 0,
+      "incurred": 12000
+     },
+     {
+      "claimNo": "901887",
+      "carrier": "Callaghan Indemnity Company",
+      "dateOfLoss": "03 Mar 2025",
+      "status": "open",
+      "paid": 4000,
+      "reserved": 26000,
+      "incurred": 30000
+     }
+    ]
+   },
    "pairedWith": "02-clean-total-stated",
    "expectations": [
     {
@@ -35308,6 +35451,33 @@
    "kind": "adversarial",
    "exercises": "loss_run_column_mislabel",
    "corruption": "swap_paid_for_incurred",
+   "facts": {
+    "lossCount": 2,
+    "totalIncurred": 42000,
+    "totalPaid": 16000,
+    "locationCount": 6,
+    "totalInsured": 8400000,
+    "losses": [
+     {
+      "claimNo": "884213",
+      "carrier": "Meridian Mutual Insurance Company",
+      "dateOfLoss": "14 Jan 2024",
+      "status": "closed",
+      "paid": 12000,
+      "reserved": 0,
+      "incurred": 12000
+     },
+     {
+      "claimNo": "901887",
+      "carrier": "Callaghan Indemnity Company",
+      "dateOfLoss": "03 Mar 2025",
+      "status": "open",
+      "paid": 4000,
+      "reserved": 26000,
+      "incurred": 30000
+     }
+    ]
+   },
    "pairedWith": null,
    "expectations": [
     {
@@ -41227,6 +41397,33 @@
    "kind": "adversarial",
    "exercises": "sov_page_break",
    "corruption": "split_last_location_across_pages",
+   "facts": {
+    "lossCount": 2,
+    "totalIncurred": 42000,
+    "totalPaid": 16000,
+    "locationCount": 14,
+    "totalInsured": 18130000,
+    "losses": [
+     {
+      "claimNo": "884213",
+      "carrier": "Meridian Mutual Insurance Company",
+      "dateOfLoss": "14 Jan 2024",
+      "status": "closed",
+      "paid": 12000,
+      "reserved": 0,
+      "incurred": 12000
+     },
+     {
+      "claimNo": "901887",
+      "carrier": "Callaghan Indemnity Company",
+      "dateOfLoss": "03 Mar 2025",
+      "status": "open",
+      "paid": 4000,
+      "reserved": 26000,
+      "incurred": 30000
+     }
+    ]
+   },
    "pairedWith": null,
    "expectations": [
     {
@@ -47925,6 +48122,33 @@
    "kind": "adversarial",
    "exercises": "missing_document",
    "corruption": "drop_loss_runs",
+   "facts": {
+    "lossCount": 2,
+    "totalIncurred": 42000,
+    "totalPaid": 16000,
+    "locationCount": 6,
+    "totalInsured": 8400000,
+    "losses": [
+     {
+      "claimNo": "884213",
+      "carrier": "Meridian Mutual Insurance Company",
+      "dateOfLoss": "14 Jan 2024",
+      "status": "closed",
+      "paid": 12000,
+      "reserved": 0,
+      "incurred": 12000
+     },
+     {
+      "claimNo": "901887",
+      "carrier": "Callaghan Indemnity Company",
+      "dateOfLoss": "03 Mar 2025",
+      "status": "open",
+      "paid": 4000,
+      "reserved": 26000,
+      "incurred": 30000
+     }
+    ]
+   },
    "pairedWith": null,
    "expectations": [
     {
@@ -53685,6 +53909,33 @@
    "kind": "adversarial",
    "exercises": "duplicate_submission",
    "corruption": "resend_with_changed_revenue",
+   "facts": {
+    "lossCount": 2,
+    "totalIncurred": 42000,
+    "totalPaid": 16000,
+    "locationCount": 6,
+    "totalInsured": 8400000,
+    "losses": [
+     {
+      "claimNo": "884213",
+      "carrier": "Meridian Mutual Insurance Company",
+      "dateOfLoss": "14 Jan 2024",
+      "status": "closed",
+      "paid": 12000,
+      "reserved": 0,
+      "incurred": 12000
+     },
+     {
+      "claimNo": "901887",
+      "carrier": "Callaghan Indemnity Company",
+      "dateOfLoss": "03 Mar 2025",
+      "status": "open",
+      "paid": 4000,
+      "reserved": 26000,
+      "incurred": 30000
+     }
+    ]
+   },
    "pairedWith": "02-clean-total-stated",
    "expectations": [
     {

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Excerpt } from "@/components/Excerpt"
+import { Evidence } from "@/components/Evidence"
 import { RecordTable, humanise } from "@/components/RecordTable"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { EvalCase, Trial } from "@/types"
@@ -17,50 +17,12 @@ const DOC_NAMES: Record<string, string> = {
   no_losses_letter: "nil letters",
 }
 
-interface Highlight {
-  doc: string
-  title: string
-  match: RegExp
-  before?: number
-  after?: number
-}
-
-const EVIDENCE: Record<string, { caption: string; panes: Highlight[] }> = {
-  "05-application-contradicts-loss-runs": {
-    caption: "The signed form says none. The attached claims record says two.",
-    panes: [
-      { doc: "application", title: "application", match: /CHK HERE IF NONE/, before: 0 },
-      { doc: "loss_run_a", title: "loss run, Meridian", match: /^\d{6},/, before: 1, after: 0 },
-    ],
-  },
-  "04-stale-thread": {
-    caption: "The figure at the top of the chain was corrected further down it.",
-    panes: [
-      { doc: "broker_email", title: "top of the thread", match: /Total sum insured/, before: 0 },
-      { doc: "broker_email", title: "three messages down", match: /takes the total/, before: 1 },
-    ],
-  },
-  "07-loss-run-column-mislabel": {
-    caption: "Paid plus outstanding should equal incurred. On this row it does not.",
-    panes: [
-      { doc: "loss_run_b", title: "loss run, Callaghan", match: /^901887/, before: 2, after: 0 },
-    ],
-  },
-  "09-missing-loss-runs": {
-    caption: "The form points at a loss summary that is not in the packet.",
-    panes: [
-      { doc: "application", title: "application", match: /SEE ATTACHED LOSS SUMMARY/, before: 0 },
-    ],
-  },
-}
-
 const MODELS = ["Opus", "Sonnet", "Haiku"]
 
 export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
   const [trial, setTrial] = useState<Trial>(
     evalCase.trials.find((t) => !t.passed) ?? evalCase.trials[0]
   )
-  const evidence = EVIDENCE[evalCase.id]
 
   return (
     <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
@@ -109,35 +71,7 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
 
       <div className="flex min-h-0 flex-1">
         <section className="flex min-w-0 flex-1 flex-col overflow-hidden border-r border-rule-soft">
-          {evidence && (
-            <div className="shrink-0 border-b border-rule-soft bg-stamp-wash/40 px-6 py-4">
-              <p className="text-[0.875rem] leading-snug font-medium">
-                {evidence.caption}
-              </p>
-              <div
-                className={cn(
-                  "mt-3 grid gap-5",
-                  evidence.panes.length > 1 && "md:grid-cols-2"
-                )}
-              >
-                {evidence.panes.map((pane) => {
-                  const doc = evalCase.documents.find((d) => d.name === pane.doc)
-                  if (!doc) return null
-                  return (
-                    <Excerpt
-                      key={`${pane.doc}-${pane.title}`}
-                      title={pane.title}
-                      body={doc.body}
-                      match={pane.match}
-                      before={pane.before ?? 1}
-                      after={pane.after ?? 0}
-                      tone="stamp"
-                    />
-                  )
-                })}
-              </div>
-            </div>
-          )}
+          <Evidence evalCase={evalCase} />
 
           <Tabs
             defaultValue="__record"

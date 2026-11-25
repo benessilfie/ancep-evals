@@ -92,6 +92,25 @@ def build(results: Path) -> dict[str, Any]:
                 "kind": case.kind,
                 "exercises": case.exercises.value if case.exercises else None,
                 "corruption": case.corruption,
+                "facts": {
+                    "lossCount": case.risk.loss_count,
+                    "totalIncurred": case.risk.total_incurred_usd,
+                    "totalPaid": case.risk.total_paid_usd,
+                    "locationCount": case.risk.location_count,
+                    "totalInsured": case.risk.total_insured_value_usd,
+                    "losses": [
+                        {
+                            "claimNo": loss.claim_no,
+                            "carrier": loss.carrier,
+                            "dateOfLoss": loss.date_of_loss.strftime("%d %b %Y"),
+                            "status": loss.status,
+                            "paid": loss.paid_usd,
+                            "reserved": loss.reserved_usd,
+                            "incurred": loss.incurred_usd,
+                        }
+                        for loss in case.risk.losses
+                    ],
+                },
                 "pairedWith": case.paired_with,
                 "expectations": [
                     {
