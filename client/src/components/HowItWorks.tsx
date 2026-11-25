@@ -42,6 +42,9 @@ export function HowItWorks({
   const { track, style } = useMarker<HTMLElement>(current.title)
   const body = useRef<HTMLDivElement>(null)
   const [floor, setFloor] = useState<number>()
+  const [wide, setWide] = useState(
+    () => typeof window === "undefined" || window.matchMedia("(min-width: 768px)").matches
+  )
 
   useLayoutEffect(() => {
     const height = body.current?.offsetHeight
@@ -49,7 +52,10 @@ export function HowItWorks({
   }, [step])
 
   useEffect(() => {
-    const remeasure = () => setFloor(undefined)
+    const remeasure = () => {
+      setFloor(undefined)
+      setWide(window.matchMedia("(min-width: 768px)").matches)
+    }
     window.addEventListener("resize", remeasure)
     return () => window.removeEventListener("resize", remeasure)
   }, [])
@@ -67,7 +73,17 @@ export function HowItWorks({
           </p>
         </div>
 
-        <nav ref={track} className="relative flex flex-wrap items-center gap-x-2 gap-y-2">
+        <div className="flex items-baseline gap-2.5 md:hidden">
+          <span className="font-mono text-[0.6875rem] text-ink-faint">
+            {step + 1} of {steps.length}
+          </span>
+          <span className="text-[0.9375rem] font-medium">{current.title}</span>
+        </div>
+
+        <nav
+          ref={track}
+          className="relative hidden flex-wrap items-center gap-x-2 gap-y-2 md:flex"
+        >
           <span
             aria-hidden
             style={style}
@@ -96,19 +112,19 @@ export function HowItWorks({
 
         <div
           ref={body}
-          style={{ minHeight: floor }}
+          style={wide ? { minHeight: floor } : undefined}
           className="mt-9 grid gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start"
         >
           <div>{current.body}</div>
           <div className="min-w-0">{current.aside}</div>
         </div>
 
-        <div className="mt-10 flex items-center gap-3 border-t border-rule-soft pt-5">
+        <div className="sticky bottom-0 -mx-4 mt-10 flex items-center gap-3 border-t border-rule-soft bg-paper px-4 py-3 sm:-mx-6 sm:px-6 md:static md:mx-0 md:px-0 md:pt-5 md:pb-0">
           <button
             type="button"
             disabled={step === 0}
             onClick={() => setStep((s) => Math.max(0, s - 1))}
-            className="pressable rounded-control border border-rule px-4 py-2 text-[0.8125rem] disabled:opacity-40"
+            className="pressable flex-1 rounded-control border border-rule px-4 py-2.5 text-[0.8125rem] disabled:opacity-40 md:flex-none md:py-2"
           >
             Back
           </button>
@@ -116,7 +132,7 @@ export function HowItWorks({
             <button
               type="button"
               onClick={() => setStep((s) => s + 1)}
-              className="pressable rounded-control bg-ink px-5 py-2 text-[0.8125rem] font-medium text-paper transition-colors hover:bg-ink-lift"
+              className="pressable flex-1 rounded-control bg-ink px-5 py-2.5 text-[0.8125rem] font-medium text-paper transition-colors hover:bg-ink-lift md:flex-none md:py-2"
             >
               Next
             </button>
@@ -124,12 +140,12 @@ export function HowItWorks({
             <button
               type="button"
               onClick={() => onGo("live")}
-              className="pressable rounded-control bg-ink px-5 py-2 text-[0.8125rem] font-medium text-paper transition-colors hover:bg-ink-lift"
+              className="pressable flex-1 rounded-control bg-ink px-5 py-2.5 text-[0.8125rem] font-medium text-paper transition-colors hover:bg-ink-lift md:flex-none md:py-2"
             >
               Open the live demo
             </button>
           )}
-          <span className="ml-auto font-mono text-micro text-ink-faint">
+          <span className="ml-auto hidden font-mono text-micro text-ink-faint md:inline">
             {step + 1} of {steps.length}
           </span>
         </div>
