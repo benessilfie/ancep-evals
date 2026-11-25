@@ -31,7 +31,7 @@ export function HowItWorks({
       <div className="mx-auto w-full max-w-[64rem] px-6 py-10">
         <div className="mb-7">
           <h1 className="max-w-[24ch] text-[1.875rem] leading-[1.12] font-semibold tracking-[-0.02em]">
-            An eval set to grade AI on insurance submissions
+            An eval set to grade AI on commercial insurance submissions
           </h1>
           <p className="mt-3 max-w-[64ch] text-[1.0625rem] leading-relaxed text-ink-soft">
             Ten submissions with the right answers written down first, so I can grade the
