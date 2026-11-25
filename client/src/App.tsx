@@ -36,8 +36,8 @@ export default function App() {
     <div className="flex h-dvh flex-col overflow-hidden">
       <header className="shrink-0 border-b border-rule">
         <div className="flex flex-wrap items-center gap-x-8 gap-y-2.5 px-4 py-2.5 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:px-5 sm:py-3">
-          <div className="flex items-baseline gap-3">
-            <span className="text-[0.875rem] leading-snug font-medium">
+          <div className="flex min-w-0 items-baseline gap-3">
+            <span className="truncate text-[0.875rem] leading-snug font-medium">
               <span className="sm:hidden">An eval set for insurance submissions</span>
               <span className="hidden sm:inline">
                 An eval set to grade AI on commercial insurance submissions
@@ -68,8 +68,8 @@ export default function App() {
           </div>
           <div
             className={cn(
-              "hidden items-center justify-end gap-5 font-mono text-micro text-ink-faint",
-              view === "recorded" && "xl:flex"
+              "hidden min-w-0 items-center justify-end gap-5 font-mono text-micro whitespace-nowrap text-ink-faint",
+              view === "recorded" && "2xl:flex"
             )}
           >
             <span>
