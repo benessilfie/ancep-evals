@@ -1,122 +1,101 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react"
+import { CaseSheet } from "@/components/CaseSheet"
+import { Ledger } from "@/components/Ledger"
+import { Reveal } from "@/components/Reveal"
+import type { EvalData } from "@/types"
 
-function App() {
-  const [count, setCount] = useState(0)
+const HERO_CASE = "05-application-contradicts-loss-runs"
+const HERO_FIELD = "loss_count_5y"
+
+export default function App() {
+  const [data, setData] = useState<EvalData | null>(null)
+  const [selected, setSelected] = useState(HERO_CASE)
+
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}eval.json`)
+      .then((r) => r.json())
+      .then(setData)
+      .catch(() => setData(null))
+  }, [])
+
+  if (!data) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center">
+        <p className="font-mono text-micro text-ink-faint">loading results</p>
+      </div>
+    )
+  }
+
+  const heroCase = data.cases.find((c) => c.id === HERO_CASE) ?? data.cases[0]
+  const heroTrial =
+    heroCase.trials.find((t) => t.model.includes("opus") && !t.passed) ?? heroCase.trials[0]
+  const current = data.cases.find((c) => c.id === selected) ?? data.cases[0]
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="min-h-dvh">
+      <header className="border-b border-rule">
+        <div className="mx-auto flex max-w-[76rem] flex-wrap items-baseline justify-between gap-x-8 gap-y-2 px-5 py-3.5">
+          <span className="font-mono text-[0.8125rem] text-ink">
+            submission intake evals
+          </span>
+          <span className="font-mono text-micro text-ink-faint">
+            {data.totals.trials} trials · {data.models.length} models · {data.reps} runs each
+            · effort {data.effort}
+          </span>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+      </header>
+
+      <main>
+        <section className="border-b border-rule-soft py-16 sm:py-20">
+          <div className="mx-auto w-full max-w-[52rem] px-5">
+            <div className="field-label">finding</div>
+            <h1 className="field-box mt-1.5 px-5 py-5 text-[1.75rem] leading-[1.25] font-semibold tracking-[-0.015em] sm:text-[2.125rem]">
+              The agent saw the contradiction, wrote it down, and signed off the field
+              anyway.
+            </h1>
+          </div>
+          <div className="mt-10">
+            <Reveal trial={heroTrial} field={HERO_FIELD} />
+          </div>
+        </section>
+
+        <section className="border-b border-rule-soft py-14">
+          <div className="mx-auto w-full max-w-[76rem] px-5">
+            <h2 className="text-lg font-semibold tracking-[-0.01em]">
+              Ten packets, graded on the record rather than the summary
+            </h2>
+            <p className="mt-2 max-w-[46rem] text-[0.9375rem] leading-relaxed text-ink-soft">
+              Each packet is generated from a truth record, so every right answer is known
+              before a model sees it. Three packets have no trick in them, because an agent
+              that flags everything would otherwise score full marks.
+            </p>
+            <div className="mt-7">
+              <Ledger
+                cases={data.cases}
+                models={data.models}
+                selected={selected}
+                onSelect={setSelected}
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="py-14">
+          <div className="mx-auto w-full max-w-[76rem] px-5">
+            <CaseSheet key={current.id} evalCase={current} />
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-rule">
+        <div className="mx-auto max-w-[76rem] px-5 py-6">
+          <p className="max-w-[46rem] text-[0.8125rem] leading-relaxed text-ink-soft">
+            Every packet here is synthetic. The forms follow industry field names but are
+            not ACORD forms, which are licensed. The author does not work in insurance, so
+            each expected answer carries a citation you can argue with.
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      </footer>
+    </div>
   )
 }
-
-export default App

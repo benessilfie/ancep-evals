@@ -8,3 +8,5 @@ __pycache__/
 
 BRIEF.md
 notes/
+client/node_modules/
+client/dist/

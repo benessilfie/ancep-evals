@@ -129,6 +129,17 @@ def sweep(
 
 
 @app.command()
+def export(
+    results: Path = Path("results"),
+    out: Path = Path("client/public/eval.json"),
+) -> None:
+    from submission_evals.export import write
+
+    written = write(results, out)
+    typer.echo(f"wrote {written} ({written.stat().st_size // 1024} KB)")
+
+
+@app.command()
 def regrade(results: Path = Path("results")) -> None:
     from submission_evals.extract import ExtractedSubmission
     from submission_evals.runner import _grade_metrics
