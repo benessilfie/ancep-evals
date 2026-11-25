@@ -149,12 +149,10 @@ function buildSteps(
           <p>
             That is what an eval set is. Ten submissions, with the right answer to each one
             written down before any model sees them, so there is something to mark against.
-            Three Claude models, three runs each, {data.totals.trials} graded records.
           </p>
           <p>
-            What I mark is the twenty one fields it filled in. Not the paragraph it writes
-            about what it did, because a model that fills a field in wrong still writes a
-            confident, convincing paragraph.
+            Each model fills in the same twenty one fields. Three Claude models, three runs
+            each, {data.totals.trials} graded records.
           </p>
         </Prose>
       ),
