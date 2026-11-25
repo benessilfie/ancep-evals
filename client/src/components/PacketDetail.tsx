@@ -117,26 +117,45 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
               </Select>
             </div>
 
-            <div className="hidden w-full shrink-0 flex-wrap items-center gap-x-0.5 gap-y-1 border-b border-rule px-5 pt-2 lg:flex">
-              <span className="field-label self-center pr-2">output</span>
+            <div className="hidden w-full shrink-0 items-center gap-x-0.5 border-b border-rule px-5 py-2 lg:flex">
+              <span className="field-label shrink-0 pr-2">output</span>
               <DocTab active={tab === "__record"} onClick={() => setTab("__record")} strong>
                 the record it filed
               </DocTab>
-              <span aria-hidden className="mx-3 self-center text-rule">
+              <span aria-hidden className="mx-3 shrink-0 text-rule">
                 |
               </span>
-              <span className="field-label self-center pr-2">
+              <span className="field-label shrink-0 pr-2">
                 the {evalCase.documents.length} documents it was given
               </span>
-              {evalCase.documents.map((doc) => (
-                <DocTab
-                  key={doc.name}
-                  active={tab === doc.name}
-                  onClick={() => setTab(doc.name)}
+              <Select
+                value={tab === "__record" ? undefined : tab}
+                onValueChange={setTab}
+              >
+                <SelectTrigger
+                  className={cn(
+                    "pressable w-[14rem] rounded-field border border-rule bg-white px-2.5 py-1.5 text-left text-[0.75rem]",
+                    tab !== "__record" && "border-carbon/40 text-carbon"
+                  )}
                 >
-                  {DOC_NAMES[doc.name] ?? doc.name}
-                </DocTab>
-              ))}
+                  <SelectValue placeholder="choose a document" />
+                </SelectTrigger>
+                <SelectContent
+                  position="popper"
+                  sideOffset={4}
+                  className="pop z-50 max-h-[22rem] w-[var(--radix-select-trigger-width)] overflow-y-auto rounded-field border border-rule bg-white p-1 shadow-[0_10px_30px_-14px_rgba(22,23,26,0.4)]"
+                >
+                  {evalCase.documents.map((doc) => (
+                    <SelectItem
+                      key={doc.name}
+                      value={doc.name}
+                      className="cursor-pointer rounded-field px-2.5 py-2 text-[0.8125rem] outline-none focus:bg-paper-sunk data-[state=checked]:bg-carbon-wash data-[state=checked]:font-medium data-[state=checked]:text-carbon"
+                    >
+                      {DOC_NAMES[doc.name] ?? doc.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <TabsContent
               value="__record"
