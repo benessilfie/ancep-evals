@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Evidence } from "@/components/Evidence"
 import { RecordTable, humanise } from "@/components/RecordTable"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import type { EvalCase, Trial } from "@/types"
+import type { EvalCase, FieldVerdict, Trial } from "@/types"
 import { cn } from "@/lib/utils"
 
 const DOC_NAMES: Record<string, string> = {
@@ -124,10 +124,27 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
         <aside className="w-[21rem] shrink-0 overflow-y-auto px-5 py-4">
           <TrialPanel trial={trial} />
 
+          {trial.notes.length > 0 && (
+            <Fold
+              className="mt-6"
+              summary={`what the model said about this packet (${trial.notes.length})`}
+            >
+              <ul className="space-y-2">
+                {trial.notes.map((note, i) => (
+                  <li
+                    key={i}
+                    className="border-l-2 border-rule pl-3 text-[0.8125rem] leading-relaxed text-ink-soft"
+                  >
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </Fold>
+          )}
+
           {evalCase.expectations.length > 0 && (
-            <div className="mt-7">
-              <div className="field-label">what a correct record does</div>
-              <ul className="mt-2.5 space-y-3">
+            <Fold className="mt-3" summary="what a correct record does">
+              <ul className="space-y-3">
                 {evalCase.expectations.map((e) => (
                   <li key={e.field} className="border-l-2 border-rule pl-3">
                     <div className="font-mono text-[0.6875rem]">
@@ -152,12 +169,55 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Fold>
           )}
         </aside>
       </div>
     </main>
   )
+}
+
+function Fold({
+  summary,
+  children,
+  className,
+}: {
+  summary: string
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <details className={cn("group border-t border-rule-soft pt-3", className)}>
+      <summary className="pressable flex cursor-pointer list-none items-center gap-1.5 text-[0.8125rem] text-ink-soft hover:text-ink">
+        <span
+          aria-hidden
+          className="font-mono text-[0.625rem] transition-transform group-open:rotate-90"
+        >
+          &gt;
+        </span>
+        {summary}
+      </summary>
+      <div className="mt-3">{children}</div>
+    </details>
+  )
+}
+
+function fieldLabel(field: string): string {
+  return field.replace(/_/g, " ").replace(/\busd\b/, "").replace(/\b5y\b/, "in 5 years").trim()
+}
+
+function whyItFailed(f: FieldVerdict): string {
+  if (f.flagDecision === "missed_flag") {
+    return "It filed a value here. This field should have gone back to a human instead."
+  }
+  if (f.flagDecision === "spurious_flag") {
+    return "It sent this back to a human. The documents answer it, so nothing needed raising."
+  }
+  if (f.valueCorrect === false) return humanise(f.detail)
+  if (f.provenanceOk === false) {
+    return f.provenanceDetail ? humanise(f.provenanceDetail) : humanise(f.detail)
+  }
+  return humanise(f.detail)
 }
 
 function TrialPanel({ trial }: { trial: Trial }) {
@@ -168,67 +228,85 @@ function TrialPanel({ trial }: { trial: Trial }) {
       (f.flagDecision !== "correctly_flagged" && f.flagDecision !== "correctly_not_flagged")
   )
 
+  const scores: { value: string; label: string; bad: boolean }[] = [
+    {
+      value: `${Math.round(trial.valueScore * 100)}%`,
+      label: "values right",
+      bad: trial.valueScore < 1,
+    },
+    {
+      value: `${Math.round(trial.provenanceScore * 100)}%`,
+      label: "citations held up",
+      bad: trial.provenanceScore < 1,
+    },
+    {
+      value: String(trial.missedFlags),
+      label: trial.missedFlags === 1 ? "conflict missed" : "conflicts missed",
+      bad: trial.missedFlags > 0,
+    },
+    {
+      value: String(trial.spuriousFlags),
+      label: "queried needlessly",
+      bad: trial.spuriousFlags > 0,
+    },
+  ]
+
   return (
     <div>
-      <div className="flex items-baseline justify-between gap-2">
-        <span className="text-[0.875rem] font-medium">
-          {trial.modelLabel} run {trial.rep + 1}
-        </span>
-        <span
+      <div
+        className={cn(
+          "rounded-field border px-4 py-3.5",
+          trial.passed ? "border-seal/35 bg-seal-wash/40" : "border-stamp/40 bg-stamp-wash/50"
+        )}
+      >
+        <div
           className={cn(
-            "font-mono text-[0.6875rem]",
-            trial.passed ? "text-seal" : "font-semibold text-stamp"
+            "text-[1.25rem] leading-none font-semibold tracking-[-0.01em]",
+            trial.passed ? "text-seal" : "text-stamp"
           )}
         >
-          {trial.passed ? "accepted" : "rejected"}
-        </span>
+          {trial.passed ? "Passed" : "Failed"}
+        </div>
+        <div className="mt-1.5 text-[0.8125rem] text-ink-soft">
+          {trial.modelLabel} · run {trial.rep + 1} of 3
+        </div>
       </div>
 
-      <dl className="mt-3 grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 font-mono text-[0.6875rem]">
-        <dt className="text-ink-faint">values right</dt>
-        <dd className="tabular-nums">{Math.round(trial.valueScore * 100)}%</dd>
-        <dt className="text-ink-faint">citations checked out</dt>
-        <dd className="tabular-nums">{Math.round(trial.provenanceScore * 100)}%</dd>
-        <dt className="text-ink-faint">conflicts it should have raised</dt>
-        <dd className="tabular-nums">{trial.missedFlags}</dd>
-        <dt className="text-ink-faint">fields it needlessly queried</dt>
-        <dd className="tabular-nums">{trial.spuriousFlags}</dd>
-      </dl>
-
       {problems.length === 0 ? (
-        <p className="mt-4 text-[0.75rem] leading-relaxed text-ink-soft">
-          Every field correct, and every citation checked against the document it names.
+        <p className="mt-4 text-[0.8125rem] leading-relaxed text-ink-soft">
+          Every graded field matched, and every citation pointed at a document that really
+          contains the value.
         </p>
       ) : (
-        <ul className="mt-4 space-y-2">
+        <ul className="mt-4 space-y-2.5">
           {problems.map((p) => (
-            <li key={p.field} className="border-l-2 border-stamp bg-stamp-wash px-3 py-2">
-              <div className="font-mono text-[0.6875rem] text-stamp">{p.field}</div>
-              <p className="mt-0.5 text-[0.75rem] leading-snug text-ink-soft">
-                {humanise(p.detail)}
+            <li key={p.field} className="border-l-2 border-stamp pl-3">
+              <div className="text-[0.8125rem] font-medium">{fieldLabel(p.field)}</div>
+              <p className="mt-0.5 text-[0.8125rem] leading-snug text-ink-soft">
+                {whyItFailed(p)}
               </p>
             </li>
           ))}
         </ul>
       )}
 
-      {trial.notes.length > 0 && (
-        <details className="mt-4">
-          <summary className="field-label cursor-pointer list-none hover:text-ink-soft">
-            its own notes ({trial.notes.length})
-          </summary>
-          <ul className="mt-2 space-y-2">
-            {trial.notes.map((note, i) => (
-              <li
-                key={i}
-                className="border-l-2 border-rule pl-3 text-[0.75rem] leading-relaxed text-ink-soft"
-              >
-                {note}
-              </li>
-            ))}
-          </ul>
-        </details>
-      )}
+      <dl className="mt-5 grid grid-cols-2 gap-px border-t border-rule-soft bg-rule-soft">
+        {scores.map((s) => (
+          <div key={s.label} className="bg-paper px-3 py-2.5">
+            <dd
+              className={cn(
+                "font-mono text-[1rem] tabular-nums",
+                s.bad ? "text-stamp" : "text-ink"
+              )}
+            >
+              {s.value}
+            </dd>
+            <dt className="mt-0.5 text-[0.6875rem] leading-tight text-ink-faint">
+              {s.label}
+            </dt>
+          </div>
+        ))}
+      </dl>
     </div>
   )
 }

@@ -3,12 +3,14 @@ from __future__ import annotations
 import asyncio
 import io
 import json
+import logging
 import os
 import time
 import uuid
 import zipfile
 from collections import defaultdict, deque
 from collections.abc import AsyncIterator
+from pathlib import Path
 from typing import Any, NamedTuple
 
 import anthropic
@@ -46,6 +48,22 @@ LIVE_MODELS: dict[str, ModelLimit] = {
     "claude-opus-5-5": ModelLimit("Opus 5.5", "most capable", 3, 6, 0.452),
 }
 DEFAULT_MODEL = "claude-haiku-5-5"
+
+def _load_env_file() -> None:
+    path = Path(__file__).resolve().parents[2] / ".env"
+    if not path.exists():
+        return
+    for raw in path.read_text().splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
+
+
+_load_env_file()
+
+logger = logging.getLogger("submission_evals")
 
 app = FastAPI(title="submission intake evals")
 app.add_middleware(
@@ -251,6 +269,7 @@ async def _stream(run_id: str) -> AsyncIterator[str]:
         ) as stream:
             response = await stream.get_final_message()
     except Exception as error:  # noqa: BLE001
+        logger.exception("model call failed")
         yield _sse("error", {"message": f"the model call failed: {type(error).__name__}"})
         return
 
