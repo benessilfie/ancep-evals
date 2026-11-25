@@ -160,3 +160,5 @@ LITERAL_CHECK_EXEMPT: frozenset[str] = frozenset(
 )
 
 CODE_FIELDS: frozenset[str] = frozenset({"property_valuation_basis", "applicant_entity_type"})
+
+COMPANY_FIELDS: frozenset[str] = frozenset({"applicant_name", "prior_property_carrier"})

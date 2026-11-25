@@ -64,11 +64,11 @@ _LOSS_SUBHEAD = (
 )
 
 _PRIOR_COLUMNS = (
-    ("LINE", 24),
-    ("CARRIER", 24),
+    ("LINE", 20),
+    ("CARRIER", 36),
     ("POLICY NUMBER", 18),
-    ("EFF-EXP DATE", 24),
-    ("PREMIUM", 10),
+    ("EFF-EXP DATE", 25),
+    ("PREMIUM", 11),
 )
 
 

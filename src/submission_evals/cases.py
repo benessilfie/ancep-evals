@@ -85,7 +85,7 @@ def _locations(count: int) -> tuple[Location, ...]:
 
 _PRIOR_CARRIERS = (
     PriorCarrier(
-        carrier="Meridian Mutual",
+        carrier="Meridian Mutual Insurance Company",
         line="Property",
         policy_no="MM-PR-4480912",
         period_start=date(2026, 1, 1),
@@ -93,7 +93,7 @@ _PRIOR_CARRIERS = (
         premium_usd=41_200,
     ),
     PriorCarrier(
-        carrier="Callaghan Indemnity",
+        carrier="Callaghan Indemnity Company",
         line="General Liability",
         policy_no="CI-GL-77301",
         period_start=date(2026, 1, 1),
@@ -104,7 +104,7 @@ _PRIOR_CARRIERS = (
 
 _LOSSES = (
     Loss(
-        carrier="Meridian Mutual",
+        carrier="Meridian Mutual Insurance Company",
         claim_no="884213",
         date_of_loss=date(2024, 1, 14),
         date_reported=date(2024, 1, 16),
@@ -115,7 +115,7 @@ _LOSSES = (
         description="Burst supply line in the Hoboken prep kitchen",
     ),
     Loss(
-        carrier="Callaghan Indemnity",
+        carrier="Callaghan Indemnity Company",
         claim_no="901887",
         date_of_loss=date(2025, 3, 3),
         date_reported=date(2025, 3, 11),
@@ -177,7 +177,7 @@ def build_risk(
         losses=_LOSSES if with_losses else (),
         no_losses_letter=(
             NoLossesLetter(
-                carrier="Meridian Mutual",
+                carrier="Meridian Mutual Insurance Company",
                 policy_no="MM-PR-4480912",
                 period_start=date(2022, 1, 1),
                 period_end=date(2027, 1, 1),

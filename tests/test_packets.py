@@ -2,9 +2,15 @@ import pytest
 
 from submission_evals.baselines import flag_everything, null_empty, oracle, plausible_liar
 from submission_evals.cases import all_specs
-from submission_evals.extract import GRADED_FIELDS
+from submission_evals.extract import DEFAULT_SOURCES, GRADED_FIELDS
 from submission_evals.generate import build_packet, packet_text
-from submission_evals.grade import expected_value, grade, renderings
+from submission_evals.grade import (
+    appears_as_token,
+    expected_value,
+    grade,
+    is_nil,
+    renderings,
+)
 from submission_evals.truth import DocumentName, SourceMode
 
 SPECS = all_specs()
@@ -41,14 +47,18 @@ def test_every_read_field_actually_appears_in_the_packet(spec):
         if expectation is None and field in DERIVED_BY_NATURE:
             continue
         wanted = expected_value(case, field)
-        forms = renderings(field, wanted)
-        if expectation is not None and expectation.source_document is not None:
-            body = text[expectation.source_document]
-            if not any(form in body for form in forms):
-                missing.append(f"{field}={wanted!r} not in {expectation.source_document.value}")
+        if is_nil(wanted):
             continue
-        if not any(form in body for body in text.values() for form in forms):
-            missing.append(f"{field}={wanted!r} not in any document")
+        forms = renderings(field, wanted)
+        cited, default_mode = DEFAULT_SOURCES[field]
+        if expectation is not None and expectation.source_document is not None:
+            cited = expectation.source_document
+        elif expectation is None and default_mode == SourceMode.DERIVED:
+            continue
+        if cited not in text:
+            continue
+        if not any(appears_as_token(form, text[cited]) for form in forms):
+            missing.append(f"{field}={wanted!r} not readable in {cited.value}")
     assert not missing, f"{case.case_id}: {missing}"
 
 
@@ -121,7 +131,7 @@ def test_the_corruptions_actually_changed_the_documents():
     mislabel = by_id["07-loss-run-column-mislabel"]
     body = packet_text(mislabel)[DocumentName.LOSS_RUN_B]
     loss = next(
-        row for row in mislabel.case.risk.losses if row.carrier == "Callaghan Indemnity"
+        row for row in mislabel.case.risk.losses if row.carrier.startswith("Callaghan")
     )
     row = next(line for line in body.split("\n") if line.startswith(loss.claim_no))
     paid, outstanding, incurred = (

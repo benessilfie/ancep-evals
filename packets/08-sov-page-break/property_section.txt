@@ -9,7 +9,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 1     BUILDING #: 1     STREET ADDRESS: 18 Washington Street, Hoboken, NJ 07030
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      1,200,000   90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    400,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               250,000     90      RC         SPECIAL                     10,000
@@ -21,7 +21,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 2     BUILDING #: 1     STREET ADDRESS: 7 Palisade Avenue, Jersey City, NJ 07306
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      650,000     90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    180,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               120,000     90      RC         SPECIAL                     10,000
@@ -33,7 +33,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 3     BUILDING #: 1     STREET ADDRESS: 214 Central Avenue, Jersey City, NJ 07307
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      1,500,000   90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    250,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               150,000     90      RC         SPECIAL                     10,000
@@ -45,7 +45,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 4     BUILDING #: 1     STREET ADDRESS: 41 Bergenline Avenue, Union City, NJ 07087
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      780,000     90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    220,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               140,000     90      RC         SPECIAL                     10,000
@@ -57,7 +57,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 5     BUILDING #: 1     STREET ADDRESS: 3 Kennedy Boulevard, Bayonne, NJ 07002
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      1,100,000   90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    300,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               180,000     90      RC         SPECIAL                     10,000
@@ -69,7 +69,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 6     BUILDING #: 1     STREET ADDRESS: 90 Port Street, Newark, NJ 07114
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      740,000     90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    150,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               90,000      90      RC         SPECIAL                     10,000
@@ -81,7 +81,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 7     BUILDING #: 1     STREET ADDRESS: 52 Observer Highway, Hoboken, NJ 07030
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      820,000     90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    210,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               130,000     90      RC         SPECIAL                     10,000
@@ -93,7 +93,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 8     BUILDING #: 1     STREET ADDRESS: 8 Journal Square, Jersey City, NJ 07306
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      960,000     90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    240,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               150,000     90      RC         SPECIAL                     10,000
@@ -105,7 +105,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 9     BUILDING #: 1     STREET ADDRESS: 301 Broadway, Bayonne, NJ 07002
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      610,000     90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    170,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               110,000     90      RC         SPECIAL                     10,000
@@ -117,7 +117,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 10    BUILDING #: 1     STREET ADDRESS: 77 Ferry Street, Newark, NJ 07105
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      1,040,000   90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    280,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               160,000     90      RC         SPECIAL                     10,000
@@ -129,7 +129,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 11    BUILDING #: 1     STREET ADDRESS: 14 Summit Avenue, Union City, NJ 07087
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      580,000     90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    160,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               100,000     90      RC         SPECIAL                     10,000
@@ -141,7 +141,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 12    BUILDING #: 1     STREET ADDRESS: 190 Grand Street, Jersey City, NJ 07302
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      1,320,000   90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    330,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               190,000     90      RC         SPECIAL                     10,000
@@ -153,7 +153,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 13    BUILDING #: 1     STREET ADDRESS: 6 Willow Terrace, Hoboken, NJ 07030
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      520,000     90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    140,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               90,000      90      RC         SPECIAL                     10,000
@@ -165,7 +165,7 @@ PREMISES INFORMATION -----------------------------------------------------------
 PREMISES #: 14    BUILDING #: 1     STREET ADDRESS: 45 Raymond Boulevard, Newark, NJ 07102
 BLDG DESCRIPTION: Bakery, retail with on-site baking
 SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 BUILDING                      1,010,000   90      RC         SPECIAL         4           10,000
 BUSINESS PERSONAL PROPERTY    260,000     90      RC         SPECIAL         4           10,000
 BUSINESS INCOME               150,000     90      RC         SPECIAL                     10,000

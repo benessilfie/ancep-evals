@@ -44,7 +44,7 @@ def money(amount: int | None) -> str:
 
 def table_header(columns: Sequence[tuple[str, int]]) -> list[str]:
     heading = "".join(name[: width - 1].ljust(width) for name, width in columns).rstrip()
-    return [heading, "-" * min(WIDTH, sum(width for _, width in columns))]
+    return [heading, "-" * sum(width for _, width in columns)]
 
 
 def table_row(values: Sequence[object], columns: Sequence[tuple[str, int]]) -> str:

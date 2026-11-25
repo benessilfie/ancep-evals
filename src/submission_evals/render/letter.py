@@ -10,7 +10,7 @@ def render(risk: Risk, options: PacketOptions) -> str:
     if letter is None:
         raise ValueError("no_losses_letter is not set on this risk")
     lines = [
-        f"{letter.carrier.upper()} INSURANCE COMPANY",
+        letter.carrier.upper(),
         "Commercial Lines Claims Services",
         "4400 Cadwell Plaza, Hartford CT 06103",
         "",
@@ -38,6 +38,6 @@ def render(risk: Risk, options: PacketOptions) -> str:
         "",
         "R. Castellan",
         "Claims Services Manager",
-        f"{letter.carrier} Insurance Company",
+        letter.carrier,
     ]
     return document(lines)

@@ -46,10 +46,10 @@ EXPLAIN ALL "YES" RESPONSES                                                 YES 
 11. HAS BUSINESS BEEN PLACED IN A TRUST?                                    [ ]  [X]
 12. ANY FOREIGN OPERATIONS OR PRODUCTS SOLD ABROAD?                         [ ]  [X]
 PRIOR CARRIER INFORMATION ----------------------------------------------------------------------
-LINE                    CARRIER                 POLICY NUMBER     EFF-EXP DATE            PREMIUM
-------------------------------------------------------------------------------------------------
-PROPERTY                Meridian Mutual         MM-PR-4480912     01/01/2026 - 01/01/2027 41,200
-GENERAL LIABILITY       Callaghan Indemnity     CI-GL-77301       01/01/2026 - 01/01/2027 18,600
+LINE                CARRIER                             POLICY NUMBER     EFF-EXP DATE             PREMIUM
+--------------------------------------------------------------------------------------------------------------
+PROPERTY            Meridian Mutual Insurance Company   MM-PR-4480912     01/01/2026 - 01/01/2027  41,200
+GENERAL LIABILITY   Callaghan Indemnity Company         CI-GL-77301       01/01/2026 - 01/01/2027  18,600
 LOSS HISTORY -----------------------------------------------------------------------------------
 ENTER ALL CLAIMS OR LOSSES (REGARDLESS OF FAULT AND WHETHER OR NOT INSURED) OR OCCURRENCES THAT
 MAY GIVE RISE TO CLAIMS FOR THE PRIOR 5 YEARS (3 YEARS IN KS & NY)

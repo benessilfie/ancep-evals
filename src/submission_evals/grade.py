@@ -8,6 +8,7 @@ from pydantic import BaseModel
 
 from submission_evals.extract import (
     CODE_FIELDS,
+    COMPANY_FIELDS,
     DATE_FIELDS,
     GRADED_FIELDS,
     IDENTIFIER_FIELDS,
@@ -23,7 +24,9 @@ FlagDecision = Literal["correctly_flagged", "correctly_not_flagged", "missed_fla
 _DATE_FORMATS = ("%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%B %d, %Y", "%d %B %Y", "%b %d, %Y")
 _NON_ALNUM = re.compile(r"[^a-z0-9]+")
 _WHITESPACE = re.compile(r"\s+")
-_ENTITY_NOISE = re.compile(r"\b(inc|llc|ltd|corp|co|company|incorporated|limited)\b")
+_ENTITY_NOISE = re.compile(
+    r"\b(inc|llc|ltd|corp|co|company|incorporated|limited|insurance|indemnity|mutual)\b"
+)
 
 
 def appears_as_token(needle: str, haystack: str) -> bool:
@@ -151,7 +154,7 @@ def values_match(field: str, expected: Any, actual: Any) -> bool:
                 expected.split(",")[-1].split()[0],
             )
         )
-    if field == "applicant_name":
+    if field in COMPANY_FIELDS:
         return normalise_name(actual) == normalise_name(expected)
     if field in CODE_FIELDS:
         return appears_as_token(normalise_text(expected), normalise_text(actual))

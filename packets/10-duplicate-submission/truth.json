@@ -145,7 +145,7 @@
   },
   "prior_carriers": [
     {
-      "carrier": "Meridian Mutual",
+      "carrier": "Meridian Mutual Insurance Company",
       "line": "Property",
       "policy_no": "MM-PR-4480912",
       "period_start": "2026-01-01",
@@ -153,7 +153,7 @@
       "premium_usd": 41200
     },
     {
-      "carrier": "Callaghan Indemnity",
+      "carrier": "Callaghan Indemnity Company",
       "line": "General Liability",
       "policy_no": "CI-GL-77301",
       "period_start": "2026-01-01",
@@ -163,7 +163,7 @@
   ],
   "losses": [
     {
-      "carrier": "Meridian Mutual",
+      "carrier": "Meridian Mutual Insurance Company",
       "claim_no": "884213",
       "date_of_loss": "2024-01-14",
       "date_reported": "2024-01-16",
@@ -175,7 +175,7 @@
       "incurred_usd": 12000
     },
     {
-      "carrier": "Callaghan Indemnity",
+      "carrier": "Callaghan Indemnity Company",
       "claim_no": "901887",
       "date_of_loss": "2025-03-03",
       "date_reported": "2025-03-11",

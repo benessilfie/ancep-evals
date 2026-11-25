@@ -37,7 +37,7 @@ def render_meridian(risk: Risk, carrier: PriorCarrier, options: PacketOptions) -
     valuation = risk.loss_run_valuation_date
     buffer = io.StringIO()
     writer = csv.writer(buffer, lineterminator="\n")
-    writer.writerow([f"{carrier.carrier.upper()} INSURANCE COMPANY"])
+    writer.writerow([carrier.carrier.upper()])
     writer.writerow(["CLAIMS EXPERIENCE REPORT"])
     writer.writerow([])
     writer.writerow(["Named Insured", risk.applicant.name])
@@ -100,7 +100,7 @@ def render_callaghan(risk: Risk, carrier: PriorCarrier, options: PacketOptions) 
     valuation = risk.loss_run_valuation_date
     losses = _losses_for(risk, carrier)
     lines = [
-        f"{carrier.carrier.upper()} COMPANY",
+        carrier.carrier.upper(),
         "LOSS EXPERIENCE LISTING",
         "=" * _CALLAGHAN_WIDTH,
         f"INSURED.........: {risk.applicant.name.upper()}",
