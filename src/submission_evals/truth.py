@@ -21,6 +21,7 @@ class DocumentName(StrEnum):
     BROKER_EMAIL = "broker_email"
     APPLICATION = "application"
     PROPERTY_SECTION = "property_section"
+    LIABILITY_SECTION = "liability_section"
     SOV = "sov"
     LOSS_RUN_A = "loss_run_a"
     LOSS_RUN_B = "loss_run_b"

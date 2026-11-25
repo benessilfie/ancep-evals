@@ -5,6 +5,7 @@ from typing import Any
 
 from submission_evals.extract import (
     COUNT_FIELDS,
+    DEFAULT_SOURCES,
     GRADED_FIELDS,
     MONEY_FIELDS,
     Extracted,
@@ -41,12 +42,16 @@ def _zero_for(field: str) -> Any:
 
 def _source_for(case: Case, field: str) -> SourceRef:
     expectation = case.expectation_for(field)
-    mode = expectation.source_mode if expectation and expectation.source_mode else SourceMode.READ
+    fallback_document, fallback_mode = DEFAULT_SOURCES[field]
+    mode = expectation.source_mode if expectation and expectation.source_mode else fallback_mode
     document = (
         expectation.source_document
         if expectation and expectation.source_document
-        else DocumentName.APPLICATION
+        else fallback_document
     )
+    if document not in case.documents:
+        document = DocumentName.APPLICATION
+        mode = SourceMode.DERIVED
     derived_from = ["statement of values rows"] if mode == SourceMode.DERIVED else []
     return SourceRef(
         document=document,

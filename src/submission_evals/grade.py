@@ -10,6 +10,7 @@ from submission_evals.extract import (
     DATE_FIELDS,
     GRADED_FIELDS,
     IDENTIFIER_FIELDS,
+    LITERAL_CHECK_EXEMPT,
     MONEY_FIELDS,
     Extracted,
     ExtractedSubmission,
@@ -128,6 +129,8 @@ def values_match(field: str, expected: Any, actual: Any) -> bool:
 
 
 def renderings(field: str, value: Any) -> list[str]:
+    if isinstance(value, bool):
+        return [str(value)]
     if field in MONEY_FIELDS or isinstance(value, int):
         number = normalise_money(value)
         if number is None:
@@ -138,7 +141,13 @@ def renderings(field: str, value: Any) -> list[str]:
         if iso is None:
             return [str(value)]
         parsed = datetime.strptime(iso, "%Y-%m-%d").date()
-        return [iso, parsed.strftime("%m/%d/%Y"), parsed.strftime("%B %d, %Y")]
+        return [
+            iso,
+            parsed.strftime("%m/%d/%Y"),
+            parsed.strftime("%B %d, %Y"),
+            parsed.strftime("%d %B %Y"),
+            parsed.strftime("%d-%b-%Y").upper(),
+        ]
     return [str(value)]
 
 
@@ -209,7 +218,11 @@ def grade_provenance(
             ),
         )
 
-    if packet_text is not None and source.mode == SourceMode.READ:
+    if (
+        packet_text is not None
+        and source.mode == SourceMode.READ
+        and field not in LITERAL_CHECK_EXEMPT
+    ):
         body = packet_text.get(source.document, "")
         if not any(form in body for form in renderings(field, value)):
             return ProvenanceVerdict(

@@ -131,3 +131,32 @@ IDENTIFIER_FIELDS: frozenset[str] = frozenset({"applicant_fein"})
 COUNT_FIELDS: frozenset[str] = frozenset(
     {"employee_count", "location_count", "property_coinsurance_pct", "loss_count_5y"}
 )
+
+
+DEFAULT_SOURCES: dict[str, tuple[DocumentName, SourceMode]] = {
+    "applicant_name": (DocumentName.APPLICATION, SourceMode.READ),
+    "applicant_fein": (DocumentName.APPLICATION, SourceMode.READ),
+    "applicant_entity_type": (DocumentName.APPLICATION, SourceMode.READ),
+    "mailing_address": (DocumentName.APPLICATION, SourceMode.READ),
+    "business_started": (DocumentName.APPLICATION, SourceMode.READ),
+    "annual_revenue_usd": (DocumentName.APPLICATION, SourceMode.READ),
+    "employee_count": (DocumentName.APPLICATION, SourceMode.READ),
+    "policy_effective_date": (DocumentName.APPLICATION, SourceMode.READ),
+    "policy_expiration_date": (DocumentName.APPLICATION, SourceMode.READ),
+    "prior_property_carrier": (DocumentName.APPLICATION, SourceMode.READ),
+    "property_coinsurance_pct": (DocumentName.PROPERTY_SECTION, SourceMode.READ),
+    "property_valuation_basis": (DocumentName.PROPERTY_SECTION, SourceMode.READ),
+    "gl_each_occurrence_usd": (DocumentName.LIABILITY_SECTION, SourceMode.READ),
+    "gl_general_aggregate_usd": (DocumentName.LIABILITY_SECTION, SourceMode.READ),
+    "location_count": (DocumentName.SOV, SourceMode.DERIVED),
+    "total_insured_value_usd": (DocumentName.SOV, SourceMode.DERIVED),
+    "loss_run_valuation_date": (DocumentName.LOSS_RUN_A, SourceMode.READ),
+    "loss_count_5y": (DocumentName.LOSS_RUN_A, SourceMode.DERIVED),
+    "total_paid_5y_usd": (DocumentName.LOSS_RUN_A, SourceMode.DERIVED),
+    "total_incurred_5y_usd": (DocumentName.LOSS_RUN_A, SourceMode.DERIVED),
+    "is_update_of_prior_submission": (DocumentName.BROKER_EMAIL, SourceMode.DERIVED),
+}
+
+LITERAL_CHECK_EXEMPT: frozenset[str] = frozenset(
+    {"mailing_address", "is_update_of_prior_submission"}
+)
