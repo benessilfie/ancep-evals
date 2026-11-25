@@ -30,14 +30,13 @@ export function HowItWorks({
     <div className="min-h-0 flex-1 overflow-y-auto">
       <div className="mx-auto w-full max-w-[64rem] px-6 py-10">
         <div className="mb-7">
-          <h1 className="max-w-[26ch] text-[1.75rem] leading-[1.15] font-semibold tracking-[-0.02em]">
-            Grading AI on insurance submissions
+          <h1 className="max-w-[24ch] text-[1.875rem] leading-[1.12] font-semibold tracking-[-0.02em]">
+            An eval set for commercial insurance submission intake
           </h1>
-          <p className="mt-2 max-w-[62ch] text-[1rem] leading-relaxed text-ink-soft">
-            An eval set is a fixed suite of test cases where the right answers are written
-            down in advance, that you point a model at and score. This one is about
-            commercial insurance paperwork, and it takes about two minutes to walk
-            through.
+          <p className="mt-3 max-w-[64ch] text-[1.0625rem] leading-relaxed text-ink-soft">
+            Ten submissions with the right answers written down first, so I can grade the
+            record a model files instead of the summary it writes about filing it. Six
+            steps, about two minutes, then you can run one yourself.
           </p>
         </div>
 

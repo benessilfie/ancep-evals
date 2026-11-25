@@ -36,10 +36,10 @@ export default function App() {
         <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2 px-5 py-3">
           <div className="flex items-baseline gap-3">
             <span className="text-[0.875rem] font-medium">
-              Grading AI on insurance submissions
+              An eval set for insurance submission intake
             </span>
             <span className="hidden text-[0.8125rem] text-ink-soft lg:inline">
-              on what it filed, not what it said it did
+              graded on what the model filed, not what it said it did
             </span>
           </div>
           <div className="flex items-center gap-5">
