@@ -111,7 +111,7 @@ export function BlankRecord({ answers, running }: Props) {
                   )}
                 </td>
                 <td className="w-[6rem] py-2.5 pr-4 font-mono text-[0.75rem] text-ink-faint">
-                  {answer ? (answer.status === "flagged" ? "—" : answer.mode) : ""}
+                  {answer ? (answer.status === "flagged" ? "" : answer.mode) : ""}
                 </td>
                 <td className="w-[9rem] py-2.5 font-mono text-[0.75rem] text-ink-faint">
                   {answer?.sources?.[0]?.document ?? ""}

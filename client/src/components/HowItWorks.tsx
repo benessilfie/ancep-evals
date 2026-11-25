@@ -1,5 +1,16 @@
+import { useState } from "react"
+import { Evidence } from "@/components/Evidence"
 import { FormMark, LedgerMark, PaperMark, ScheduleMark, SealMark } from "@/components/Marks"
-import type { EvalData } from "@/types"
+import type { EvalCase, EvalData } from "@/types"
+import { cn } from "@/lib/utils"
+
+const usd = (n: number) => `$${n.toLocaleString("en-US")}`
+
+interface StepView {
+  title: string
+  body: React.ReactNode
+  aside: React.ReactNode
+}
 
 export function HowItWorks({
   data,
@@ -8,217 +19,347 @@ export function HowItWorks({
   data: EvalData
   onGo: (view: "live" | "recorded") => void
 }) {
-  const unbeaten = data.cases.filter((c) => c.trials.every((t) => !t.passed))
-  const controls = data.cases.filter((c) => c.kind === "control").length
+  const [step, setStep] = useState(0)
+  const broken = data.cases.find((c) => c.trials.every((t) => !t.passed)) ?? data.cases[4]
+  const controls = data.cases.filter((c) => c.kind === "control")
+  const steps = buildSteps(data, broken, controls, onGo)
+  const current = steps[step]
+  const last = step === steps.length - 1
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
-      <article className="mx-auto w-full max-w-[50rem] px-6 py-12">
-        <h1 className="max-w-[19ch] text-[2.125rem] leading-[1.1] font-semibold tracking-[-0.025em] sm:text-[2.75rem]">
-          An AI spotted the problem, wrote it down, and filed a clean report anyway.
-        </h1>
+      <div className="mx-auto w-full max-w-[64rem] px-6 py-10">
+        <nav className="flex flex-wrap items-center gap-x-2 gap-y-2">
+          {steps.map((s, i) => (
+            <button
+              key={s.title}
+              type="button"
+              onClick={() => setStep(i)}
+              className={cn(
+                "pressable rounded-field px-2.5 py-1 text-[0.75rem] transition-colors",
+                i === step
+                  ? "bg-ink text-paper"
+                  : i < step
+                    ? "text-ink-soft hover:bg-paper-sunk"
+                    : "text-ink-faint hover:bg-paper-sunk"
+              )}
+            >
+              <span className="font-mono text-[0.625rem]">{i + 1}</span>
+              <span className="ml-1.5">{s.title}</span>
+            </button>
+          ))}
+        </nav>
 
-        <div className="mt-7 space-y-4 text-[1.0625rem] leading-relaxed text-ink-soft">
-          <p>
-            When a business wants insurance, its broker sends the insurer a pile of
-            paperwork. Someone has to read all of it and type the facts into a system. That
-            job is now being handed to AI.
-          </p>
-          <p>
-            So I made ten fake submissions where I already know every right answer, gave
-            them to three Claude models, three goes each, and checked{" "}
-            <strong className="font-medium text-ink">what they actually typed in</strong> —
-            not the confident paragraph they wrote about it.
-          </p>
+        <div className="mt-9 grid gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
+          <div>{current.body}</div>
+          <div className="min-w-0">{current.aside}</div>
         </div>
 
-        <Rule />
-
-        <h2 className="text-[1.25rem] font-semibold tracking-[-0.01em]">
-          How I know the right answers
-        </h2>
-        <p className="mt-2 max-w-[62ch] text-[0.9375rem] leading-relaxed text-ink-soft">
-          Normally you would pay someone who knows insurance to read real files and mark
-          them up. That takes days. I did it backwards instead.
-        </p>
-
-        <ol className="mt-7 space-y-7">
-          <Step
-            mark={<PaperMark className="h-10 w-12 text-rule" />}
-            head="First decide what is true"
-            body="A bakery with six shops. Property worth $8,400,000 in total. Two claims in the last five years, one for $12,000 and one for $30,000."
-          />
-          <Step
-            mark={<FormMark className="h-10 w-12 text-rule" />}
-            head="Then print the paperwork from that"
-            body="An email from the broker, the application form the client signed, a spreadsheet listing all six shops, and claims records from the two previous insurers."
-            note="Because the facts came first, the paperwork can never disagree with the answer key by accident."
-          />
-          <Step
-            mark={<LedgerMark className="h-10 w-12 text-rule" />}
-            head="Then break exactly one thing"
-            body="On the signed form, tick the box that says no claims in five years. Leave the two real claims sitting in the attached records."
-            note="Now the right answer is not a number. It is: these two documents disagree, go and ask the broker."
-          />
-        </ol>
-
-        <Rule />
-
-        <h2 className="text-[1.25rem] font-semibold tracking-[-0.01em]">
-          Three things get checked
-        </h2>
-        <dl className="mt-5 space-y-5">
-          <Check
-            head="Is the number right?"
-            body="Did it say the property is worth $8,400,000, or $7,900,000?"
-          />
-          <Check
-            head="Did it really read that, or work it out?"
-            body="If it says &ldquo;I read the total off the form&rdquo;, the total had better be on the form. Often it is not there at all, and the agent added up the spreadsheet and called it reading. Same number, but now nobody double-checks it."
-          />
-          <Check
-            head="Did it stop when it should have?"
-            body="When the form says no claims and the records show two, the right answer is to raise it. Picking one and moving on is the failure, even when it picks the correct one."
-          />
-        </dl>
-
-        <Rule />
-
-        <div className="flex items-start gap-5">
-          <SealMark className="mt-1 h-12 w-14 shrink-0 text-rule" />
-          <div>
-            <h2 className="text-[1.25rem] font-semibold tracking-[-0.01em]">
-              Why {controls} of the ten have nothing wrong with them
-            </h2>
-            <p className="mt-2 max-w-[58ch] text-[0.9375rem] leading-relaxed text-ink-soft">
-              A smoke alarm that goes off constantly catches every fire. It is also
-              useless. If every file had a trap in it, an AI that said &ldquo;ask a
-              human&rdquo; to everything would score full marks.
-            </p>
-            <p className="mt-3 max-w-[58ch] text-[0.9375rem] leading-relaxed text-ink-soft">
-              So some files are clean, and raising a query on those counts against you. One
-              of them genuinely has no claims, with a letter from the insurer confirming
-              it. That looks almost identical to the file where the claims records are
-              simply missing — and those two need opposite answers.
-            </p>
-          </div>
+        <div className="mt-10 flex items-center gap-3 border-t border-rule-soft pt-5">
+          <button
+            type="button"
+            disabled={step === 0}
+            onClick={() => setStep((s) => Math.max(0, s - 1))}
+            className="pressable rounded-control border border-rule px-4 py-2 text-[0.8125rem] disabled:opacity-40"
+          >
+            Back
+          </button>
+          {!last ? (
+            <button
+              type="button"
+              onClick={() => setStep((s) => s + 1)}
+              className="pressable rounded-control bg-ink px-5 py-2 text-[0.8125rem] font-medium text-paper transition-colors hover:bg-carbon"
+            >
+              Next
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => onGo("live")}
+              className="pressable rounded-control bg-ink px-5 py-2 text-[0.8125rem] font-medium text-paper transition-colors hover:bg-carbon"
+            >
+              Open the live demo
+            </button>
+          )}
+          <span className="ml-auto font-mono text-micro text-ink-faint">
+            {step + 1} of {steps.length}
+          </span>
         </div>
+      </div>
+    </div>
+  )
+}
 
-        <Rule />
+function buildSteps(
+  data: EvalData,
+  broken: EvalCase,
+  controls: EvalCase[],
+  onGo: (view: "live" | "recorded") => void
+): StepView[] {
+  const f = broken.facts
+  const sample = data.cases[1]
 
-        <h2 className="text-[1.25rem] font-semibold tracking-[-0.01em]">
-          What happened
-        </h2>
-        {unbeaten.map((c) => (
-          <div key={c.id} className="mt-4 border-l-2 border-stamp bg-stamp-wash px-5 py-4">
-            <p className="text-[1.0625rem] leading-snug font-medium">
-              Every model failed this one. Every single run.
-            </p>
-            <p className="mt-2.5 max-w-[60ch] text-[0.9375rem] leading-relaxed text-ink-soft">
-              The file where the form says no claims and the records show two. All three
-              models typed in &ldquo;2 claims&rdquo;, which is correct, and said honestly
-              where they got it. None of them mentioned that the signed form said the
-              opposite.
-            </p>
-            <p className="mt-2.5 max-w-[60ch] text-[0.9375rem] leading-relaxed text-ink-soft">
-              One model even wrote the contradiction down in its notes, then filed the
-              clean number anyway. Read what it said and it looks like it caught the
-              problem. Read what it filed and the problem is invisible.
-            </p>
-            <div className="mt-3 font-mono text-micro text-stamp">
-              {c.id} · {c.trials.length} runs, none passed
+  return [
+    {
+      title: "What this is",
+      body: (
+        <Prose>
+          <p>
+            A broker sends an insurer a pile of paperwork and somebody has to read all of
+            it and type the facts into a system, and that job is going to AI now.
+          </p>
+          <p>
+            So I built ten fake submissions where I already know every right answer, gave
+            them to three Claude models three times each, and graded the record they filed
+            rather than the summary they wrote about filing it.
+          </p>
+          <p className="text-ink">
+            Models that get this wrong still describe their work in fluent, confident
+            prose, so the summary tells you nothing.
+          </p>
+        </Prose>
+      ),
+      aside: (
+        <Panel label="the ten submissions">
+          <ul className="divide-y divide-rule-soft">
+            {data.cases.map((c) => (
+              <li key={c.id} className="flex items-center gap-3 px-4 py-2">
+                <span className="font-mono text-[0.625rem] text-ink-faint">
+                  {c.id.slice(0, 2)}
+                </span>
+                <span className="flex-1 truncate text-[0.8125rem]">{c.short}</span>
+                <span
+                  className={cn(
+                    "font-mono text-[0.625rem]",
+                    c.kind === "control" ? "text-seal" : "text-ink-faint"
+                  )}
+                >
+                  {c.kind === "control" ? "nothing wrong" : "one thing broken"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      ),
+    },
+    {
+      title: "How I know the answers",
+      body: (
+        <Prose>
+          <p>
+            Normally you would pay someone who knows insurance to read real files and mark
+            them up, which takes days and expertise I do not have.
+          </p>
+          <p>
+            So I did it the other way round. I wrote down what is true first, then a
+            program printed the paperwork out of that record, which means the answer key
+            came free and a trap is just me breaking one thing on purpose.
+          </p>
+        </Prose>
+      ),
+      aside: (
+        <div className="space-y-3">
+          <Flow
+            mark={<PaperMark className="h-9 w-11 text-rule" />}
+            head="the truth record"
+            body={`A bakery, ${f?.locationCount ?? 6} shops, ${usd(f?.totalInsured ?? 8400000)} of property, ${f?.lossCount ?? 2} claims worth ${usd(f?.totalIncurred ?? 42000)} between them.`}
+          />
+          <Flow
+            mark={<FormMark className="h-9 w-11 text-rule" />}
+            head="the paperwork, printed from it"
+            body={`${sample.documents.length} documents. The broker's email, the application and its property and liability sections, the schedule of values, loss runs from both prior carriers.`}
+          />
+          <Flow
+            mark={<LedgerMark className="h-9 w-11 text-rule" />}
+            head="then one thing breaks"
+            body="Tick the no claims box on the signed form and leave the two real claims in the attached loss runs. The truth record still holds the right answer."
+            tone="stamp"
+          />
+        </div>
+      ),
+    },
+    {
+      title: "What I check",
+      body: (
+        <Prose>
+          <p>Three things on every field, and the middle one is the whole point.</p>
+          <p>
+            Every answer has to carry its provenance, so the agent names the document and
+            says whether it read the value or worked it out, and I check that claim against
+            the document it named.
+          </p>
+        </Prose>
+      ),
+      aside: (
+        <div className="space-y-3">
+          <Flow
+            mark={<ScheduleMark className="h-9 w-11 text-rule" />}
+            head="is the number right"
+            body={`Did it file ${usd(f?.totalInsured ?? 8400000)} for the property, or something else.`}
+          />
+          <Flow
+            mark={<FormMark className="h-9 w-11 text-rule" />}
+            head="did it really read that"
+            body="If it says it read the total off the application, that total had better be on the application. Usually it is not anywhere, so the agent sums the schedule and calls it reading, and the number is right but nobody checks the arithmetic again."
+            tone="stamp"
+          />
+          <Flow
+            mark={<SealMark className="h-9 w-11 text-rule" />}
+            head="did it stop and ask"
+            body="When two documents disagree, or one is missing, the right answer is a query, not a value. Picking a side quietly is the failure even when it picks correctly."
+          />
+        </div>
+      ),
+    },
+    {
+      title: "Why some have no trap",
+      body: (
+        <Prose>
+          <p>
+            A smoke alarm that goes off all day catches every fire and is useless, so if
+            every file had a trap an agent that queried everything would score full marks.
+          </p>
+          <p>
+            {controls.length} of the ten are clean, and raising a query on those counts
+            against you. One of them genuinely has no claims with the carrier&rsquo;s nil
+            letter attached, which looks almost identical to the file where the loss runs
+            are simply missing, and those two need opposite answers.
+          </p>
+        </Prose>
+      ),
+      aside: (
+        <Panel label="the pair that decides it">
+          <div className="grid gap-px bg-rule-soft sm:grid-cols-2">
+            <div className="bg-white px-4 py-3">
+              <div className="field-label">03 nil losses, letter attached</div>
+              <p className="mt-1.5 text-[0.875rem] leading-snug">
+                Record zero claims and cite the letter.
+              </p>
+              <p className="mt-1.5 font-mono text-[0.6875rem] text-seal">
+                querying this is wrong
+              </p>
+            </div>
+            <div className="bg-white px-4 py-3">
+              <div className="field-label">09 loss runs missing</div>
+              <p className="mt-1.5 text-[0.875rem] leading-snug">
+                Go back to the broker. Absent is not zero.
+              </p>
+              <p className="mt-1.5 font-mono text-[0.6875rem] text-stamp">
+                recording zero is wrong
+              </p>
             </div>
           </div>
-        ))}
-
-        <Rule />
-
-        <h2 className="text-[1.25rem] font-semibold tracking-[-0.01em]">
-          Have a look around
-        </h2>
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+        </Panel>
+      ),
+    },
+    {
+      title: "What broke",
+      body: (
+        <Prose>
+          <p>
+            Every model failed this one on every run, {broken.trials.length} attempts
+            between them.
+          </p>
+          <p>
+            They all filed the right claim count with an honest citation and no query, and
+            none of them mentioned that the signed form said the opposite.
+          </p>
+          <p className="text-ink">
+            One of them wrote the contradiction into its own notes and filed the clean
+            number anyway, so reading what it said you would think it caught the problem,
+            and reading what it filed the problem is gone.
+          </p>
+        </Prose>
+      ),
+      aside: (
+        <div className="overflow-hidden rounded-field border border-rule">
+          <Evidence evalCase={broken} />
+        </div>
+      ),
+    },
+    {
+      title: "Go and try it",
+      body: (
+        <Prose>
+          <p>
+            The live demo runs a packet against a model right now and fills the record in
+            front of you, so you can watch it miss the thing it was told to watch for.
+          </p>
+          <p>
+            Findings has all {data.totals.trials} runs that already happened, every packet,
+            every model, and the field that went wrong in each one.
+          </p>
+        </Prose>
+      ),
+      aside: (
+        <div className="grid gap-4 sm:grid-cols-2">
           <Card
             mark={<ScheduleMark className="h-7 w-8 text-rule" />}
             head="Live demo"
-            body="Open any of the ten files, read the actual paperwork, then run it past a model right now and watch the twenty-one fields fill in one by one."
-            hint="start with the file called “Form contradicts the loss runs”"
+            body="Read any packet document by document, then run it. About forty seconds."
+            hint={`open ${broken.short} first`}
             onClick={() => onGo("live")}
           />
           <Card
             mark={<LedgerMark className="h-7 w-8 text-rule" />}
             head="Findings"
-            body={`All ${data.totals.trials} runs that already happened. Every file, every model, and exactly which field went wrong.`}
-            hint="red numbers are failures, so scan the column for them"
+            body={`All ${data.totals.trials} recorded runs, with the record each one filed.`}
+            hint="red numbers in the left list are failures"
             onClick={() => onGo("recorded")}
           />
         </div>
+      ),
+    },
+  ]
+}
 
-        <Rule />
+function Prose({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="space-y-4 text-[1rem] leading-relaxed text-ink-soft">{children}</div>
+  )
+}
 
-        <h2 className="text-[1.25rem] font-semibold tracking-[-0.01em]">
-          Things worth knowing
-        </h2>
-        <ul className="mt-4 space-y-3">
-          {[
-            "These files are made up. They show that a mistake like this can happen and can be caught, not how often it happens for real.",
-            "The forms are modelled on the industry standard ones but they are not the real thing, because those are licensed.",
-            `${data.totals.trials} runs over ten files is not enough to say one model is better than another, so there is no league table here.`,
-            "I do not work in insurance. Every answer I marked as correct carries a link to where I got that from, so you can tell me I am wrong.",
-          ].map((line) => (
-            <li
-              key={line}
-              className="border-l-2 border-rule pl-4 text-[0.9375rem] leading-relaxed text-ink-soft"
-            >
-              {line}
-            </li>
-          ))}
-        </ul>
-      </article>
+function Panel({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="overflow-hidden rounded-field border border-rule bg-white">
+      <div className="field-label border-b border-rule-soft bg-paper-sunk/60 px-4 py-2">
+        {label}
+      </div>
+      {children}
     </div>
   )
 }
 
-function Rule() {
-  return <hr className="my-10 border-0 border-t border-rule-soft" />
-}
-
-function Step({
+function Flow({
   mark,
   head,
   body,
-  note,
+  tone,
 }: {
   mark: React.ReactNode
   head: string
   body: string
-  note?: string
+  tone?: "stamp"
 }) {
   return (
-    <li className="flex items-start gap-5">
+    <div
+      className={cn(
+        "flex items-start gap-4 rounded-field border bg-white px-4 py-3.5",
+        tone === "stamp" ? "border-stamp/40" : "border-rule"
+      )}
+    >
       <span className="mt-0.5 shrink-0">{mark}</span>
       <div>
-        <div className="text-[1rem] font-medium">{head}</div>
-        <p className="mt-1 max-w-[56ch] text-[0.9375rem] leading-relaxed text-ink-soft">
-          {body}
-        </p>
-        {note && (
-          <p className="mt-2 max-w-[56ch] border-l-2 border-rule pl-3 text-[0.875rem] leading-relaxed text-ink-faint">
-            {note}
-          </p>
-        )}
+        <div
+          className={cn(
+            "text-[0.9375rem] font-medium",
+            tone === "stamp" ? "text-stamp" : "text-ink"
+          )}
+        >
+          {head}
+        </div>
+        <p className="mt-1 text-[0.875rem] leading-relaxed text-ink-soft">{body}</p>
       </div>
-    </li>
-  )
-}
-
-function Check({ head, body }: { head: string; body: string }) {
-  return (
-    <div className="border-l-2 border-rule pl-4">
-      <dt className="text-[1rem] font-medium">{head}</dt>
-      <dd
-        className="mt-1 max-w-[62ch] text-[0.9375rem] leading-relaxed text-ink-soft"
-        dangerouslySetInnerHTML={{ __html: body }}
-      />
     </div>
   )
 }
@@ -247,9 +388,7 @@ function Card({
         <span className="text-[0.9375rem] font-medium">{head}</span>
       </div>
       <p className="mt-2 text-[0.8125rem] leading-relaxed text-ink-soft">{body}</p>
-      <p className="mt-2.5 font-mono text-[0.6875rem] leading-relaxed text-carbon">
-        {hint}
-      </p>
+      <p className="mt-2.5 font-mono text-[0.6875rem] text-carbon">{hint}</p>
     </button>
   )
 }

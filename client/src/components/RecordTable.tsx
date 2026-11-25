@@ -86,10 +86,10 @@ export function RecordTable({ trial }: { trial: Trial }) {
                 )}
               </td>
               <td className="px-3 py-2 font-mono text-[0.75rem] text-ink-soft">
-                {answer.status === "flagged" ? "—" : answer.mode}
+                {answer.status === "flagged" ? "" : answer.mode}
               </td>
               <td className="px-3 py-2 font-mono text-[0.75rem] text-ink-soft">
-                {answer.sources?.[0]?.document ?? "—"}
+                {answer.sources?.[0]?.document ?? ""}
               </td>
             </tr>
           )
