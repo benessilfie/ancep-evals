@@ -187,7 +187,11 @@ function buildSteps(
         </Prose>
       ),
       aside: (
-        <Panel label="ten submissions, eight classes of failure">
+        <Panel
+          label={`${data.cases.length} submissions, ${
+            new Set(data.cases.filter((c) => c.kind !== "control").map((c) => FAILURE_CLASS[c.id])).size
+          } ways to go wrong`}
+        >
           <ul className="divide-y divide-rule-soft">
             {data.cases.map((c) => (
               <li key={c.id} className="flex items-center gap-3 px-4 py-2">
@@ -294,12 +298,12 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            {controls.length} of the ten are clean. If they all had something wrong in them
+            {controls.length} of the {data.cases.length} are clean. If they all had something wrong in them
             an agent could flag everything and still score full marks, which is useless,
             like a smoke alarm that goes off all day.
           </p>
           <p className="text-ink">
-            So on the clean {controls.length}, raising a query counts against it.
+            So on those {controls.length}, raising a query counts against it.
           </p>
           <p>
             Two of them look almost identical and need opposite answers. One client
