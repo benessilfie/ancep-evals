@@ -278,18 +278,22 @@ function buildSteps(
       ),
     },
     {
-      title: "Why some have no trap",
+      title: "Why some are clean",
       body: (
         <Prose>
           <p>
-            A smoke alarm that goes off all day catches every fire and is useless, so if
-            every file had a trap an agent that queried everything would score full marks.
+            {controls.length} of the ten are clean. If they all had something wrong in them
+            an agent could flag everything and still score full marks, which is useless,
+            like a smoke alarm that goes off all day.
+          </p>
+          <p className="text-ink">
+            So on the clean {controls.length}, raising a query counts against it.
           </p>
           <p>
-            {controls.length} of the ten are clean, and raising a query on those counts
-            against you. One of them genuinely has no claims with the carrier&rsquo;s nil
-            letter attached, which looks almost identical to the file where the loss runs
-            are simply missing, and those two need opposite answers.
+            Two of the files look almost identical and need opposite answers. One client
+            genuinely has no claims and the insurer sent a letter confirming it, so the
+            agent should record zero. The other is missing its claims record entirely, so
+            the agent should go back and ask.
           </p>
         </Prose>
       ),
@@ -323,17 +327,20 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            Every model failed this one on every run, {broken.trials.length} attempts
-            between them.
-          </p>
-          <p>
-            They all filed the right claim count with an honest citation and no query, and
-            none of them mentioned that the signed form said the opposite.
+            The hardest one is the file where the signed form says no claims and the
+            attached insurer records show two.
           </p>
           <p className="text-ink">
-            One of them wrote the contradiction into its own notes and filed the clean
-            number anyway, so reading what it said you would think it caught the problem,
-            and reading what it filed the problem is gone.
+            Every model failed it, on all {broken.trials.length} runs.
+          </p>
+          <p>
+            They all recorded 2 claims, which is correct, and said honestly where they got
+            it. None of them mentioned that the signed form said the opposite.
+          </p>
+          <p>
+            One wrote the contradiction into its own notes and filed the clean number
+            anyway. Read what it wrote and you would think it caught the problem. Read what
+            it filed and the problem is gone.
           </p>
         </Prose>
       ),
