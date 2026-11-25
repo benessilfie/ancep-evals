@@ -207,6 +207,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
                   </button>
                 )
               })}
+            </div>
             {chosen && (
               <p className="mt-2 text-[0.75rem] text-ink-faint">{chosen.note}</p>
             )}
