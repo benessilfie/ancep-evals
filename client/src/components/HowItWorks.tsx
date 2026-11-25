@@ -118,9 +118,13 @@ function buildSteps(
             it and type the facts into a system, and that job is going to AI now.
           </p>
           <p>
-            So I built ten fake submissions where I already know every right answer, gave
-            them to three Claude models, three goes at each one, which is{" "}
-            {data.totals.trials} graded records in total.
+            An eval set is how you find out whether it can. You write a fixed set of test
+            cases, you write down the right answer to each one before any model sees it,
+            then you point a model at them and score what comes back.
+          </p>
+          <p>
+            This one is ten fake submissions put to three Claude models, three goes at
+            each, so {data.totals.trials} graded records in total.
           </p>
           <p className="text-ink">
             What I score is the record they filed, not the summary they wrote about filing
