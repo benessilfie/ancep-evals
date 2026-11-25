@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react"
-import { CaseSheet } from "@/components/CaseSheet"
-import { Ledger } from "@/components/Ledger"
-import { Reveal } from "@/components/Reveal"
+import { PacketDetail } from "@/components/PacketDetail"
+import { PacketList } from "@/components/PacketList"
 import type { EvalData } from "@/types"
 
-const HERO_CASE = "05-application-contradicts-loss-runs"
-const HERO_FIELD = "loss_count_5y"
+const DEFAULT_CASE = "05-application-contradicts-loss-runs"
 
 export default function App() {
   const [data, setData] = useState<EvalData | null>(null)
-  const [selected, setSelected] = useState(HERO_CASE)
+  const [selected, setSelected] = useState(DEFAULT_CASE)
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}eval.json`)
@@ -20,82 +18,47 @@ export default function App() {
 
   if (!data) {
     return (
-      <div className="flex min-h-dvh items-center justify-center">
-        <p className="font-mono text-micro text-ink-faint">loading results</p>
+      <div className="flex h-dvh items-center justify-center">
+        <p className="font-mono text-micro text-ink-faint">loading the run</p>
       </div>
     )
   }
 
-  const heroCase = data.cases.find((c) => c.id === HERO_CASE) ?? data.cases[0]
-  const heroTrial =
-    heroCase.trials.find((t) => t.model.includes("opus") && !t.passed) ?? heroCase.trials[0]
   const current = data.cases.find((c) => c.id === selected) ?? data.cases[0]
+  const unbeaten = data.cases.filter((c) => c.trials.every((t) => !t.passed)).length
 
   return (
-    <div className="min-h-dvh">
-      <header className="border-b border-rule">
-        <div className="mx-auto flex max-w-[76rem] flex-wrap items-baseline justify-between gap-x-8 gap-y-2 px-5 py-3.5">
-          <span className="font-mono text-[0.8125rem] text-ink">
-            submission intake evals
-          </span>
-          <span className="font-mono text-micro text-ink-faint">
-            {data.totals.trials} trials · {data.models.length} models · {data.reps} runs each
-            · effort {data.effort}
-          </span>
+    <div className="flex h-dvh flex-col overflow-hidden">
+      <header className="shrink-0 border-b border-rule">
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2 px-5 py-3">
+          <div className="flex items-baseline gap-4">
+            <span className="font-mono text-[0.8125rem]">submission intake evals</span>
+            <span className="hidden text-[0.875rem] text-ink-soft sm:inline">
+              Graded on the record the model filed, not the summary it wrote.
+            </span>
+          </div>
+          <div className="flex items-center gap-5 font-mono text-micro text-ink-faint">
+            <span>
+              <span className="text-stamp">{unbeaten}</span>{" "}
+              {unbeaten === 1 ? "packet" : "packets"} no model passed
+            </span>
+            <span>
+              {data.totals.passed}/{data.totals.trials} records accepted
+            </span>
+            <span className="hidden md:inline">effort {data.effort}</span>
+          </div>
         </div>
       </header>
 
-      <main>
-        <section className="border-b border-rule-soft py-16 sm:py-20">
-          <div className="mx-auto w-full max-w-[52rem] px-5">
-            <div className="field-label">finding</div>
-            <h1 className="field-box mt-1.5 px-5 py-5 text-[1.75rem] leading-[1.25] font-semibold tracking-[-0.015em] sm:text-[2.125rem]">
-              The agent saw the contradiction, wrote it down, and signed off the field
-              anyway.
-            </h1>
-          </div>
-          <div className="mt-10">
-            <Reveal trial={heroTrial} field={HERO_FIELD} />
-          </div>
-        </section>
-
-        <section className="border-b border-rule-soft py-14">
-          <div className="mx-auto w-full max-w-[76rem] px-5">
-            <h2 className="text-lg font-semibold tracking-[-0.01em]">
-              Ten packets, graded on the record rather than the summary
-            </h2>
-            <p className="mt-2 max-w-[46rem] text-[0.9375rem] leading-relaxed text-ink-soft">
-              Each packet is generated from a truth record, so every right answer is known
-              before a model sees it. Three packets have no trick in them, because an agent
-              that flags everything would otherwise score full marks.
-            </p>
-            <div className="mt-7">
-              <Ledger
-                cases={data.cases}
-                models={data.models}
-                selected={selected}
-                onSelect={setSelected}
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="py-14">
-          <div className="mx-auto w-full max-w-[76rem] px-5">
-            <CaseSheet key={current.id} evalCase={current} />
-          </div>
-        </section>
-      </main>
-
-      <footer className="border-t border-rule">
-        <div className="mx-auto max-w-[76rem] px-5 py-6">
-          <p className="max-w-[46rem] text-[0.8125rem] leading-relaxed text-ink-soft">
-            Every packet here is synthetic. The forms follow industry field names but are
-            not ACORD forms, which are licensed. The author does not work in insurance, so
-            each expected answer carries a citation you can argue with.
-          </p>
-        </div>
-      </footer>
+      <div className="flex min-h-0 flex-1">
+        <PacketList
+          cases={data.cases}
+          models={data.models}
+          selected={current.id}
+          onSelect={setSelected}
+        />
+        <PacketDetail key={current.id} evalCase={current} />
+      </div>
     </div>
   )
 }
