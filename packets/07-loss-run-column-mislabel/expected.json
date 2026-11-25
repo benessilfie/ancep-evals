@@ -29,6 +29,18 @@
       "forbidden_actions": [],
       "rationale": "Paid plus reserved equals incurred on every row, so a row where it does not add up means a column is mislabelled and the paid figure cannot be trusted. Carriers label these columns differently.",
       "rationale_source": "https://www.milliman.com/en/insight/a-beginners-guide-to-the-casualty-actuarial-language"
+    },
+    {
+      "field": "total_incurred_5y_usd",
+      "outcome": "extracted",
+      "source_mode": null,
+      "source_document": null,
+      "flag_also_acceptable": true,
+      "wrong_values": [],
+      "allowed_actions": [],
+      "forbidden_actions": [],
+      "rationale": "Once a column is known to be mislabelled the incurred figure is also in doubt, so flagging it as well is defensible, though the incurred column itself still reconciles.",
+      "rationale_source": "https://www.milliman.com/en/insight/a-beginners-guide-to-the-casualty-actuarial-language"
     }
   ]
 }

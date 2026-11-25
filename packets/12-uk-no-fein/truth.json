@@ -1,0 +1,132 @@
+{
+  "applicant": {
+    "name": "Pennine Mills Limited",
+    "fein": "",
+    "entity_type": "Private limited company",
+    "street": "Unit 4, Kirkstall Road",
+    "city": "Leeds",
+    "state": "",
+    "zip_code": "LS4 2AZ",
+    "business_started": "2011-03-02"
+  },
+  "operations": {
+    "description": "Flour milling and packing for wholesale bakeries, three sites in West Yorkshire",
+    "sic_code": "1041",
+    "naics_code": "311211",
+    "annual_revenue_usd": 14600000,
+    "employee_count": 62
+  },
+  "policy": {
+    "effective_date": "2027-02-01",
+    "expiration_date": "2028-02-01",
+    "lines_requested": [
+      "Property",
+      "Commercial General Liability"
+    ]
+  },
+  "locations": [
+    {
+      "loc_no": 1,
+      "street": "Unit 4, Kirkstall Road",
+      "city": "Leeds",
+      "state": "",
+      "zip_code": "LS4 2AZ",
+      "construction_class": 2,
+      "year_built": 1996,
+      "stories": 1,
+      "square_feet": 28000,
+      "building_value_usd": 2400000,
+      "bpp_value_usd": 310000,
+      "business_income_value_usd": 180000,
+      "occupancy": "Flour milling and packing",
+      "sprinklered": true,
+      "protection_class": 3,
+      "tiv_usd": 2890000
+    },
+    {
+      "loc_no": 2,
+      "street": "Bowling Back Lane",
+      "city": "Bradford",
+      "state": "",
+      "zip_code": "BD4 8SW",
+      "construction_class": 2,
+      "year_built": 1988,
+      "stories": 1,
+      "square_feet": 28000,
+      "building_value_usd": 1750000,
+      "bpp_value_usd": 240000,
+      "business_income_value_usd": 130000,
+      "occupancy": "Flour milling and packing",
+      "sprinklered": true,
+      "protection_class": 3,
+      "tiv_usd": 2120000
+    },
+    {
+      "loc_no": 3,
+      "street": "Parkside Industrial Estate",
+      "city": "Wakefield",
+      "state": "",
+      "zip_code": "WF2 0XJ",
+      "construction_class": 2,
+      "year_built": 2009,
+      "stories": 1,
+      "square_feet": 28000,
+      "building_value_usd": 2900000,
+      "bpp_value_usd": 395000,
+      "business_income_value_usd": 210000,
+      "occupancy": "Flour milling and packing",
+      "sprinklered": true,
+      "protection_class": 3,
+      "tiv_usd": 3505000
+    }
+  ],
+  "coverage": {
+    "property_coinsurance_pct": 100,
+    "property_valuation_basis": "RC",
+    "property_deductible_usd": 25000,
+    "gl_each_occurrence_usd": 5000000,
+    "gl_general_aggregate_usd": 10000000,
+    "gl_premium_basis": "S",
+    "gl_exposure_usd": 14600000
+  },
+  "prior_carriers": [
+    {
+      "carrier": "Thamesmead Insurance plc",
+      "line": "Property",
+      "policy_no": "TM-PR-884102",
+      "period_start": "2026-02-01",
+      "period_end": "2027-02-01",
+      "premium_usd": 36400
+    },
+    {
+      "carrier": "Ravensbourne Liability Limited",
+      "line": "General Liability",
+      "policy_no": "RL-GL-20934",
+      "period_start": "2026-02-01",
+      "period_end": "2027-02-01",
+      "premium_usd": 15800
+    }
+  ],
+  "losses": [
+    {
+      "carrier": "Thamesmead Insurance plc",
+      "claim_no": "TM-2024-0661",
+      "date_of_loss": "2024-09-14",
+      "date_reported": "2024-09-16",
+      "status": "closed",
+      "paid_usd": 48000,
+      "reserved_usd": 0,
+      "cause": "Storm",
+      "description": "Roof sheeting lifted at the Bradford site",
+      "incurred_usd": 48000
+    }
+  ],
+  "no_losses_letters": [],
+  "loss_run_valuation_date": "2026-12-31",
+  "total_insured_value_usd": 8515000,
+  "location_count": 3,
+  "loss_count": 1,
+  "total_paid_usd": 48000,
+  "total_reserved_usd": 0,
+  "total_incurred_usd": 48000
+}

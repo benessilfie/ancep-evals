@@ -68,7 +68,7 @@ export default function App() {
           </div>
           <div
             className={cn(
-              "hidden min-w-0 items-center justify-end gap-5 font-mono text-micro whitespace-nowrap text-ink-faint",
+              "hidden min-w-0 items-center justify-end gap-4 font-mono text-[0.625rem] tracking-[0.01em] whitespace-nowrap text-ink-faint",
               view === "recorded" && "2xl:flex"
             )}
           >

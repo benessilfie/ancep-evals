@@ -12,6 +12,7 @@ from submission_evals.render import (
     liability_section,
     loss_run,
     property_section,
+    slip,
     sov,
 )
 from submission_evals.render.options import PacketOptions
@@ -26,6 +27,7 @@ _FILENAMES = {
     DocumentName.LOSS_RUN_B: "loss_run_b.txt",
     DocumentName.NO_LOSSES_LETTER: "no_losses_letter.txt",
     DocumentName.RECORDS_ON_FILE: "records_on_file.txt",
+    DocumentName.SLIP: "slip.txt",
 }
 
 
@@ -48,19 +50,25 @@ def build_packet(spec: CaseSpec) -> dict[DocumentName, tuple[str, str]]:
             _FILENAMES[DocumentName.BROKER_EMAIL],
             broker_email.render(risk, options),
         ),
-        DocumentName.APPLICATION: (
+    }
+    if options.london_slip:
+        packet[DocumentName.SLIP] = (
+            _FILENAMES[DocumentName.SLIP],
+            slip.render(risk, options),
+        )
+    else:
+        packet[DocumentName.APPLICATION] = (
             _FILENAMES[DocumentName.APPLICATION],
             application.render(risk, options),
-        ),
-        DocumentName.PROPERTY_SECTION: (
+        )
+        packet[DocumentName.PROPERTY_SECTION] = (
             _FILENAMES[DocumentName.PROPERTY_SECTION],
             property_section.render(risk, options),
-        ),
-        DocumentName.LIABILITY_SECTION: (
+        )
+        packet[DocumentName.LIABILITY_SECTION] = (
             _FILENAMES[DocumentName.LIABILITY_SECTION],
             liability_section.render(risk, options),
-        ),
-    }
+        )
     packet[DocumentName.SOV] = sov.render(risk, options)
 
     for index, (filename, body) in enumerate(loss_run.render_all(risk, options)):

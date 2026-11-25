@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils"
 const ORDER = [
   "records_on_file",
   "broker_email",
+  "slip",
   "application",
   "property_section",
   "liability_section",
@@ -20,6 +21,7 @@ const ORDER = [
   "loss_run_a",
   "loss_run_b",
   "no_losses_letter",
+  "slip",
 ]
 
 const NAMES: Record<string, string> = {
@@ -32,6 +34,7 @@ const NAMES: Record<string, string> = {
   loss_run_a: "Loss run, Meridian",
   loss_run_b: "Loss run, Callaghan",
   no_losses_letter: "Nil claims letters",
+  slip: "Market reform slip",
 }
 
 const WHAT: Record<string, string> = {
@@ -44,6 +47,7 @@ const WHAT: Record<string, string> = {
   loss_run_a: "The expiring property carrier's claims record, as of a valuation date.",
   loss_run_b: "The expiring liability carrier's claims record, in its own layout.",
   no_losses_letter: "Written confirmation from a carrier that there are no claims.",
+  slip: "The London market contract. Risk details, period, sum insured and claims experience.",
 }
 
 export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {

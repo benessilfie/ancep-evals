@@ -22,6 +22,7 @@ const DOC_NAMES: Record<string, string> = {
   loss_run_a: "loss run A",
   loss_run_b: "loss run B",
   no_losses_letter: "nil letters",
+  slip: "slip",
 }
 
 const MODELS = ["Opus", "Sonnet", "Haiku"]

@@ -18,6 +18,8 @@ const FAILURE_CLASS: Record<string, string> = {
   "08-sov-page-break": "row split by layout",
   "09-missing-loss-runs": "evidence absent",
   "10-duplicate-submission": "already on file",
+  "11-london-slip": "unfamiliar format",
+  "12-uk-no-fein": "field has no source",
 }
 
 interface StepView {

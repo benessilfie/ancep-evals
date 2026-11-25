@@ -18,6 +18,8 @@ _SIGNALS: tuple[tuple[DocumentName, tuple[str, ...], int], ...] = (
     (DocumentName.NO_LOSSES_LETTER, ("no claims have been", "to whom it may concern"), 5),
     (DocumentName.BROKER_EMAIL, ("subject:", "from:", "to:"), 4),
     (DocumentName.RECORDS_ON_FILE, ("submissions already on file",), 6),
+    (DocumentName.SLIP, ("market reform contract", "unique market reference"), 6),
+    (DocumentName.SLIP, ("risk details", "security details", "order hereon"), 5),
 )
 
 _BY_NAME = {name.value: name for name in DocumentName}

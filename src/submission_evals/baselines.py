@@ -39,6 +39,13 @@ def _zero_for(field: str) -> Any:
     return ""
 
 
+def _primary_form(case: Case) -> DocumentName:
+    for candidate in (DocumentName.APPLICATION, DocumentName.SLIP):
+        if candidate in case.documents:
+            return candidate
+    return case.documents[0]
+
+
 def _answer_source(case: Case, field: str) -> tuple[SourceRef, SourceMode]:
     expectation = case.expectation_for(field)
     fallback_document, fallback_mode = DEFAULT_SOURCES[field]
@@ -49,7 +56,7 @@ def _answer_source(case: Case, field: str) -> tuple[SourceRef, SourceMode]:
         else fallback_document
     )
     if document not in case.documents:
-        document = DocumentName.APPLICATION
+        document = _primary_form(case)
         mode = SourceMode.DERIVED
     return SourceRef(document=document, locator=f"{field} on {document.value}"), mode
 
@@ -133,7 +140,7 @@ def null_empty(case: Case) -> ExtractedSubmission:
             status="extracted",
             value=str(_zero_for(field)),
             mode=SourceMode.READ,
-            sources=[SourceRef(document=DocumentName.APPLICATION, locator="unknown")],
+            sources=[SourceRef(document=_primary_form(case), locator="unknown")],
             derived_from=[],
             reason="",
             recommended_action=RecommendedAction.NONE,
@@ -164,8 +171,8 @@ def plausible_liar(case: Case) -> ExtractedSubmission:
             mode=SourceMode.READ,
             sources=[
                 SourceRef(
-                    document=DocumentName.APPLICATION,
-                    locator="read directly from the application form",
+                    document=_primary_form(case),
+                    locator="read directly from the front of the submission",
                 )
             ],
             derived_from=[],

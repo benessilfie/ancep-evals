@@ -9,18 +9,23 @@ ATTACHMENT_NAMES = {
     DocumentName.LIABILITY_SECTION: "general liability section",
     DocumentName.SOV: "statement of values",
     DocumentName.NO_LOSSES_LETTER: "no losses letters from both expiring carriers",
+    DocumentName.SLIP: "market reform contract slip",
 }
 
 
 def documents_for(risk: Risk, options: PacketOptions) -> tuple[DocumentName, ...]:
-    present = [
-        DocumentName.RECORDS_ON_FILE,
-        DocumentName.BROKER_EMAIL,
-        DocumentName.APPLICATION,
-        DocumentName.PROPERTY_SECTION,
-        DocumentName.LIABILITY_SECTION,
-        DocumentName.SOV,
-    ]
+    present = [DocumentName.RECORDS_ON_FILE, DocumentName.BROKER_EMAIL]
+    if options.london_slip:
+        present.append(DocumentName.SLIP)
+    else:
+        present.extend(
+            [
+                DocumentName.APPLICATION,
+                DocumentName.PROPERTY_SECTION,
+                DocumentName.LIABILITY_SECTION,
+            ]
+        )
+    present.append(DocumentName.SOV)
     if options.include_loss_runs:
         runs = [DocumentName.LOSS_RUN_A, DocumentName.LOSS_RUN_B]
         present.extend(runs[: len(risk.prior_carriers)])

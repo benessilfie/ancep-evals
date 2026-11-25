@@ -116,6 +116,7 @@ export const DOC_MARKS: Record<string, (p: MarkProps) => React.ReactElement> = {
   loss_run_a: LedgerMark,
   loss_run_b: LedgerMark,
   no_losses_letter: SealMark,
+  slip: SealMark,
 }
 
 export function SpinnerMark({ className }: MarkProps) {

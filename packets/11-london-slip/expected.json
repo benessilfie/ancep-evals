@@ -1,0 +1,41 @@
+{
+  "case_id": "11-london-slip",
+  "title": "The same risk presented on a London market slip instead of ACORD forms",
+  "kind": "control",
+  "exercises": null,
+  "paired_with": null,
+  "documents": [
+    "records_on_file",
+    "broker_email",
+    "slip",
+    "sov",
+    "loss_run_a",
+    "loss_run_b"
+  ],
+  "expectations": [
+    {
+      "field": "policy_expiration_date",
+      "outcome": "extracted",
+      "source_mode": "derived",
+      "source_document": "slip",
+      "flag_also_acceptable": false,
+      "wrong_values": [],
+      "allowed_actions": [],
+      "forbidden_actions": [],
+      "rationale": "A slip states the period as a duration and an inception date rather than two dates, so the expiry has to be worked out from it and declaring it as read off the page is a false receipt.",
+      "rationale_source": "https://www.londonmarketgroup.co.uk/mrc"
+    },
+    {
+      "field": "total_insured_value_usd",
+      "outcome": "extracted",
+      "source_mode": "read",
+      "source_document": "slip",
+      "flag_also_acceptable": false,
+      "wrong_values": [],
+      "allowed_actions": [],
+      "forbidden_actions": [],
+      "rationale": "The slip states the total sum insured in the risk details, so it is read rather than summed from the schedule.",
+      "rationale_source": "https://www.londonmarketgroup.co.uk/mrc"
+    }
+  ]
+}

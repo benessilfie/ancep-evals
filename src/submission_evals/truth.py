@@ -15,6 +15,7 @@ class FailureMode(StrEnum):
     SOV_PAGE_BREAK = "sov_page_break"
     MISSING_DOCUMENT = "missing_document"
     DUPLICATE_SUBMISSION = "duplicate_submission"
+    FIELD_WITH_NO_SOURCE = "field_with_no_source"
 
 
 class DocumentName(StrEnum):
@@ -27,6 +28,7 @@ class DocumentName(StrEnum):
     LOSS_RUN_B = "loss_run_b"
     NO_LOSSES_LETTER = "no_losses_letter"
     RECORDS_ON_FILE = "records_on_file"
+    SLIP = "slip"
 
 
 class SourceMode(StrEnum):

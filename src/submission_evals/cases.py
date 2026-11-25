@@ -32,6 +32,8 @@ SOURCE_INCURRED = (
     "https://www.milliman.com/en/insight/a-beginners-guide-to-the-casualty-actuarial-language"
 )
 SOURCE_EXTRACTION = "https://www.docsumo.com/blog/loss-run-data-extraction"
+SOURCE_MRC = "https://www.londonmarketgroup.co.uk/mrc"
+SOURCE_FEIN = "https://www.irs.gov/businesses/small-businesses-self-employed/employer-id-numbers"
 SOURCE_BROKER_QUERY = (
     "https://insops.com/blogs/why-broker-submissions-fail-on-first-receipt-and-how-to-fix-it"
 )
@@ -193,6 +195,114 @@ def build_risk(
     )
 
 
+_UK_CARRIERS = (
+    PriorCarrier(
+        carrier="Thamesmead Insurance plc",
+        line="Property",
+        policy_no="TM-PR-884102",
+        period_start=date(2026, 2, 1),
+        period_end=date(2027, 2, 1),
+        premium_usd=36_400,
+    ),
+    PriorCarrier(
+        carrier="Ravensbourne Liability Limited",
+        line="General Liability",
+        policy_no="RL-GL-20934",
+        period_start=date(2026, 2, 1),
+        period_end=date(2027, 2, 1),
+        premium_usd=15_800,
+    ),
+)
+
+_UK_SITES = (
+    ("Unit 4, Kirkstall Road", "Leeds", "LS4 2AZ", 1996, 2_400_000, 310_000, 180_000),
+    ("Bowling Back Lane", "Bradford", "BD4 8SW", 1988, 1_750_000, 240_000, 130_000),
+    ("Parkside Industrial Estate", "Wakefield", "WF2 0XJ", 2009, 2_900_000, 395_000, 210_000),
+)
+
+
+def _uk_locations() -> tuple[Location, ...]:
+    return tuple(
+        Location(
+            loc_no=index + 1,
+            street=street,
+            city=city,
+            state="",
+            zip_code=postcode,
+            construction_class=2,
+            year_built=year_built,
+            stories=1,
+            square_feet=28_000,
+            building_value_usd=building,
+            bpp_value_usd=bpp,
+            business_income_value_usd=bi,
+            occupancy="Flour milling and packing",
+            sprinklered=True,
+            protection_class=3,
+        )
+        for index, (street, city, postcode, year_built, building, bpp, bi) in enumerate(
+            _UK_SITES
+        )
+    )
+
+
+def build_uk_risk() -> Risk:
+    return Risk(
+        applicant=Applicant(
+            name="Pennine Mills Limited",
+            fein="",
+            entity_type="Private limited company",
+            street="Unit 4, Kirkstall Road",
+            city="Leeds",
+            state="",
+            zip_code="LS4 2AZ",
+            business_started=date(2011, 3, 2),
+        ),
+        operations=Operations(
+            description=(
+                "Flour milling and packing for wholesale bakeries, three sites in West Yorkshire"
+            ),
+            sic_code="1041",
+            naics_code="311211",
+            annual_revenue_usd=14_600_000,
+            employee_count=62,
+        ),
+        policy=Policy(
+            effective_date=date(2027, 2, 1),
+            expiration_date=date(2028, 2, 1),
+            lines_requested=("Property", "Commercial General Liability"),
+        ),
+        locations=_uk_locations(),
+        coverage=Coverage(
+            property_coinsurance_pct=100,
+            property_valuation_basis="RC",
+            property_deductible_usd=25_000,
+            gl_each_occurrence_usd=5_000_000,
+            gl_general_aggregate_usd=10_000_000,
+            gl_premium_basis="S",
+            gl_exposure_usd=14_600_000,
+        ),
+        prior_carriers=_UK_CARRIERS,
+        losses=_UK_LOSSES,
+        loss_run_valuation_date=date(2026, 12, 31),
+    )
+
+
+_UK_LOSSES = (
+    Loss(
+        claim_no="TM-2024-0661",
+        carrier="Thamesmead Insurance plc",
+        date_of_loss=date(2024, 9, 14),
+        date_reported=date(2024, 9, 16),
+        status="closed",
+        cause="Storm",
+        description="Roof sheeting lifted at the Bradford site",
+        paid_usd=48_000,
+        reserved_usd=0,
+    ),
+)
+
+
 SHORT_NAMES = {'01-clean-single-location': 'Clean baseline',
     '02-clean-total-stated': 'Total stated in the email',
     '03-clean-no-losses-letter': 'Nil losses, letter attached',
@@ -202,7 +312,9 @@ SHORT_NAMES = {'01-clean-single-location': 'Clean baseline',
     '07-loss-run-column-mislabel': 'Mislabelled paid column',
     '08-sov-page-break': 'Location split across pages',
     '09-missing-loss-runs': 'Loss runs missing',
-    '10-duplicate-submission': 'Resent with a change'}
+    '10-duplicate-submission': 'Resent with a change',
+    '11-london-slip': 'London market slip',
+    '12-uk-no-fein': 'No FEIN exists'}
 
 
 def _spec(
@@ -536,6 +648,85 @@ def all_specs() -> list[CaseSpec]:
                     annual_revenue_usd=9_400_000,
                 ),
             ),
+        ),
+        _spec(
+            "11-london-slip",
+            "The same risk presented on a London market slip instead of ACORD forms",
+            "control",
+            None,
+            base,
+            PacketOptions(london_slip=True, state_total_in_email=False),
+            (
+                Expectation(
+                    field="policy_expiration_date",
+                    outcome="extracted",
+                    source_mode=SourceMode.DERIVED,
+                    source_document=DocumentName.SLIP,
+                    rationale=(
+                        "A slip states the period as a duration and an inception date rather "
+                        "than two dates, so the expiry has to be worked out from it and "
+                        "declaring it as read off the page is a false receipt."
+                    ),
+                    rationale_source=SOURCE_MRC,
+                ),
+                Expectation(
+                    field="total_insured_value_usd",
+                    outcome="extracted",
+                    source_mode=SourceMode.READ,
+                    source_document=DocumentName.SLIP,
+                    rationale=(
+                        "The slip states the total sum insured in the risk details, so it is "
+                        "read rather than summed from the schedule."
+                    ),
+                    rationale_source=SOURCE_MRC,
+                ),
+            ),
+        ),
+        _spec(
+            "12-uk-no-fein",
+            "A British insured on a slip, where the federal tax number does not exist",
+            "adversarial",
+            FailureMode.FIELD_WITH_NO_SOURCE,
+            build_uk_risk(),
+            PacketOptions(
+                london_slip=True,
+                state_total_in_email=False,
+                agency="Calderdale Brokers Limited",
+                broker_name="Priya Raman",
+                broker_email="p.raman@calderdale.example",
+                target_carrier="Northgate Specialty Insurance Company",
+                market_reference="B0729PM2027C8802",
+                company_number="07482913",
+                submitted_on=date(2027, 1, 11),
+                agency_customer_id="CB-2291",
+            ),
+            (
+                Expectation(
+                    field="applicant_fein",
+                    outcome="flagged",
+                    source_mode=None,
+                    source_document=None,
+                    rationale=(
+                        "A FEIN is issued by the United States tax authority. A company "
+                        "registered in England does not have one, so the field cannot be "
+                        "filled from this packet and inventing a plausible number is worse "
+                        "than leaving it open."
+                    ),
+                    rationale_source=SOURCE_FEIN,
+                ),
+                Expectation(
+                    field="policy_expiration_date",
+                    outcome="extracted",
+                    source_mode=SourceMode.DERIVED,
+                    source_document=DocumentName.SLIP,
+                    rationale=(
+                        "The slip gives a period and an inception date, so expiry is worked "
+                        "out rather than read."
+                    ),
+                    rationale_source=SOURCE_MRC,
+                ),
+            ),
+            corruption="no_federal_tax_number_exists",
         ),
     ]
 

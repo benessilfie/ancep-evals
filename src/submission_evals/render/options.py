@@ -22,6 +22,11 @@ class PacketOptions:
     stale_location_values: bool = False
     promise_loss_summary_without_it: bool = False
     state_location_count_in_email: bool = True
+    london_slip: bool = False
+    market_reference: str = "B0729FP2027A4411"
+    slip_type: str = "Commercial Combined, Property Damage and Liability"
+    company_number: str = ""
+    slip_currency: str = "United States Dollars (USD)"
     premises_by_schedule: bool = False
     mislabel_loss_run_b_columns: bool = False
     sov_as_paged_text: bool = False

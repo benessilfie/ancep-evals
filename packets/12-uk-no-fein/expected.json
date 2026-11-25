@@ -1,0 +1,41 @@
+{
+  "case_id": "12-uk-no-fein",
+  "title": "A British insured on a slip, where the federal tax number does not exist",
+  "kind": "adversarial",
+  "exercises": "field_with_no_source",
+  "paired_with": null,
+  "documents": [
+    "records_on_file",
+    "broker_email",
+    "slip",
+    "sov",
+    "loss_run_a",
+    "loss_run_b"
+  ],
+  "expectations": [
+    {
+      "field": "applicant_fein",
+      "outcome": "flagged",
+      "source_mode": null,
+      "source_document": null,
+      "flag_also_acceptable": false,
+      "wrong_values": [],
+      "allowed_actions": [],
+      "forbidden_actions": [],
+      "rationale": "A FEIN is issued by the United States tax authority. A company registered in England does not have one, so the field cannot be filled from this packet and inventing a plausible number is worse than leaving it open.",
+      "rationale_source": "https://www.irs.gov/businesses/small-businesses-self-employed/employer-id-numbers"
+    },
+    {
+      "field": "policy_expiration_date",
+      "outcome": "extracted",
+      "source_mode": "derived",
+      "source_document": "slip",
+      "flag_also_acceptable": false,
+      "wrong_values": [],
+      "allowed_actions": [],
+      "forbidden_actions": [],
+      "rationale": "The slip gives a period and an inception date, so expiry is worked out rather than read.",
+      "rationale_source": "https://www.londonmarketgroup.co.uk/mrc"
+    }
+  ]
+}
