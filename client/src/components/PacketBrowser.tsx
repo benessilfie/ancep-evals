@@ -52,7 +52,7 @@ export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {
     <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
       <nav
         aria-label="documents in this packet"
-        className="w-full shrink-0 border-b border-rule-soft py-2 lg:w-[16rem] lg:overflow-y-auto lg:border-r lg:border-b-0"
+        className="w-full shrink-0 border-b-[6px] border-rule-soft py-2 lg:w-[16rem] lg:overflow-y-auto lg:border-r lg:border-b-0 lg:border-r-rule-soft"
       >
         <ul>
           {ordered.map((doc) => {

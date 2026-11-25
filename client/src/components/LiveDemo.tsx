@@ -197,7 +197,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:flex-row lg:overflow-hidden">
-      <aside className="w-full shrink-0 border-b border-rule bg-paper-sunk/40 px-5 py-5 lg:w-[22rem] lg:overflow-y-auto lg:border-r lg:border-b-0">
+      <aside className="w-full shrink-0 border-b-[6px] border-rule-soft bg-paper-sunk/40 px-5 py-5 lg:w-[22rem] lg:overflow-y-auto lg:border-r lg:border-b-0 lg:border-r-rule">
         <h2 className="text-[0.9375rem] font-semibold">Run one yourself</h2>
         <p className="mt-2 text-[0.8125rem] leading-relaxed text-ink-soft">
           Pick a packet and a model, read what is in the packet, then send it over. The
@@ -337,7 +337,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
       </aside>
 
       <section className="flex min-w-0 flex-1 flex-col lg:overflow-hidden">
-        <div className="flex shrink-0 items-center gap-1 border-b border-rule px-5 pt-2">
+        <div className="sticky top-0 z-20 flex shrink-0 items-center gap-1 border-b border-rule bg-paper px-4 pt-2 sm:px-5 lg:static">
           {(["packet", "record"] as const).map((key) => (
             <button
               key={key}
