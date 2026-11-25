@@ -32,7 +32,7 @@ MAX_TOKENS = 32_000
 MAX_FILES = 12
 MAX_BYTES = 400_000
 RUNS_PER_HOUR = int(os.environ.get("DEMO_RUNS_PER_HOUR", "12"))
-RUNS_PER_DAY = int(os.environ.get("DEMO_RUNS_PER_DAY", "400"))
+RUNS_PER_DAY = int(os.environ.get("DEMO_RUNS_PER_DAY", "36"))
 
 app = FastAPI(title="submission intake evals")
 app.add_middleware(
@@ -56,7 +56,10 @@ def _allow(ip: str) -> str | None:
     while _today and now - _today[0] > 86_400:
         _today.popleft()
     if len(_today) >= RUNS_PER_DAY:
-        return "The demo budget for today is spent. The recorded runs are still here."
+        return (
+            f"That is the {RUNS_PER_DAY} live runs this demo allows in a day. "
+            "The 90 recorded runs are still here."
+        )
     if len(hour) >= RUNS_PER_HOUR:
         return f"That is {RUNS_PER_HOUR} runs in an hour from this address. Try again later."
     hour.append(now)

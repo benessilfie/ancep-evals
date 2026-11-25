@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import { BlankRecord } from "@/components/BlankRecord"
 import { PacketBrowser } from "@/components/PacketBrowser"
+import { RunVerdict, type Graded } from "@/components/RunVerdict"
+import { useRunHistory, timeAgo, type PastRun } from "@/lib/history"
 import {
   Select,
   SelectContent,
@@ -31,7 +33,14 @@ export function LiveDemo({ data }: { data: EvalData }) {
   const [meta, setMeta] = useState<{ seconds?: number; tokens?: number }>({})
   const [files, setFiles] = useState<FileList | null>(null)
   const [pane, setPane] = useState<"packet" | "record">("packet")
+  const [graded, setGraded] = useState<Graded | null>(null)
+  const [uploaded, setUploaded] = useState(false)
   const source = useRef<EventSource | null>(null)
+  const collected = useRef<{ fields: typeof fields; findings: Finding[] }>({
+    fields: [],
+    findings: [],
+  })
+  const { runs, save } = useRunHistory()
 
   useEffect(() => () => source.current?.close(), [])
 
@@ -41,10 +50,14 @@ export function LiveDemo({ data }: { data: EvalData }) {
     setFindings([])
     setMeta({})
     setMessage(null)
+    setGraded(null)
+    collected.current = { fields: [], findings: [] }
+    setUploaded(Boolean(files && files.length > 0))
     setPhase("starting")
     setPane("record")
 
     const body = new FormData()
+    const uploadedNow = Boolean(files && files.length > 0)
     if (files && files.length > 0) {
       for (const file of Array.from(files)) body.append("files", file)
     } else {
@@ -78,15 +91,34 @@ export function LiveDemo({ data }: { data: EvalData }) {
     })
     es.addEventListener("field", (e) => {
       const d = JSON.parse((e as MessageEvent).data)
+      collected.current.fields.push(d)
       setFields((prev) => [...prev, d])
     })
     es.addEventListener("finding", (e) => {
-      setFindings((prev) => [...prev, JSON.parse((e as MessageEvent).data)])
+      const f = JSON.parse((e as MessageEvent).data)
+      collected.current.findings.push(f)
+      setFindings((prev) => [...prev, f])
     })
     es.addEventListener("done", (e) => {
       const d = JSON.parse((e as MessageEvent).data)
       setMeta((m) => ({ ...m, seconds: d.seconds }))
+      setGraded(d.graded ?? null)
       setPhase("done")
+      const taken = collected.current
+      save({
+        id: runId,
+        at: Date.now(),
+        packetId: uploadedNow ? null : packetId,
+        label: uploadedNow
+          ? `${taken.fields.length ? "your documents" : "your upload"}`
+          : (data.cases.find((c) => c.id === packetId)?.short ?? packetId),
+        seconds: d.seconds,
+        passed: d.graded ? d.graded.passed : null,
+        raised: taken.fields.filter((f) => f.answer.status === "flagged").length,
+        blocking: d.blocking ?? 0,
+        fields: taken.fields,
+        findings: taken.findings,
+      })
       es.close()
     })
     es.addEventListener("error", (e) => {
@@ -100,7 +132,19 @@ export function LiveDemo({ data }: { data: EvalData }) {
   const running = phase === "starting" || phase === "reading" || phase === "checking"
   const answers = new Map(fields.map((f) => [f.field, f.answer]))
   const selectedCase: EvalCase | undefined = data.cases.find((c) => c.id === packetId)
-  const blocking = findings.filter((f) => f.severity === "blocking")
+
+  const restore = (run: PastRun) => {
+    source.current?.close()
+    setFields(run.fields)
+    setFindings(run.findings)
+    setGraded(run.passed === null ? null : { passed: run.passed, valueScore: 0, provenanceScore: 0 })
+    setUploaded(run.packetId === null)
+    if (run.packetId) setPacketId(run.packetId)
+    setMeta({ seconds: run.seconds })
+    setMessage(null)
+    setPhase("done")
+    setPane("record")
+  }
 
   return (
     <div className="flex min-h-0 flex-1 overflow-hidden">
@@ -182,8 +226,43 @@ export function LiveDemo({ data }: { data: EvalData }) {
         </button>
 
         <p className="mt-3 text-[0.6875rem] leading-relaxed text-ink-faint">
-          About half a cent a run, rate limited per address.
+          About half a cent a run. Twelve an hour from one address, thirty six a day in
+          total, so the demo cannot run up a bill.
         </p>
+
+        {runs.length > 0 && (
+          <div className="mt-7 border-t border-rule pt-5">
+            <div className="field-label">your runs</div>
+            <ul className="mt-2 -mx-1.5">
+              {runs.map((run) => (
+                <li key={run.id}>
+                  <button
+                    type="button"
+                    onClick={() => restore(run)}
+                    className="pressable flex w-full items-baseline gap-2.5 rounded-field px-1.5 py-1.5 text-left transition-colors hover:bg-white"
+                  >
+                    <span
+                      className={cn(
+                        "shrink-0 font-mono text-[0.625rem]",
+                        run.passed === null
+                          ? "text-ink-faint"
+                          : run.passed
+                            ? "text-seal"
+                            : "text-stamp"
+                      )}
+                    >
+                      {run.passed === null ? "yours" : run.passed ? "right" : "wrong"}
+                    </span>
+                    <span className="flex-1 truncate text-[0.8125rem]">{run.label}</span>
+                    <span className="shrink-0 font-mono text-[0.625rem] text-ink-faint">
+                      {timeAgo(run.at)}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </aside>
 
       <section className="flex min-w-0 flex-1 flex-col overflow-hidden">
@@ -217,47 +296,19 @@ export function LiveDemo({ data }: { data: EvalData }) {
               </div>
             )}
 
-            {findings.length > 0 && (
-              <section className="mt-6">
-                <h3 className="text-[0.9375rem] font-semibold">
-                  {blocking.length > 0
-                    ? `${blocking.length} thing${blocking.length === 1 ? "" : "s"} a human needs to see`
-                    : "Nothing blocking"}
-                </h3>
-                <ul className="mt-3 space-y-2">
-                  {findings.map((f, i) => (
-                    <li
-                      key={i}
-                      className={cn(
-                        "border-l-2 px-4 py-2.5",
-                        f.severity === "blocking"
-                          ? "border-stamp bg-stamp-wash"
-                          : "border-rule bg-white"
-                      )}
-                    >
-                      <div className="flex items-baseline gap-2">
-                        <span
-                          className={cn(
-                            "font-mono text-[0.625rem]",
-                            f.severity === "blocking" ? "text-stamp" : "text-ink-faint"
-                          )}
-                        >
-                          {f.severity}
-                        </span>
-                        {f.field && (
-                          <span className="font-mono text-[0.6875rem] text-ink-soft">
-                            {f.field}
-                          </span>
-                        )}
-                      </div>
-                      <p className="mt-1 text-[0.875rem] leading-snug">{f.message}</p>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+            {phase === "done" && (
+              <div className="mt-5">
+                <RunVerdict
+                  evalCase={uploaded ? undefined : selectedCase}
+                  graded={graded}
+                  findings={findings}
+                  answers={answers}
+                  uploaded={uploaded}
+                />
+              </div>
             )}
 
-            <div className="mt-7">
+            <div className="mt-6">
               <BlankRecord answers={answers} running={running} />
             </div>
           </div>
