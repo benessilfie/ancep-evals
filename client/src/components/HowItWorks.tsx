@@ -139,22 +139,22 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            A broker sends an insurer a pile of paperwork and somebody has to read all of
-            it and type the facts into a system, and that job is going to AI now.
+            A broker sends an insurer a pile of paperwork. Somebody has to read all of it
+            and type the facts into a system, and that job is going to AI now.
+          </p>
+          <p className="text-[1.0625rem] text-ink">
+            This checks whether the AI actually did that job right, instead of taking its
+            word for it.
           </p>
           <p>
-            An eval set is how you find out whether it can. You write a fixed set of test
-            cases, you write down the right answer to each one before any model sees it,
-            then you point a model at them and score what comes back.
+            That is what an eval set is. Ten submissions, with the right answer to each one
+            written down before any model sees them, so there is something to mark against.
+            Three Claude models, three runs each, {data.totals.trials} graded records.
           </p>
           <p>
-            This one is ten fake submissions put to three Claude models, three separate
-            runs each, so {data.totals.trials} graded records in total.
-          </p>
-          <p className="text-ink">
-            Each model fills in the same twenty one fields, and those filled in fields are
-            what I grade. Not the paragraph it writes about what it did, because a model
-            that fills a field in wrong still writes a confident, convincing paragraph.
+            What I mark is the twenty one fields it filled in. Not the paragraph it writes
+            about what it did, because a model that fills a field in wrong still writes a
+            confident, convincing paragraph.
           </p>
         </Prose>
       ),

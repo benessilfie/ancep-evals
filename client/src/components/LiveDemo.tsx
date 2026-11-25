@@ -39,10 +39,8 @@ export function LiveDemo({ data }: { data: EvalData }) {
   const [fields, setFields] = useState<{ field: string; answer: Answer }[]>([])
   const [findings, setFindings] = useState<Finding[]>([])
   const [meta, setMeta] = useState<{ seconds?: number; tokens?: number }>({})
-  const [files, setFiles] = useState<FileList | null>(null)
   const [pane, setPane] = useState<"packet" | "record">("packet")
   const [graded, setGraded] = useState<Graded | null>(null)
-  const [uploaded, setUploaded] = useState(false)
   const source = useRef<EventSource | null>(null)
   const collected = useRef<{ fields: typeof fields; findings: Finding[] }>({
     fields: [],
@@ -70,7 +68,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
     setMessage(null)
     setElapsed(0)
     setPhase("idle")
-  }, [packetId, files])
+  }, [packetId])
 
   useEffect(() => {
     if (phase !== "starting" && phase !== "reading" && phase !== "checking") return
@@ -101,20 +99,14 @@ export function LiveDemo({ data }: { data: EvalData }) {
     setMessage(null)
     setGraded(null)
     collected.current = { fields: [], findings: [] }
-    setUploaded(Boolean(files && files.length > 0))
     startedAt.current = Date.now()
     setElapsed(0)
     setPhase("starting")
     setPane("record")
 
     const body = new FormData()
-    const uploadedNow = Boolean(files && files.length > 0)
     const chosenLabel = models.find((m) => m.id === model)?.label ?? "Haiku 5.5"
-    if (files && files.length > 0) {
-      for (const file of Array.from(files)) body.append("files", file)
-    } else {
-      body.append("packet_id", packetId)
-    }
+    body.append("packet_id", packetId)
     if (model) body.append("model", model)
 
     let runId: string
@@ -162,10 +154,8 @@ export function LiveDemo({ data }: { data: EvalData }) {
       save({
         id: runId,
         at: Date.now(),
-        packetId: uploadedNow ? null : packetId,
-        label: uploadedNow
-          ? "your documents"
-          : (data.cases.find((c) => c.id === packetId)?.short ?? packetId),
+        packetId,
+        label: data.cases.find((c) => c.id === packetId)?.short ?? packetId,
         seconds: d.seconds,
         model: chosenLabel,
         passed: d.graded ? d.graded.passed : null,
@@ -195,7 +185,6 @@ export function LiveDemo({ data }: { data: EvalData }) {
     setFields(run.fields)
     setFindings(run.findings)
     setGraded(run.passed === null ? null : { passed: run.passed, valueScore: 0, provenanceScore: 0 })
-    setUploaded(run.packetId === null)
     if (run.packetId) setPacketId(run.packetId)
     setMeta({ seconds: run.seconds })
     setMessage(null)
@@ -209,8 +198,8 @@ export function LiveDemo({ data }: { data: EvalData }) {
         <h2 className="text-[0.9375rem] font-semibold">Run one yourself</h2>
         <p className="mt-2 text-[0.8125rem] leading-relaxed text-ink-soft">
           Pick a packet and a model, read what is in the packet, then send it over. The
-          model fills in the record and the checks run against the documents it was given,
-          so an upload of your own works the same way.
+          model fills in the record, and the checks mark it against the answer written down
+          before it ever saw the documents.
         </p>
 
         {models.length > 0 && (
@@ -275,33 +264,6 @@ export function LiveDemo({ data }: { data: EvalData }) {
               ))}
             </SelectContent>
           </Select>
-        </div>
-
-        <div className="mt-5">
-          <label className="field-label" htmlFor="upload">
-            or upload your own
-          </label>
-          <input
-            id="upload"
-            type="file"
-            multiple
-            disabled={running}
-            onChange={(e) => setFiles(e.target.files)}
-            className="mt-1.5 w-full text-[0.75rem] file:mr-2 file:rounded-field file:border file:border-rule file:bg-white file:px-2 file:py-1 file:text-[0.75rem]"
-          />
-          <p className="mt-1.5 text-[0.6875rem] leading-relaxed text-ink-faint">
-            Filenames must match the document they are, for example application.txt,
-            loss_run_a.csv, sov.csv.
-          </p>
-          {files && files.length > 0 && (
-            <button
-              type="button"
-              onClick={() => setFiles(null)}
-              className="mt-1 font-mono text-micro text-carbon hover:underline"
-            >
-              clear {files.length} file{files.length === 1 ? "" : "s"}
-            </button>
-          )}
         </div>
 
         <button
@@ -378,7 +340,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
           ))}
         </div>
 
-        {pane === "packet" && selectedCase && !files?.length ? (
+        {pane === "packet" && selectedCase ? (
           <PacketBrowser key={selectedCase.id} evalCase={selectedCase} />
         ) : (
           <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
@@ -393,11 +355,10 @@ export function LiveDemo({ data }: { data: EvalData }) {
             {phase === "done" && (
               <div className="mt-5">
                 <RunVerdict
-                  evalCase={uploaded ? undefined : selectedCase}
+                  evalCase={selectedCase}
                   graded={graded}
                   findings={findings}
                   answers={answers}
-                  uploaded={uploaded}
                 />
               </div>
             )}

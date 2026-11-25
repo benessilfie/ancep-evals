@@ -68,33 +68,17 @@ export function RunVerdict({
   graded,
   findings,
   answers,
-  uploaded,
 }: {
   evalCase?: EvalCase
   graded: Graded | null
   findings: Finding[]
   answers: Map<string, Answer>
-  uploaded: boolean
 }) {
   const raised = [...answers.entries()].filter(([, a]) => a.status === "flagged")
-  const blocking = findings.filter((f) => f.severity === "blocking")
   const copy = evalCase ? TESTS[evalCase.id] : undefined
 
-  const headline = uploaded
-    ? blocking.length > 0
-      ? `${blocking.length} thing${blocking.length === 1 ? "" : "s"} in your documents did not hold up`
-      : "Every claim the agent made checks out against your documents"
-    : graded?.passed
-      ? "It did the right thing here"
-      : "It got this one wrong"
-
-  const tone: "seal" | "stamp" = uploaded
-    ? blocking.length > 0
-      ? "stamp"
-      : "seal"
-    : graded?.passed
-      ? "seal"
-      : "stamp"
+  const headline = graded?.passed ? "It did the right thing here" : "It got this one wrong"
+  const tone: "seal" | "stamp" = graded?.passed ? "seal" : "stamp"
 
   return (
     <section
@@ -144,17 +128,6 @@ export function RunVerdict({
         </dl>
       )}
 
-      {uploaded && (
-        <div className="border-t border-rule-soft px-5 py-3.5">
-          <div className="field-label">what was checked</div>
-          <p className="mt-1.5 max-w-[70ch] text-[0.875rem] leading-relaxed text-ink-soft">
-            There is no answer key for your documents, so nothing here compares against one.
-            These checks read the record back against the files you supplied: every citation
-            has to point at a document that exists, the value has to actually appear where it
-            says, and any figure it added up has to reconcile.
-          </p>
-        </div>
-      )}
 
       {findings.length > 0 && (
         <ul className="divide-y divide-rule-soft border-t border-rule-soft">
