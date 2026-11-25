@@ -79,18 +79,18 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
             defaultValue="__record"
             className="flex min-h-0 flex-1 flex-col gap-0"
           >
-            <TabsList className="h-auto shrink-0 flex-wrap justify-start gap-0.5 rounded-none border-b border-rule bg-transparent px-5 pt-2 pb-0">
-              <span className="field-label self-center pr-2">output</span>
+            <TabsList className="h-auto w-full shrink-0 flex-wrap justify-start gap-x-0.5 gap-y-1 rounded-none border-b border-rule bg-transparent px-4 pt-2 pb-0 group-data-[orientation=horizontal]/tabs:h-auto sm:px-5">
+              <span className="field-label hidden self-center pr-2 sm:inline">output</span>
               <TabsTrigger
                 value="__record"
                 className="rounded-none px-2 py-1.5 text-[0.75rem] font-medium text-ink [border-width:0_0_2px_0] [border-bottom-color:transparent] [border-style:solid] data-[state=active]:[border-bottom-color:var(--color-carbon)] data-[state=active]:text-carbon"
               >
                 the record it filed
               </TabsTrigger>
-              <span aria-hidden className="mx-3 self-center text-rule">
+              <span aria-hidden className="mx-3 hidden self-center text-rule sm:inline">
                 |
               </span>
-              <span className="field-label self-center pr-2">
+              <span className="field-label hidden self-center pr-2 sm:inline">
                 the {evalCase.documents.length} documents it was given
               </span>
               {evalCase.documents.map((doc) => (
