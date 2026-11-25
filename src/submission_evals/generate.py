@@ -25,6 +25,7 @@ _FILENAMES = {
     DocumentName.LOSS_RUN_A: "loss_run_a.csv",
     DocumentName.LOSS_RUN_B: "loss_run_b.txt",
     DocumentName.NO_LOSSES_LETTER: "no_losses_letter.txt",
+    DocumentName.RECORDS_ON_FILE: "records_on_file.txt",
 }
 
 
@@ -35,8 +36,14 @@ class CaseSpec:
 
 
 def build_packet(spec: CaseSpec) -> dict[DocumentName, tuple[str, str]]:
+    from submission_evals.prompt import records_on_file_text
+
     risk, options = spec.case.risk, spec.options
     packet: dict[DocumentName, tuple[str, str]] = {
+        DocumentName.RECORDS_ON_FILE: (
+            _FILENAMES[DocumentName.RECORDS_ON_FILE],
+            records_on_file_text(spec) + "\n",
+        ),
         DocumentName.BROKER_EMAIL: (
             _FILENAMES[DocumentName.BROKER_EMAIL],
             broker_email.render(risk, options),

@@ -5,6 +5,7 @@
   "exercises": "derived_number",
   "paired_with": "02-clean-total-stated",
   "documents": [
+    "records_on_file",
     "broker_email",
     "application",
     "property_section",

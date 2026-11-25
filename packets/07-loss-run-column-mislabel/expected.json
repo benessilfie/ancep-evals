@@ -5,6 +5,7 @@
   "exercises": "loss_run_column_mislabel",
   "paired_with": null,
   "documents": [
+    "records_on_file",
     "broker_email",
     "application",
     "property_section",

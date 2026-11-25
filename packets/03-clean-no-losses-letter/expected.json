@@ -5,6 +5,7 @@
   "exercises": null,
   "paired_with": "09-missing-loss-runs",
   "documents": [
+    "records_on_file",
     "broker_email",
     "application",
     "property_section",

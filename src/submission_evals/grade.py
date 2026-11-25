@@ -82,7 +82,8 @@ _FALSE_WORDS = frozenset({"false", "no", "n", "0", "f", ""})
 def parse_bool(value: Any) -> bool | None:
     if isinstance(value, bool):
         return value
-    word = str(value).strip().casefold()
+    text = str(value).strip().casefold()
+    word = re.split(r"[^a-z0-9]+", text)[0] if text else ""
     if word in _TRUE_WORDS:
         return True
     if word in _FALSE_WORDS:

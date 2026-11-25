@@ -26,6 +26,7 @@ class DocumentName(StrEnum):
     LOSS_RUN_A = "loss_run_a"
     LOSS_RUN_B = "loss_run_b"
     NO_LOSSES_LETTER = "no_losses_letter"
+    RECORDS_ON_FILE = "records_on_file"
 
 
 class SourceMode(StrEnum):

@@ -14,6 +14,7 @@ ATTACHMENT_NAMES = {
 
 def documents_for(risk: Risk, options: PacketOptions) -> tuple[DocumentName, ...]:
     present = [
+        DocumentName.RECORDS_ON_FILE,
         DocumentName.BROKER_EMAIL,
         DocumentName.APPLICATION,
         DocumentName.PROPERTY_SECTION,

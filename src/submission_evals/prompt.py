@@ -28,31 +28,35 @@ extract zero and cite the document that establishes it.
 Do not guess in order to fill a field, and do not flag a field you can actually establish. Both \
 are failures.
 
-You are also given the submissions already on file for this carrier. Use them, and only them, to \
+You are also given the submissions already on file for this carrier, as the document \
+records_on_file. Use those, and only those, to \
 decide whether this packet is a new risk or an update to one already received. An empty list \
 means nothing matching is on file.
+
+is_update_of_prior_submission takes exactly true or false and nothing else. Put the \
+reasoning in the locator or in packet_notes.
 
 Money fields are whole US dollars with no symbols or separators. Dates are ISO format, \
 YYYY-MM-DD. Put anything the placing team should know, that no field covers, in packet_notes."""
 
 
+def records_on_file_text(spec: CaseSpec) -> str:
+    on_file = spec.case.records_on_file
+    if not on_file:
+        return "SUBMISSIONS ALREADY ON FILE (0):\n  none"
+    rows = "\n".join(
+        f"  {record.reference} | {record.named_insured} | FEIN {record.fein} | "
+        f"inception {record.effective_date.isoformat()} | "
+        f"received {record.received.isoformat()} | "
+        f"TIV {record.total_insured_value_usd} | revenue {record.annual_revenue_usd}"
+        for record in on_file
+    )
+    return f"SUBMISSIONS ALREADY ON FILE ({len(on_file)}):\n{rows}"
+
+
 def user_content(spec: CaseSpec) -> list[dict]:
     packet = build_packet(spec)
-    on_file = spec.case.records_on_file
-    if on_file:
-        rows = "\n".join(
-            f"  {record.reference} | {record.named_insured} | FEIN {record.fein} | "
-            f"inception {record.effective_date.isoformat()} | "
-            f"received {record.received.isoformat()} | "
-            f"TIV {record.total_insured_value_usd} | revenue {record.annual_revenue_usd}"
-            for record in on_file
-        )
-        ledger = f"SUBMISSIONS ALREADY ON FILE ({len(on_file)}):\n{rows}"
-    else:
-        ledger = "SUBMISSIONS ALREADY ON FILE (0):\n  none"
-
     blocks: list[dict] = [
-        {"type": "text", "text": ledger},
         {
             "type": "text",
             "text": (

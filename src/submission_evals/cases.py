@@ -464,7 +464,7 @@ def all_specs() -> list[CaseSpec]:
                     field="is_update_of_prior_submission",
                     outcome="extracted",
                     source_mode=SourceMode.DERIVED,
-                    source_document=DocumentName.BROKER_EMAIL,
+                    source_document=DocumentName.RECORDS_ON_FILE,
                     rationale=(
                         "Clearance checks whether the same risk is already in the system before "
                         "a submission is worked, because opening a second record on one risk "

@@ -152,7 +152,7 @@ DEFAULT_SOURCES: dict[str, tuple[DocumentName, SourceMode]] = {
     "loss_count_5y": (DocumentName.LOSS_RUN_A, SourceMode.DERIVED),
     "total_paid_5y_usd": (DocumentName.LOSS_RUN_A, SourceMode.DERIVED),
     "total_incurred_5y_usd": (DocumentName.LOSS_RUN_A, SourceMode.DERIVED),
-    "is_update_of_prior_submission": (DocumentName.BROKER_EMAIL, SourceMode.DERIVED),
+    "is_update_of_prior_submission": (DocumentName.RECORDS_ON_FILE, SourceMode.DERIVED),
 }
 
 LITERAL_CHECK_EXEMPT: frozenset[str] = frozenset(

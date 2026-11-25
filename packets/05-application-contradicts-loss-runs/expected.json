@@ -5,6 +5,7 @@
   "exercises": "application_contradicts_loss_runs",
   "paired_with": null,
   "documents": [
+    "records_on_file",
     "broker_email",
     "application",
     "property_section",
