@@ -201,8 +201,8 @@ function buildSteps(
             up the right answers. That takes days, and expertise I do not have.
           </p>
           <p>
-            So I start from the answers. I decide the facts first, then a program prints
-            the paperwork from them.
+            So I start from the answers. I decide the facts first, then generate the
+            paperwork from them.
           </p>
           <p>
             To make a hard case, I break one thing in the paperwork. The facts never
