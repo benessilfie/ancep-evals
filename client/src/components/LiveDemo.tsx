@@ -50,7 +50,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
   const [models, setModels] = useState<LiveModel[]>([])
   const [model, setModel] = useState<string | null>(null)
   const [showRuns, setShowRuns] = useState(
-    () => typeof window === "undefined" || window.matchMedia("(min-width: 1024px)").matches
+    () => typeof window === "undefined" || window.matchMedia("(min-width: 768px)").matches
   )
   const [elapsed, setElapsed] = useState(0)
   const startedAt = useRef<number>(0)
