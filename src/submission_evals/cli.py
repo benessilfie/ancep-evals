@@ -117,20 +117,34 @@ def show(case: str, document: str | None = None) -> None:
 
 
 @app.command()
+def sweep(
+    model: str = "claude-haiku-5-5",
+    efforts: str = "low,medium,high,xhigh",
+    reps: int = 1,
+    results: Path = Path("results"),
+) -> None:
+    for level in [part.strip() for part in efforts.split(",") if part.strip()]:
+        typer.echo(f"--- {model} at effort {level} ---")
+        run(model=[model], reps=reps, effort=level, results=results)
+
+
+@app.command()
 def summarise(results: Path = Path("results")) -> None:
     path = results / "results.jsonl"
     if not path.exists():
         typer.echo(f"no results at {path}")
         raise typer.Exit(1)
     rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
-    by_case: dict[tuple[str, str], list[dict]] = {}
+    by_case: dict[tuple[str, str, str], list[dict]] = {}
     for row in rows:
-        by_case.setdefault((row["prompt_id"], row["requested_model"]), []).append(row)
-    typer.echo(f"{'case':<40}{'model':<22}{'passed':>10}")
-    typer.echo("-" * 72)
-    for (case_id, model), group in sorted(by_case.items()):
+        key = (row["prompt_id"], row["requested_model"], row.get("effort", "?"))
+        by_case.setdefault(key, []).append(row)
+    typer.echo(f"{'case':<40}{'model':<20}{'effort':<9}{'passed':>8}")
+    typer.echo("-" * 78)
+    for (case_id, model, effort), group in sorted(by_case.items()):
         passed = sum(int(row["grade"]["case_passed"]) for row in group)
-        typer.echo(f"{case_id:<40}{model:<22}{passed:>5}/{len(group)}")
+        short = model.replace("claude-", "")
+        typer.echo(f"{case_id:<40}{short:<20}{effort:<9}{passed:>4}/{len(group)}")
 
 
 if __name__ == "__main__":

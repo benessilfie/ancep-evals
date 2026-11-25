@@ -45,8 +45,8 @@ class Attempt:
         return time.monotonic() - self.started
 
 
-def trial_key(case_id: str, model: str, rep: int) -> str:
-    return f"{case_id}::{model}::rep{rep}"
+def trial_key(case_id: str, model: str, effort: str, rep: int) -> str:
+    return f"{case_id}::{model}::{effort}::rep{rep}"
 
 
 def _usage_dict(usage: Any) -> dict[str, int]:
@@ -109,7 +109,14 @@ class Runner:
             if not line.strip():
                 continue
             row = json.loads(line)
-            done.add(trial_key(row["prompt_id"], row["requested_model"], row["rep"]))
+            done.add(
+                trial_key(
+                    row["prompt_id"],
+                    row["requested_model"],
+                    row.get("effort", "unknown"),
+                    row["rep"],
+                )
+            )
         return done
 
     async def _write(self, path: Path, row: dict[str, Any]) -> None:
@@ -271,7 +278,8 @@ class Runner:
             for spec in specs
             for model in self.config.models
             for rep in range(self.config.reps)
-            if force or trial_key(spec.case.case_id, model, rep) not in done
+            if force
+            or trial_key(spec.case.case_id, model, self.config.effort, rep) not in done
         ]
         results = await asyncio.gather(
             *(self.run_trial(spec, model, rep) for spec, model, rep in work)
