@@ -20,12 +20,12 @@ from submission_evals.truth import (
 )
 
 _SITES = (
-    (1, "18 Oxford Street", "Osu", 1962, 4200, 1_200_000, 400_000, 250_000),
-    (2, "7 Kojo Thompson Road", "Adabraka", 1998, 2100, 650_000, 180_000, 120_000),
-    (3, "214 Spintex Road", "Accra", 2004, 5600, 1_500_000, 250_000, 150_000),
-    (4, "41 Liberation Road", "Airport City", 2011, 3100, 780_000, 220_000, 140_000),
-    (5, "3 Ring Road East", "Accra", 1988, 4800, 1_100_000, 300_000, 180_000),
-    (6, "90 Harbour Road", "Tema", 2015, 1800, 740_000, 150_000, 90_000),
+    (1, "18 Washington Street", "Hoboken", "07030", 1962, 4200, 1_200_000, 400_000, 250_000),
+    (2, "7 Palisade Avenue", "Jersey City", "07306", 1998, 2100, 650_000, 180_000, 120_000),
+    (3, "214 Central Avenue", "Jersey City", "07307", 2004, 5600, 1_500_000, 250_000, 150_000),
+    (4, "41 Bergenline Avenue", "Union City", "07087", 2011, 3100, 780_000, 220_000, 140_000),
+    (5, "3 Kennedy Boulevard", "Bayonne", "07002", 1988, 4800, 1_100_000, 300_000, 180_000),
+    (6, "90 Port Street", "Newark", "07114", 2015, 1800, 740_000, 150_000, 90_000),
 )
 
 _ALL_DOCUMENTS = (
@@ -41,17 +41,17 @@ _ALL_DOCUMENTS = (
 def build_risk() -> Risk:
     return Risk(
         applicant=Applicant(
-            name="Kwaku's Bakery LLC",
+            name="Halsey Street Bakery LLC",
             fein="47-3918266",
             entity_type="LLC",
-            street="18 Oxford Street",
-            city="Osu",
+            street="18 Washington Street",
+            city="Hoboken",
             state="NJ",
             zip_code="07030",
             business_started=date(2009, 4, 6),
         ),
         operations=Operations(
-            description="Retail bakery chain with six outlets and a delivery fleet",
+            description="Retail bakery chain, six outlets, on-site baking and a delivery fleet",
             sic_code="5461",
             naics_code="311811",
             annual_revenue_usd=9_400_000,
@@ -68,7 +68,7 @@ def build_risk() -> Risk:
                 street=street,
                 city=city,
                 state="NJ",
-                zip_code="07030",
+                zip_code=zip_code,
                 construction_class=2,
                 year_built=year_built,
                 stories=1,
@@ -80,7 +80,7 @@ def build_risk() -> Risk:
                 sprinklered=True,
                 protection_class=4,
             )
-            for loc_no, street, city, year_built, square_feet, building, bpp, bi in _SITES
+            for loc_no, street, city, zip_code, year_built, square_feet, building, bpp, bi in _SITES
         ),
         coverage=Coverage(
             property_coinsurance_pct=90,
@@ -119,7 +119,7 @@ def build_risk() -> Risk:
                 paid_usd=12_000,
                 reserved_usd=0,
                 cause="Water damage",
-                description="Burst supply line in the Osu prep kitchen",
+                description="Burst supply line in the Hoboken prep kitchen",
             ),
             Loss(
                 carrier="Callaghan Indemnity",
@@ -130,7 +130,7 @@ def build_risk() -> Risk:
                 paid_usd=4_000,
                 reserved_usd=26_000,
                 cause="Bodily injury",
-                description="Customer slipped on a wet floor at the Spintex outlet",
+                description="Customer slipped on a wet floor at the Central Avenue outlet",
             ),
         ),
         loss_run_valuation_date=date(2026, 11, 30),

@@ -1,0 +1,28 @@
+{
+  "case_id": "10-duplicate-submission",
+  "title": "The same risk resent a week later with the revenue changed",
+  "kind": "adversarial",
+  "exercises": "duplicate_submission",
+  "paired_with": "02-clean-total-stated",
+  "documents": [
+    "broker_email",
+    "application",
+    "property_section",
+    "liability_section",
+    "sov",
+    "loss_run_a",
+    "loss_run_b"
+  ],
+  "expectations": [
+    {
+      "field": "is_update_of_prior_submission",
+      "outcome": "extracted",
+      "source_mode": "derived",
+      "source_document": "broker_email",
+      "allowed_actions": [],
+      "forbidden_actions": [],
+      "rationale": "Clearance checks whether the same risk is already in the system before a submission is worked, because opening a second record on one risk distorts the pipeline and the broker of record position.",
+      "rationale_source": "https://help.vertafore.com/AIM/content/insured_clearance_search.htm"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+STATEMENT OF VALUES                    Halsey Street Bakery LLC
+AS AT 12/07/2026                          PAGE 1
+
+LOC  STREET                  CITY          ST  ZIP    CON  BUILT  SQ FT   BUILDING    CONTENTS   BUS INCOME
+------------------------------------------------------------------------------------------------
+1    18 Washington Street    Hoboken       NJ  07030  2    1962   4,200   1,200,000   400,000    250,000
+2    7 Palisade Avenue       Jersey City   NJ  07306  2    1998   2,100   650,000     180,000    120,000
+3    214 Central Avenue      Jersey City   NJ  07307  2    2004   5,600   1,500,000   250,000    150,000
+4    41 Bergenline Avenue    Union City    NJ  07087  2    2011   3,100   780,000     220,000    140,000
+5    3 Kennedy Boulevard     Bayonne       NJ  07002  2    1988   4,800   1,100,000   300,000    180,000
+6    90 Port Street          Newark        NJ  07114  2    2015   1,800   740,000     150,000    90,000
+7    52 Observer Highway     Hoboken       NJ  07030  2    1975   2,600   820,000     210,000    130,000
+8    8 Journal Square        Jersey City   NJ  07306  2    1969   3,400   960,000     240,000    150,000
+9    301 Broadway            Bayonne       NJ  07002  2    1992   2,200   610,000     170,000    110,000
+10   77 Ferry Street         Newark        NJ  07105  2    2001   4,100   1,040,000   280,000    160,000
+11   14 Summit Avenue        Union City    NJ  07087  2    1983   1,900   580,000     160,000    100,000
+12   190 Grand Street        Jersey City   NJ  07302  2    2008   5,200   1,320,000   330,000    190,000
+13   6 Willow Terrace        Hoboken       NJ  07030  2    1958   1,600   520,000     140,000    90,000
+14   45 Raymond Boulevard    Newark        NJ  07102
+
+
+STATEMENT OF VALUES                    Halsey Street Bakery LLC
+AS AT 12/07/2026                          PAGE 2
+
+2    2013   3,700   1,010,000   260,000    150,000
+

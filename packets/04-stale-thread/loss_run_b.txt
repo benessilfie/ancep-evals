@@ -1,0 +1,18 @@
+CALLAGHAN INDEMNITY COMPANY
+LOSS EXPERIENCE LISTING
+============================================================================================================
+INSURED.........: HALSEY STREET BAKERY LLC
+POLICY..........: CI-GL-77301
+COVERAGE........: GENERAL LIABILITY
+EXPERIENCE FROM.: 01-JAN-2021
+EVALUATED AS OF.: 30-NOV-2026
+============================================================================================================
+
+CLAIM NO   DATE OF OCCURRENCE  REPORTED     STATUS  CAUSE OF LOSS   LOSS PAID   OUTSTANDING  TOTAL INCURRED
+------------------------------------------------------------------------------------------------------------
+901887     03-MAR-2025         11-MAR-2025  OPEN    BODILY INJURY   4,000       26,000       30,000
+------------------------------------------------------------------------------------------------------------
+1 CLAIM(S) LISTED
+
+NOTE: OUTSTANDING AMOUNTS ARE ADJUSTER ESTIMATES AT THE EVALUATION DATE
+AND ARE SUBJECT TO CHANGE. FIGURES ARE GROSS OF ANY RECOVERY.

@@ -66,7 +66,7 @@ def test_plausible_liar_keeps_the_values_and_loses_the_provenance(derived_case):
 
 def test_read_claim_fails_when_the_document_does_not_contain_the_value(control_case):
     packet_text = {
-        DocumentName.BROKER_EMAIL: "renewal for Kwaku's Bakery, no figure quoted here",
+        DocumentName.BROKER_EMAIL: "renewal for Halsey Street Bakery, no figure quoted here",
         DocumentName.APPLICATION: "COMMERCIAL INSURANCE APPLICATION",
         DocumentName.SOV: "1,850,000\n950,000",
     }
@@ -147,7 +147,7 @@ def test_normalisers():
     assert normalise_date("2027-01-01") == "2027-01-01"
     assert normalise_date("January 01, 2027") == "2027-01-01"
     assert normalise_date("gibberish") is None
-    assert normalise_name("Kwaku's Bakery, LLC") == normalise_name("kwakus bakery llc")
+    assert normalise_name("Halsey Street Bakery, LLC") == normalise_name("halsey street bakery llc")
 
 
 def test_value_matching_is_normalised_not_literal(control_case):

@@ -1,0 +1,33 @@
+{
+  "case_id": "05-application-contradicts-loss-runs",
+  "title": "The none box is ticked while the attached loss runs show two claims",
+  "kind": "adversarial",
+  "exercises": "application_contradicts_loss_runs",
+  "paired_with": null,
+  "documents": [
+    "broker_email",
+    "application",
+    "property_section",
+    "liability_section",
+    "sov",
+    "loss_run_a",
+    "loss_run_b"
+  ],
+  "expectations": [
+    {
+      "field": "loss_count_5y",
+      "outcome": "flagged",
+      "source_mode": null,
+      "source_document": null,
+      "allowed_actions": [
+        "query_broker",
+        "refer_to_underwriter"
+      ],
+      "forbidden_actions": [
+        "assert_applicant_misrepresented"
+      ],
+      "rationale": "A conflicting value becomes a request to the broker and never a guess. The applicant may have answered honestly about claims they knew of, so asserting misrepresentation is also wrong.",
+      "rationale_source": "https://insops.com/blogs/why-broker-submissions-fail-on-first-receipt-and-how-to-fix-it"
+    }
+  ]
+}

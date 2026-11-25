@@ -1,0 +1,47 @@
+================================================================================================
+                              COMMERCIAL GENERAL LIABILITY SECTION
+                          (ATTACH TO COMMERCIAL INSURANCE APPLICATION)
+================================================================================================
+AGENCY: Harbridge Insurance Brokers             CARRIER: Callaghan Indemnity  NAIC: 19201
+NAMED INSURED(S): Halsey Street Bakery LLC              EFFECTIVE DATE: 01/01/2027
+COVERAGE ---------------------------------------------------------------------------------------
+[X] COMMERCIAL GENERAL LIABILITY                [X] OCCURRENCE        [ ] CLAIMS MADE
+RETRO DATE:                             
+LIMITS OF INSURANCE ----------------------------------------------------------------------------
+GENERAL AGGREGATE                                                2,000,000
+PRODUCTS AND COMPLETED OPERATIONS AGGREGATE                      2,000,000
+PERSONAL AND ADVERTISING INJURY                                  1,000,000
+EACH OCCURRENCE                                                  1,000,000
+DAMAGE TO RENTED PREMISES                                          100,000
+MEDICAL EXPENSE                                                     10,000
+DEDUCTIBLES ------------------------------------------------------------------------------------
+PROPERTY DAMAGE DEDUCTIBLE: 1,000               PER: CLAIM
+SCHEDULE OF HAZARDS ----------------------------------------------------------------------------
+LOC  CLASSIFICATION                            CLASS CODE  PREMIUM BASIS  EXPOSURE
+----------------------------------------------------------------------------------------
+1    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              1,658,333
+2    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              1,658,333
+3    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              1,658,333
+4    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              1,658,333
+5    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              1,658,333
+6    BAKERIES - RETAIL WITH BAKING ON PREMISES 10100       S              1,658,333
+----------------------------------------------------------------------------------------
+TOTAL EXPOSURE                                                                 9,950,000
+
+PREMIUM BASIS LEGEND: S = GROSS SALES, P = PAYROLL, A = AREA
+GENERAL LIABILITY QUESTIONS --------------------------------------------------------------------
+EXPLAIN ALL "YES" RESPONSES                                                 YES  NO
+DOES THE APPLICANT USE SUBCONTRACTORS?                                      [ ]  [X]
+ARE CERTIFICATES OF INSURANCE OBTAINED FROM SUBCONTRACTORS?                 [ ]  [X]
+ANY WORK PERFORMED AT HEIGHT OR BELOW GROUND?                               [ ]  [X]
+ANY PRODUCTS SOLD UNDER THE APPLICANT'S OWN LABEL?                          [X]  [ ]
+ANY DELIVERY BY OWN VEHICLES?                                               [X]  [ ]
+ANY ALCOHOL SOLD OR SERVED?                                                 [ ]  [X]
+REMARKS ----------------------------------------------------------------------------------------
+Products are baked goods sold at the applicant's own outlets and delivered to third party cafes
+within a 40 mile radius.
+------------------------------------------------------------------------------------------------
+SYNTHETIC DOCUMENT. Generated for an evaluation set. Not an ACORD form and not produced by,
+affiliated with or endorsed by ACORD. Field names follow industry usage. No real applicant,
+carrier or policy is described.
+COMMERCIAL GENERAL LIABILITY SECTION (synthetic)                                                

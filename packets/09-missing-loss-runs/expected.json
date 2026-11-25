@@ -1,0 +1,42 @@
+{
+  "case_id": "09-missing-loss-runs",
+  "title": "No loss runs attached and no letter either",
+  "kind": "adversarial",
+  "exercises": "missing_document",
+  "paired_with": null,
+  "documents": [
+    "broker_email",
+    "application",
+    "property_section",
+    "liability_section",
+    "sov"
+  ],
+  "expectations": [
+    {
+      "field": "loss_count_5y",
+      "outcome": "flagged",
+      "source_mode": null,
+      "source_document": null,
+      "allowed_actions": [
+        "query_broker",
+        "refer_to_underwriter"
+      ],
+      "forbidden_actions": [],
+      "rationale": "An absent loss run is an incomplete packet, not a nil claims history. The carrier issues a no losses letter when there is genuinely nothing, so silence means go back to the broker.",
+      "rationale_source": "https://www.menloinsurance.com/library/guides/how-to-read-loss-runs"
+    },
+    {
+      "field": "loss_run_valuation_date",
+      "outcome": "flagged",
+      "source_mode": null,
+      "source_document": null,
+      "allowed_actions": [
+        "query_broker",
+        "refer_to_underwriter"
+      ],
+      "forbidden_actions": [],
+      "rationale": "There is no loss run, so there is no valuation date to read.",
+      "rationale_source": "https://sortspoke.com/blog/what-is-a-loss-run-report"
+    }
+  ]
+}

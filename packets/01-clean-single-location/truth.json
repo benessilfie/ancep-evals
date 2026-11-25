@@ -1,0 +1,108 @@
+{
+  "applicant": {
+    "name": "Halsey Street Bakery LLC",
+    "fein": "47-3918266",
+    "entity_type": "LLC",
+    "street": "18 Washington Street",
+    "city": "Hoboken",
+    "state": "NJ",
+    "zip_code": "07030",
+    "business_started": "2009-04-06"
+  },
+  "operations": {
+    "description": "Retail bakery chain, on-site baking at every outlet and a delivery fleet",
+    "sic_code": "5461",
+    "naics_code": "311811",
+    "annual_revenue_usd": 9400000,
+    "employee_count": 40
+  },
+  "policy": {
+    "effective_date": "2027-01-01",
+    "expiration_date": "2028-01-01",
+    "lines_requested": [
+      "Property",
+      "Commercial General Liability"
+    ]
+  },
+  "locations": [
+    {
+      "loc_no": 1,
+      "street": "18 Washington Street",
+      "city": "Hoboken",
+      "state": "NJ",
+      "zip_code": "07030",
+      "construction_class": 2,
+      "year_built": 1962,
+      "stories": 1,
+      "square_feet": 4200,
+      "building_value_usd": 1200000,
+      "bpp_value_usd": 400000,
+      "business_income_value_usd": 250000,
+      "occupancy": "Bakery, retail with on-site baking",
+      "sprinklered": true,
+      "protection_class": 4,
+      "tiv_usd": 1850000
+    }
+  ],
+  "coverage": {
+    "property_coinsurance_pct": 90,
+    "property_valuation_basis": "RC",
+    "property_deductible_usd": 10000,
+    "gl_each_occurrence_usd": 1000000,
+    "gl_general_aggregate_usd": 2000000,
+    "gl_premium_basis": "S",
+    "gl_exposure_usd": 9400000
+  },
+  "prior_carriers": [
+    {
+      "carrier": "Meridian Mutual",
+      "line": "Property",
+      "policy_no": "MM-PR-4480912",
+      "period_start": "2026-01-01",
+      "period_end": "2027-01-01",
+      "premium_usd": 41200
+    },
+    {
+      "carrier": "Callaghan Indemnity",
+      "line": "General Liability",
+      "policy_no": "CI-GL-77301",
+      "period_start": "2026-01-01",
+      "period_end": "2027-01-01",
+      "premium_usd": 18600
+    }
+  ],
+  "losses": [
+    {
+      "carrier": "Meridian Mutual",
+      "claim_no": "884213",
+      "date_of_loss": "2024-01-14",
+      "date_reported": "2024-01-16",
+      "status": "closed",
+      "paid_usd": 12000,
+      "reserved_usd": 0,
+      "cause": "Water damage",
+      "description": "Burst supply line in the Hoboken prep kitchen",
+      "incurred_usd": 12000
+    },
+    {
+      "carrier": "Callaghan Indemnity",
+      "claim_no": "901887",
+      "date_of_loss": "2025-03-03",
+      "date_reported": "2025-03-11",
+      "status": "open",
+      "paid_usd": 4000,
+      "reserved_usd": 26000,
+      "cause": "Bodily injury",
+      "description": "Customer slipped on a wet floor at the Central Avenue outlet",
+      "incurred_usd": 30000
+    }
+  ],
+  "no_losses_letter": null,
+  "loss_run_valuation_date": "2026-11-30",
+  "total_insured_value_usd": 1850000,
+  "location_count": 1,
+  "loss_count": 2,
+  "total_paid_usd": 16000,
+  "total_reserved_usd": 26000,
+  "total_incurred_usd": 42000
+}

@@ -1,0 +1,87 @@
+================================================================================================
+                                        PROPERTY SECTION
+                          (ATTACH TO COMMERCIAL INSURANCE APPLICATION)
+================================================================================================
+AGENCY: Harbridge Insurance Brokers             CARRIER: Meridian Mutual      NAIC: 24171
+NAMED INSURED(S): Halsey Street Bakery LLC                  EFFECTIVE DATE: 01/01/2027
+PREMISES INFORMATION ---------------------------------------------------------------------------
+PREMISES #: 1     BUILDING #: 1     STREET ADDRESS: 18 Washington Street, Hoboken, NJ 07030
+BLDG DESCRIPTION: Bakery, retail with on-site baking
+SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
+------------------------------------------------------------------------------------------------
+BUILDING                      1,200,000   90      RC         SPECIAL         4           10,000
+BUSINESS PERSONAL PROPERTY    400,000     90      RC         SPECIAL         4           10,000
+BUSINESS INCOME               250,000     90      RC         SPECIAL                     10,000
+CONSTRUCTION TYPE: JOISTED MASONRY            DISTANCE TO HYDRANT: 180 FTFIRE STAT: 1.2 MI
+PROT CL: 4    # STORIES: 1  # BASM'TS: 0  YR BUILT: 1962  TOTAL AREA: 4,200
+PREMISES FIRE PROTECTION: WET SPRINKLER SYSTEM THROUGHOUT     % SPRNK: 100
+BURGLAR ALARM TYPE: CENTRAL STATION           ROOF UPDATED: 1974
+PREMISES INFORMATION ---------------------------------------------------------------------------
+PREMISES #: 2     BUILDING #: 1     STREET ADDRESS: 7 Palisade Avenue, Jersey City, NJ 07306
+BLDG DESCRIPTION: Bakery, retail with on-site baking
+SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
+------------------------------------------------------------------------------------------------
+BUILDING                      650,000     90      RC         SPECIAL         4           10,000
+BUSINESS PERSONAL PROPERTY    180,000     90      RC         SPECIAL         4           10,000
+BUSINESS INCOME               120,000     90      RC         SPECIAL                     10,000
+CONSTRUCTION TYPE: JOISTED MASONRY            DISTANCE TO HYDRANT: 180 FTFIRE STAT: 1.2 MI
+PROT CL: 4    # STORIES: 1  # BASM'TS: 0  YR BUILT: 1998  TOTAL AREA: 2,100
+PREMISES FIRE PROTECTION: WET SPRINKLER SYSTEM THROUGHOUT     % SPRNK: 100
+BURGLAR ALARM TYPE: CENTRAL STATION           ROOF UPDATED: 2010
+PREMISES INFORMATION ---------------------------------------------------------------------------
+PREMISES #: 3     BUILDING #: 1     STREET ADDRESS: 214 Central Avenue, Jersey City, NJ 07307
+BLDG DESCRIPTION: Bakery, retail with on-site baking
+SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
+------------------------------------------------------------------------------------------------
+BUILDING                      1,500,000   90      RC         SPECIAL         4           10,000
+BUSINESS PERSONAL PROPERTY    250,000     90      RC         SPECIAL         4           10,000
+BUSINESS INCOME               150,000     90      RC         SPECIAL                     10,000
+CONSTRUCTION TYPE: JOISTED MASONRY            DISTANCE TO HYDRANT: 180 FTFIRE STAT: 1.2 MI
+PROT CL: 4    # STORIES: 1  # BASM'TS: 0  YR BUILT: 2004  TOTAL AREA: 5,600
+PREMISES FIRE PROTECTION: WET SPRINKLER SYSTEM THROUGHOUT     % SPRNK: 100
+BURGLAR ALARM TYPE: CENTRAL STATION           ROOF UPDATED: 2016
+PREMISES INFORMATION ---------------------------------------------------------------------------
+PREMISES #: 4     BUILDING #: 1     STREET ADDRESS: 41 Bergenline Avenue, Union City, NJ 07087
+BLDG DESCRIPTION: Bakery, retail with on-site baking
+SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
+------------------------------------------------------------------------------------------------
+BUILDING                      780,000     90      RC         SPECIAL         4           10,000
+BUSINESS PERSONAL PROPERTY    220,000     90      RC         SPECIAL         4           10,000
+BUSINESS INCOME               140,000     90      RC         SPECIAL                     10,000
+CONSTRUCTION TYPE: JOISTED MASONRY            DISTANCE TO HYDRANT: 180 FTFIRE STAT: 1.2 MI
+PROT CL: 4    # STORIES: 1  # BASM'TS: 0  YR BUILT: 2011  TOTAL AREA: 3,100
+PREMISES FIRE PROTECTION: WET SPRINKLER SYSTEM THROUGHOUT     % SPRNK: 100
+BURGLAR ALARM TYPE: CENTRAL STATION           ROOF UPDATED: 2023
+PREMISES INFORMATION ---------------------------------------------------------------------------
+PREMISES #: 5     BUILDING #: 1     STREET ADDRESS: 3 Kennedy Boulevard, Bayonne, NJ 07002
+BLDG DESCRIPTION: Bakery, retail with on-site baking
+SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
+------------------------------------------------------------------------------------------------
+BUILDING                      1,100,000   90      RC         SPECIAL         4           10,000
+BUSINESS PERSONAL PROPERTY    300,000     90      RC         SPECIAL         4           10,000
+BUSINESS INCOME               180,000     90      RC         SPECIAL                     10,000
+CONSTRUCTION TYPE: JOISTED MASONRY            DISTANCE TO HYDRANT: 180 FTFIRE STAT: 1.2 MI
+PROT CL: 4    # STORIES: 1  # BASM'TS: 0  YR BUILT: 1988  TOTAL AREA: 4,800
+PREMISES FIRE PROTECTION: WET SPRINKLER SYSTEM THROUGHOUT     % SPRNK: 100
+BURGLAR ALARM TYPE: CENTRAL STATION           ROOF UPDATED: 2000
+PREMISES INFORMATION ---------------------------------------------------------------------------
+PREMISES #: 6     BUILDING #: 1     STREET ADDRESS: 90 Port Street, Newark, NJ 07114
+BLDG DESCRIPTION: Bakery, retail with on-site baking
+SUBJECT OF INSURANCE          AMOUNT      COINS%  VALUATION  CAUSES OF LOSS  INFL GUARD% DED
+------------------------------------------------------------------------------------------------
+BUILDING                      740,000     90      RC         SPECIAL         4           10,000
+BUSINESS PERSONAL PROPERTY    150,000     90      RC         SPECIAL         4           10,000
+BUSINESS INCOME               90,000      90      RC         SPECIAL                     10,000
+CONSTRUCTION TYPE: JOISTED MASONRY            DISTANCE TO HYDRANT: 180 FTFIRE STAT: 1.2 MI
+PROT CL: 4    # STORIES: 1  # BASM'TS: 0  YR BUILT: 2015  TOTAL AREA: 1,800
+PREMISES FIRE PROTECTION: WET SPRINKLER SYSTEM THROUGHOUT     % SPRNK: 100
+BURGLAR ALARM TYPE: CENTRAL STATION           ROOF UPDATED: 2027
+ADDITIONAL INTEREST ----------------------------------------------------------------------------
+INTEREST: MORTGAGEE     NAME: Hudson Commercial Bank            INTEREST IN ITEM: LOCATION 1 BUILDING 1
+REMARKS ----------------------------------------------------------------------------------------
+Values per the attached statement of values.
+------------------------------------------------------------------------------------------------
+SYNTHETIC DOCUMENT. Generated for an evaluation set. Not an ACORD form and not produced by,
+affiliated with or endorsed by ACORD. Field names follow industry usage. No real applicant,
+carrier or policy is described.
+PROPERTY SECTION (synthetic)                                                                    

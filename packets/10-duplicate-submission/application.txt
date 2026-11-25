@@ -1,0 +1,75 @@
+================================================================================================
+                                COMMERCIAL INSURANCE APPLICATION
+                                 APPLICANT INFORMATION SECTION
+================================================================================================
+AGENCY: Harbridge Insurance Brokers             CARRIER: Meridian Mutual      DATE: 12/14/2026
+AGENCY CUSTOMER ID: HRB-004418                  NAIC CODE: 24171              UNDERWRITER:
+POLICIES OR PROGRAM REQUESTED ------------------------------------------------------------------
+INDICATE SECTIONS ATTACHED
+[X] PROPERTY                                    [X] COMMERCIAL GENERAL LIABILITY
+[ ] BUSINESS AUTO                               [ ] WORKERS COMPENSATION
+[ ] UMBRELLA                                    [ ] CRIME/MISCELLANEOUS CRIME
+STATUS OF TRANSACTION --------------------------------------------------------------------------
+[X] QUOTE               [ ] ISSUE POLICY        [ ] RENEW               [ ] BOUND
+PROPOSED EFF DATE: 01/01/2027     PROPOSED EXP DATE: 01/01/2028     BILLING PLAN: AGENCY BILL
+APPLICANT INFORMATION --------------------------------------------------------------------------
+NAME (First Named Insured): Halsey Street Bakery LLC    MAILING ADDRESS INCL ZIP+4
+                                                        STREET: 18 Washington Street
+FEIN OR SOC SEC #: 47-3918266                           CITY: Hoboken
+PHONE (A/C, No, Ext): (201) 555-0184                    STATE: NJ
+E-MAIL ADDRESS(ES): accounts@halseystreetbakery.example ZIP CODE: 07030
+[ ] INDIVIDUAL    [ ] CORPORATION     [X] LLC             NO. OF MEMBERS AND MANAGERS: 2
+[ ] PARTNERSHIP   [ ] JOINT VENTURE   [ ] NOT FOR PROFIT  DATE BUS STARTED: 04/06/2009
+PREMISES INFORMATION ---------------------------------------------------------------------------
+LOC# BLD# STREET, CITY, COUNTY, STATE, ZIP+4                    CITY LIMITS INTEREST  %OCC
+-------------------------------------------------------------------------------------------
+1    1    18 Washington Street, Hoboken, Hudson, NJ 07030       INSIDE      OWNER     100
+2    1    7 Palisade Avenue, Jersey City, Hudson, NJ 07306      INSIDE      OWNER     100
+3    1    214 Central Avenue, Jersey City, Hudson, NJ 07307     INSIDE      OWNER     100
+4    1    41 Bergenline Avenue, Union City, Hudson, NJ 07087    INSIDE      OWNER     100
+5    1    3 Kennedy Boulevard, Bayonne, Hudson, NJ 07002        INSIDE      OWNER     100
+6    1    90 Port Street, Newark, Hudson, NJ 07114              INSIDE      OWNER     100
+NATURE OF BUSINESS -----------------------------------------------------------------------------
+DESCRIPTION OF PRIMARY OPERATIONS:
+  Retail bakery chain, on-site baking at every outlet and a delivery fleet
+SIC: 5461               NAICS: 311811             ANNUAL REVENUES: 9,950,000
+NO. OF FULL TIME EMPLOYEES: 40          NO. OF PART TIME EMPLOYEES: 0
+GENERAL INFORMATION ----------------------------------------------------------------------------
+EXPLAIN ALL "YES" RESPONSES                                                 YES  NO
+1a. IS THE APPLICANT A SUBSIDIARY OF ANOTHER ENTITY?                        [ ]  [X]
+1b. DOES THE APPLICANT HAVE ANY SUBSIDIARIES?                               [ ]  [X]
+2. IS A FORMAL SAFETY PROGRAM IN OPERATION?                                 [X]  [ ]
+3. ANY EXPOSURE TO FLAMMABLES, EXPLOSIVES, CHEMICALS?                       [ ]  [X]
+4. ANY CATASTROPHE EXPOSURE?                                                [ ]  [X]
+5. ANY OTHER INSURANCE WITH THIS COMPANY?                                   [ ]  [X]
+6. ANY POLICY DECLINED OR NON-RENEWED IN THE PRIOR 3 YEARS?                 [ ]  [X]
+7. ANY PAST LOSSES RELATING TO DISCRIMINATION OR NEGLIGENT HIRING?          [ ]  [X]
+8. ANY ARSON OR FRAUD CONVICTION IN THE LAST FIVE YEARS?                    [ ]  [X]
+9. ANY UNCORRECTED FIRE CODE VIOLATIONS?                                    [ ]  [X]
+10. ANY BANKRUPTCIES, TAX OR CREDIT LIENS IN THE PAST 5 YEARS?              [ ]  [X]
+11. HAS BUSINESS BEEN PLACED IN A TRUST?                                    [ ]  [X]
+12. ANY FOREIGN OPERATIONS OR PRODUCTS SOLD ABROAD?                         [ ]  [X]
+PRIOR CARRIER INFORMATION ----------------------------------------------------------------------
+LINE                    CARRIER                 POLICY NUMBER     EFF-EXP DATE            PREMIUM
+------------------------------------------------------------------------------------------------
+PROPERTY                Meridian Mutual         MM-PR-4480912     01/01/2026 - 01/01/2027 41,200
+GENERAL LIABILITY       Callaghan Indemnity     CI-GL-77301       01/01/2026 - 01/01/2027 18,600
+LOSS HISTORY -----------------------------------------------------------------------------------
+ENTER ALL CLAIMS OR LOSSES (REGARDLESS OF FAULT AND WHETHER OR NOT INSURED) OR OCCURRENCES THAT
+MAY GIVE RISE TO CLAIMS FOR THE PRIOR 5 YEARS (3 YEARS IN KS & NY)
+CHK HERE IF NONE: [ ]                           SEE ATTACHED LOSS SUMMARY: [X]
+DATE OF     LINE      TYPE/DESCRIPTION OF OCCURRENCE  DATE OF     AMOUNT    AMOUNT    CLAIM
+OCCURRENCE                                            CLAIM       PAID      RESERVED  STATU
+--------------------------------------------------------------------------------------------
+01/14/2024  PROPERTY  Burst supply line in the Hoboke 01/16/2024  12,000    0         CLSD
+03/03/2025  GL        Customer slipped on a wet floor 03/11/2025  4,000     26,000    OPEN
+SIGNATURE --------------------------------------------------------------------------------------
+THE UNDERSIGNED IS AN AUTHORIZED REPRESENTATIVE OF THE APPLICANT AND CERTIFIES THAT THE ANSWERS
+ARE TRUE, CORRECT AND COMPLETE TO THE BEST OF HIS/HER KNOWLEDGE.
+APPLICANT'S SIGNATURE: A. Dadson                DATE: 12/14/2026
+PRODUCER'S SIGNATURE: Dana Whitfield            NATIONAL PRODUCER NUMBER: 1884220
+------------------------------------------------------------------------------------------------
+SYNTHETIC DOCUMENT. Generated for an evaluation set. Not an ACORD form and not produced by,
+affiliated with or endorsed by ACORD. Field names follow industry usage. No real applicant,
+carrier or policy is described.
+COMMERCIAL INSURANCE APPLICATION (synthetic)                                                    

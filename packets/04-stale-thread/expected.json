@@ -1,0 +1,28 @@
+{
+  "case_id": "04-stale-thread",
+  "title": "The total is corrected three messages down a forwarded chain",
+  "kind": "adversarial",
+  "exercises": "stale_thread",
+  "paired_with": null,
+  "documents": [
+    "broker_email",
+    "application",
+    "property_section",
+    "liability_section",
+    "sov",
+    "loss_run_a",
+    "loss_run_b"
+  ],
+  "expectations": [
+    {
+      "field": "total_insured_value_usd",
+      "outcome": "extracted",
+      "source_mode": "read",
+      "source_document": "broker_email",
+      "allowed_actions": [],
+      "forbidden_actions": [],
+      "rationale": "The newest message in a forwarded chain is at the top but the newest fact is further down, and the corrected total is the one that binds.",
+      "rationale_source": "https://www.independentagent.com/vu_resource/helping-your-clients-maintain-accurate-statements-of-value/"
+    }
+  ]
+}

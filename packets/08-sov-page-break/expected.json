@@ -1,0 +1,28 @@
+{
+  "case_id": "08-sov-page-break",
+  "title": "The last location splits across a page break in the statement of values",
+  "kind": "adversarial",
+  "exercises": "sov_page_break",
+  "paired_with": null,
+  "documents": [
+    "broker_email",
+    "application",
+    "property_section",
+    "liability_section",
+    "sov",
+    "loss_run_a",
+    "loss_run_b"
+  ],
+  "expectations": [
+    {
+      "field": "location_count",
+      "outcome": "extracted",
+      "source_mode": "derived",
+      "source_document": "sov",
+      "allowed_actions": [],
+      "forbidden_actions": [],
+      "rationale": "Column headers appear on the first page only and rows continue underneath, so a split row is read as missing or counted twice.",
+      "rationale_source": "https://www.docsumo.com/blog/loss-run-data-extraction"
+    }
+  ]
+}
