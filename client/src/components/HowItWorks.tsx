@@ -161,10 +161,6 @@ function buildSteps(
             word for it.
           </p>
           <p>
-            That is what an eval set is. Ten submissions, with the right answer to each one
-            written down before any model sees them, so there is something to mark against.
-          </p>
-          <p>
             Each model fills in the same twenty one fields. Three Claude models, three runs
             each, {data.totals.trials} graded records.
           </p>
@@ -202,17 +198,12 @@ function buildSteps(
             to mark up the right answers. That takes days, and expertise I do not have.
           </p>
           <p>
-            So I start from the answers. I decide the facts first, then generate the
-            documents from them.
-          </p>
-          <p>
-            To make a hard case, I break one thing in the documents. The facts never
-            change, so I always know what the right answer was.
+            So I start from the answers instead, and generate the documents from them.
           </p>
           <p className="text-ink">
-            A new case takes minutes this way. And each one is a type of problem, not one
-            particular bakery. The test is &ldquo;the documents disagree&rdquo;, so any
-            submission where that happens is already covered.
+            A new case takes minutes this way, and each one is a type of problem rather than
+            one particular bakery, so any submission whose documents disagree is already
+            covered.
           </p>
         </Prose>
       ),
