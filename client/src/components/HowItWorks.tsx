@@ -62,7 +62,7 @@ export function HowItWorks({
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
-      <div className="mx-auto w-full max-w-[64rem] px-4 py-8 sm:px-6 sm:py-10">
+      <div className="mx-auto w-full max-w-[64rem] px-4 pt-8 pb-28 sm:px-6 sm:pt-10 md:pb-10">
         <div className={cn("mb-7", step > 0 && "hidden md:block")}>
           <h1 className="max-w-[24ch] text-[1.875rem] leading-[1.12] font-semibold tracking-[-0.02em]">
             An eval set to grade AI on commercial insurance submissions
@@ -121,7 +121,7 @@ export function HowItWorks({
           <div className="min-w-0">{current.aside}</div>
         </div>
 
-        <div className="sticky bottom-0 -mx-4 mt-10 flex items-center gap-3 border-t border-rule-soft bg-paper px-4 py-3 sm:-mx-6 sm:px-6 md:static md:mx-0 md:px-0 md:pt-5 md:pb-0">
+        <div className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-rule bg-paper px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:static md:z-auto md:mt-10 md:border-rule-soft md:px-0 md:py-0 md:pt-5">
           <button
             type="button"
             disabled={step === 0}
