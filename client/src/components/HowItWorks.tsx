@@ -355,12 +355,12 @@ function buildSteps(
       body: (
         <Prose>
           <p>
-            The live demo runs a packet against a model right now and fills the record in
-            front of you, so you can watch it miss the thing it was told to watch for.
+            The live demo sends one of the files, a packet, to a model and fills in the
+            twenty one fields while you watch.
           </p>
           <p>
-            Findings has all {data.totals.trials} runs that already happened, every packet,
-            every model, and the field that went wrong in each one.
+            Findings has the {data.totals.trials} runs I already did: every packet, every
+            model, and the field that went wrong in each one.
           </p>
         </Prose>
       ),
@@ -369,14 +369,14 @@ function buildSteps(
           <Card
             mark={<ScheduleMark className="h-7 w-8 text-rule" />}
             head="Live demo"
-            body="Read any packet document by document, then run it. About forty seconds."
+            body="Read a packet document by document, then run it against a model. About forty seconds."
             hint={`open ${broken.short} first`}
             onClick={() => onGo("live")}
           />
           <Card
             mark={<LedgerMark className="h-7 w-8 text-rule" />}
             head="Findings"
-            body={`All ${data.totals.trials} recorded runs, with the record each one filed.`}
+            body={`All ${data.totals.trials} runs, and the twenty one fields each one filed.`}
             hint="red numbers in the left list are failures"
             onClick={() => onGo("recorded")}
           />
