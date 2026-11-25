@@ -188,7 +188,7 @@ function Fold({
 }) {
   return (
     <details className={cn("group border-t border-rule-soft pt-3", className)}>
-      <summary className="pressable flex cursor-pointer list-none items-center gap-1.5 text-[0.8125rem] text-ink-soft hover:text-ink">
+      <summary className="pressable flex cursor-pointer list-none items-center gap-1.5 rounded-field text-[0.8125rem] text-ink-soft outline-none hover:text-ink focus-visible:text-carbon focus-visible:underline focus-visible:decoration-carbon/40 focus-visible:underline-offset-4">
         <span
           aria-hidden
           className="font-mono text-[0.625rem] transition-transform group-open:rotate-90"
