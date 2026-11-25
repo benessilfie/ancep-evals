@@ -30,6 +30,12 @@
   --radius-control: 5px;
 }
 
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+}
+
 :root {
   --background: var(--color-paper);
   --foreground: var(--color-ink);
@@ -131,10 +137,103 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  .pressable,
+  .marker,
+  .fold::details-content {
+    transition: none;
+  }
+
+  .rise-in,
+  .write-in,
+  .drop-in {
+    animation: fade-only 160ms ease both;
+  }
+
+  .spin-ring {
+    animation-duration: 1800ms;
+  }
+}
+
+@keyframes fade-only {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: scale(0.985) translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes write-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer components {
+  .spin-ring {
+    animation: spin-ring 700ms linear infinite;
+  }
+
+  .rise-in {
+    animation: rise-in 220ms var(--ease-out-strong) both;
+  }
+
+  .write-in {
+    animation: write-in 260ms var(--ease-out-strong) both;
+  }
+
+  .drop-in {
+    animation: drop-in 180ms var(--ease-out-strong) both;
+  }
+
+  .marker {
+    transition:
+      transform 240ms var(--ease-out-strong),
+      width 240ms var(--ease-out-strong),
+      height 240ms var(--ease-out-strong),
+      opacity 150ms var(--ease-out-strong);
+  }
+
+  .fold::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 240ms var(--ease-out-strong),
+      content-visibility 240ms allow-discrete;
+  }
+
+  .fold[open]::details-content {
+    block-size: auto;
   }
 }

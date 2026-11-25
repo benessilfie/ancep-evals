@@ -1,3 +1,4 @@
+import { useMarker } from "@/lib/marker"
 import type { EvalCase, ModelSummary } from "@/types"
 import { cn } from "@/lib/utils"
 
@@ -14,6 +15,7 @@ function tally(evalCase: EvalCase, model: string) {
 }
 
 export function PacketList({ cases, models, selected, onSelect }: Props) {
+  const { track, style } = useMarker<HTMLUListElement>(selected)
   return (
     <nav
       aria-label="packets"
@@ -29,7 +31,12 @@ export function PacketList({ cases, models, selected, onSelect }: Props) {
         ))}
       </div>
 
-      <ul>
+      <ul ref={track} className="relative">
+        <span
+          aria-hidden
+          style={style}
+          className="marker pointer-events-none absolute top-0 left-0 bg-white shadow-[inset_3px_0_0_var(--color-carbon)]"
+        />
         {cases.map((evalCase) => {
           const active = evalCase.id === selected
           const none = evalCase.trials.every((t) => !t.passed)
@@ -39,11 +46,10 @@ export function PacketList({ cases, models, selected, onSelect }: Props) {
                 type="button"
                 onClick={() => onSelect(evalCase.id)}
                 aria-current={active ? "true" : undefined}
+                data-on={active ? "true" : undefined}
                 className={cn(
-                  "pressable flex w-full items-start gap-2 border-b border-rule-soft px-4 py-3 text-left transition-colors",
-                  active
-                    ? "bg-white shadow-[inset_3px_0_0_var(--color-carbon)]"
-                    : "hover:bg-white/60"
+                  "pressable relative flex w-full items-start gap-2 border-b border-rule-soft px-4 py-3 text-left transition-colors",
+                  !active && "hover:bg-white/60"
                 )}
               >
                 <span className="min-w-0 flex-1">

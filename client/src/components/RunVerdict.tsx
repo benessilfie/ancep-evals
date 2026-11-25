@@ -99,7 +99,7 @@ export function RunVerdict({
   return (
     <section
       className={cn(
-        "rounded-field border bg-white",
+        "rise-in rounded-field border bg-white",
         tone === "seal" ? "border-seal/35" : "border-stamp/45"
       )}
     >

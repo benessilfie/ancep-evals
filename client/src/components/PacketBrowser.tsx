@@ -66,7 +66,7 @@ export function PacketBrowser({ evalCase }: { evalCase: EvalCase }) {
                   onClick={() => setOpen(doc.name)}
                   aria-current={active ? "true" : undefined}
                   className={cn(
-                    "flex w-full items-center gap-2.5 px-3 py-2 text-left transition-colors",
+                    "pressable flex w-full items-center gap-2.5 px-3 py-2 text-left transition-colors",
                     active
                       ? "bg-carbon-wash shadow-[inset_2px_0_0_var(--color-carbon)]"
                       : "hover:bg-paper-sunk"

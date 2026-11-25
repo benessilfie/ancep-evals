@@ -117,3 +117,20 @@ export const DOC_MARKS: Record<string, (p: MarkProps) => React.ReactElement> = {
   loss_run_b: LedgerMark,
   no_losses_letter: SealMark,
 }
+
+export function SpinnerMark({ className }: MarkProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      className={className ?? "size-4"}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    >
+      <circle cx="8" cy="8" r="6" opacity=".2" />
+      <path d="M14 8a6 6 0 0 0-6-6" className="spin-ring" style={{ transformOrigin: "8px 8px" }} />
+    </svg>
+  )
+}

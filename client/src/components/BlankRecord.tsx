@@ -73,7 +73,7 @@ export function BlankRecord({ answers, running }: Props) {
                   {answer ? (
                     <span
                       className={cn(
-                        "font-mono text-[0.75rem] duration-500 animate-in fade-in",
+                        "write-in block font-mono text-[0.75rem]",
                         answer.status === "flagged"
                           ? "font-medium text-carbon"
                           : "text-ink"

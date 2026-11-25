@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useMarker } from "@/lib/marker"
 import { Evidence } from "@/components/Evidence"
 import { FormMark, LedgerMark, PaperMark, ScheduleMark, SealMark } from "@/components/Marks"
 import type { EvalCase, EvalData } from "@/types"
@@ -25,6 +26,7 @@ export function HowItWorks({
   const steps = buildSteps(data, broken, controls, onGo)
   const current = steps[step]
   const last = step === steps.length - 1
+  const { track, style } = useMarker<HTMLElement>(current.title)
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
@@ -38,19 +40,25 @@ export function HowItWorks({
           </p>
         </div>
 
-        <nav className="flex flex-wrap items-center gap-x-2 gap-y-2">
+        <nav ref={track} className="relative flex flex-wrap items-center gap-x-2 gap-y-2">
+          <span
+            aria-hidden
+            style={style}
+            className="marker pointer-events-none absolute top-0 left-0 rounded-field bg-ink"
+          />
           {steps.map((s, i) => (
             <button
               key={s.title}
               type="button"
+              data-on={i === step ? "true" : undefined}
               onClick={() => setStep(i)}
               className={cn(
-                "pressable rounded-field px-2.5 py-1 text-[0.75rem] transition-colors",
+                "pressable relative rounded-field px-2.5 py-1 text-[0.75rem] transition-colors duration-200",
                 i === step
-                  ? "bg-ink text-paper"
+                  ? "text-paper"
                   : i < step
-                    ? "text-ink-soft hover:bg-paper-sunk"
-                    : "text-ink-faint hover:bg-paper-sunk"
+                    ? "text-ink-soft hover:text-ink"
+                    : "text-ink-faint hover:text-ink-soft"
               )}
             >
               <span className="font-mono text-[0.625rem]">{i + 1}</span>

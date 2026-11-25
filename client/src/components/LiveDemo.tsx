@@ -3,6 +3,7 @@ import { BlankRecord } from "@/components/BlankRecord"
 import { PacketBrowser } from "@/components/PacketBrowser"
 import { RunVerdict, type Graded } from "@/components/RunVerdict"
 import { useRunHistory, timeAgo, type PastRun } from "@/lib/history"
+import { SpinnerMark } from "@/components/Marks"
 import {
   Select,
   SelectContent,
@@ -50,8 +51,19 @@ export function LiveDemo({ data }: { data: EvalData }) {
   const { runs, save } = useRunHistory()
   const [models, setModels] = useState<LiveModel[]>([])
   const [model, setModel] = useState<string | null>(null)
+  const [elapsed, setElapsed] = useState(0)
+  const startedAt = useRef<number>(0)
 
   useEffect(() => () => source.current?.close(), [])
+
+  useEffect(() => {
+    if (phase !== "starting" && phase !== "reading" && phase !== "checking") return
+    const tick = window.setInterval(
+      () => setElapsed((Date.now() - startedAt.current) / 1000),
+      100
+    )
+    return () => window.clearInterval(tick)
+  }, [phase])
 
   const loadModels = useCallback(() => {
     fetch(`${API}/api/health`)
@@ -74,6 +86,8 @@ export function LiveDemo({ data }: { data: EvalData }) {
     setGraded(null)
     collected.current = { fields: [], findings: [] }
     setUploaded(Boolean(files && files.length > 0))
+    startedAt.current = Date.now()
+    setElapsed(0)
     setPhase("starting")
     setPane("record")
 
@@ -295,7 +309,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
                   <button
                     type="button"
                     onClick={() => restore(run)}
-                    className="pressable flex w-full items-baseline gap-2.5 rounded-field px-1.5 py-1.5 text-left transition-colors hover:bg-white"
+                    className="drop-in pressable flex w-full items-baseline gap-2.5 rounded-field px-1.5 py-1.5 text-left transition-colors hover:bg-white"
                   >
                     <span
                       className={cn(
@@ -336,7 +350,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
               type="button"
               onClick={() => setPane(key)}
               className={cn(
-                "px-2 py-1.5 text-[0.75rem] [border-style:solid] [border-width:0_0_2px_0]",
+                "pressable px-2 py-1.5 text-[0.75rem] [border-style:solid] [border-width:0_0_2px_0]",
                 pane === key
                   ? "[border-bottom-color:var(--color-carbon)] font-medium text-carbon"
                   : "[border-bottom-color:transparent] text-ink-soft hover:text-ink"
@@ -351,7 +365,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
           <PacketBrowser key={selectedCase.id} evalCase={selectedCase} />
         ) : (
           <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
-            <Progress phase={phase} meta={meta} count={fields.length} />
+            <Progress phase={phase} meta={meta} count={fields.length} elapsed={elapsed} />
 
             {message && (
               <div className="mt-4 border-l-2 border-stamp bg-stamp-wash px-4 py-3 text-[0.875rem] leading-relaxed text-stamp">
@@ -392,10 +406,12 @@ function Progress({
   phase,
   meta,
   count,
+  elapsed,
 }: {
   phase: Phase
   meta: { seconds?: number; tokens?: number }
   count: number
+  elapsed: number
 }) {
   if (phase === "idle") {
     return (
@@ -412,14 +428,18 @@ function Progress({
           const state = phase === "error" ? "idle" : i < reached ? "past" : i === reached ? "now" : "idle"
           return (
             <li key={stage.key} className="flex items-center gap-2">
-              <span
-                className={cn(
-                  "size-1.5 rounded-full",
-                  state === "past" && "bg-seal",
-                  state === "now" && "animate-pulse bg-carbon",
-                  state === "idle" && "bg-rule"
-                )}
-              />
+              {state === "now" && phase !== "done" ? (
+                <SpinnerMark className="size-3.5 text-carbon" />
+              ) : (
+                <span
+                  className={cn(
+                    "size-1.5 rounded-full transition-colors duration-300",
+                    state === "past" && "bg-seal",
+                    state === "now" && "bg-carbon",
+                    state === "idle" && "bg-rule"
+                  )}
+                />
+              )}
               <span
                 className={cn(
                   "text-[0.8125rem]",
@@ -433,9 +453,18 @@ function Progress({
         })}
       </ol>
       <p className="mt-2 font-mono text-micro text-ink-faint">
-        {meta.seconds ? `${meta.seconds}s` : "waiting on the model"}
-        {meta.tokens ? ` · ${meta.tokens.toLocaleString()} tokens` : ""}
-        {count > 0 ? ` · ${count} fields` : ""}
+        {phase === "done" || phase === "error" ? (
+          <>
+            {meta.seconds ? `${meta.seconds}s` : ""}
+            {meta.tokens ? ` · ${meta.tokens.toLocaleString()} tokens` : ""}
+            {count > 0 ? ` · ${count} fields` : ""}
+          </>
+        ) : (
+          <>
+            <span className="tabular-nums text-carbon">{elapsed.toFixed(1)}s</span>
+            {count > 0 ? ` · ${count} of 21 fields` : " · usually 25 to 45 seconds"}
+          </>
+        )}
       </p>
     </div>
   )
