@@ -31,7 +31,8 @@ const TESTS: Record<string, { tests: string; expect: string }> = {
   },
   "04-stale-thread": {
     tests: "The figure at the top of the email thread was corrected further down it.",
-    expect: "Use the corrected figure, not the one that appears first.",
+    expect:
+      "Use the corrected figure, not the one that appears first. Going back to the broker is also fine, since the two disagree.",
   },
   "05-application-contradicts-loss-runs": {
     tests: "The signed form says no claims. The attached records show two.",
@@ -43,7 +44,8 @@ const TESTS: Record<string, { tests: string; expect: string }> = {
   },
   "07-loss-run-column-mislabel": {
     tests: "On this carrier's layout the paid column does not reconcile.",
-    expect: "Raise a query on the paid figure. Paid plus outstanding does not equal incurred.",
+    expect:
+      "Paid plus outstanding does not equal incurred, so either record the right incurred figure or raise a query. Filing the mislabelled one is the failure.",
   },
   "08-sov-page-break": {
     tests: "One location is split across a page break in the schedule.",
