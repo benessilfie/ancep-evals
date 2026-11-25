@@ -122,19 +122,13 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
               <DocTab active={tab === "__record"} onClick={() => setTab("__record")} strong>
                 the record it filed
               </DocTab>
-              <span aria-hidden className="mx-3 hidden shrink-0 text-rule 2xl:inline">
-                |
-              </span>
-              <span className="field-label ml-auto shrink-0 pr-2">
-                the {evalCase.documents.length} documents it was given
-              </span>
               <Select
                 value={tab === "__record" ? undefined : tab}
                 onValueChange={setTab}
               >
                 <SelectTrigger
                   className={cn(
-                    "pressable w-[14rem] rounded-field border border-rule bg-transparent px-2.5 py-1.5 text-left text-[0.75rem] outline-none focus-visible:border-carbon focus-visible:ring-0",
+                    "pressable ml-auto w-[14rem] rounded-field border border-rule bg-transparent px-2.5 py-1.5 text-left text-[0.75rem] outline-none focus-visible:border-carbon focus-visible:ring-0",
                     tab !== "__record" ? "border-carbon/40 text-carbon" : "text-ink-soft"
                   )}
                 >
