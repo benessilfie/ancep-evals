@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { HowItWorks } from "@/components/HowItWorks"
 import { LiveDemo } from "@/components/LiveDemo"
 import { PacketDetail } from "@/components/PacketDetail"
+import { cn } from "@/lib/utils"
 import { PacketList } from "@/components/PacketList"
 import { PacketPicker } from "@/components/PacketPicker"
 import type { EvalData } from "@/types"
@@ -34,7 +35,7 @@ export default function App() {
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
       <header className="shrink-0 border-b border-rule">
-        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2.5 px-4 py-2.5 sm:px-5 sm:py-3">
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-2.5 px-4 py-2.5 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:px-5 sm:py-3">
           <div className="flex items-baseline gap-3">
             <span className="text-[0.875rem] leading-snug font-medium">
               <span className="sm:hidden">An eval set for insurance submissions</span>
@@ -42,11 +43,11 @@ export default function App() {
                 An eval set to grade AI on commercial insurance submissions
               </span>
             </span>
-            <span className="hidden text-[0.8125rem] text-ink-soft lg:inline">
+            <span className="hidden text-[0.8125rem] text-ink-soft 2xl:inline">
               graded on what the model filed, not what it said it did
             </span>
           </div>
-          <div className="flex w-full items-center gap-5 sm:w-auto">
+          <div className="flex w-full items-center justify-center gap-5 sm:w-auto">
             <div className="flex w-full rounded-control border border-rule bg-white p-0.5 sm:w-auto">
               {(["start", "live", "recorded"] as const).map((mode) => (
                 <button
@@ -65,7 +66,12 @@ export default function App() {
               ))}
             </div>
           </div>
-          <div className="hidden items-center gap-5 font-mono text-micro text-ink-faint md:flex">
+          <div
+            className={cn(
+              "hidden items-center justify-end gap-5 font-mono text-micro text-ink-faint",
+              view === "recorded" && "xl:flex"
+            )}
+          >
             <span>
               <span className="text-stamp">{unbeaten}</span>{" "}
               {unbeaten === 1 ? "packet" : "packets"} no model passed

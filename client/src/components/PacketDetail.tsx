@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Evidence } from "@/components/Evidence"
 import { RecordTable, humanise } from "@/components/RecordTable"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent } from "@/components/ui/tabs"
 import {
   Select,
   SelectContent,
@@ -117,33 +117,27 @@ export function PacketDetail({ evalCase }: { evalCase: EvalCase }) {
               </Select>
             </div>
 
-            <TabsList
-              style={{ height: "auto" }}
-              className="hidden w-full shrink-0 flex-wrap justify-start gap-x-0.5 gap-y-1 rounded-none border-b border-rule bg-transparent px-5 pt-2 pb-0 lg:flex"
-            >
-              <span className="field-label hidden self-center pr-2 sm:inline">output</span>
-              <TabsTrigger
-                value="__record"
-                className="rounded-none px-2 py-1.5 text-[0.75rem] font-medium text-ink [border-width:0_0_2px_0] [border-bottom-color:transparent] [border-style:solid] data-[state=active]:[border-bottom-color:var(--color-carbon)] data-[state=active]:text-carbon"
-              >
+            <div className="hidden w-full shrink-0 flex-wrap items-center gap-x-0.5 gap-y-1 border-b border-rule px-5 pt-2 lg:flex">
+              <span className="field-label self-center pr-2">output</span>
+              <DocTab active={tab === "__record"} onClick={() => setTab("__record")} strong>
                 the record it filed
-              </TabsTrigger>
-              <span aria-hidden className="mx-3 hidden self-center text-rule sm:inline">
+              </DocTab>
+              <span aria-hidden className="mx-3 self-center text-rule">
                 |
               </span>
-              <span className="field-label hidden self-center pr-2 sm:inline">
+              <span className="field-label self-center pr-2">
                 the {evalCase.documents.length} documents it was given
               </span>
               {evalCase.documents.map((doc) => (
-                <TabsTrigger
+                <DocTab
                   key={doc.name}
-                  value={doc.name}
-                  className="rounded-none px-2 py-1.5 text-[0.75rem] text-ink-soft [border-width:0_0_2px_0] [border-bottom-color:transparent] [border-style:solid] data-[state=active]:[border-bottom-color:var(--color-carbon)] data-[state=active]:text-carbon"
+                  active={tab === doc.name}
+                  onClick={() => setTab(doc.name)}
                 >
                   {DOC_NAMES[doc.name] ?? doc.name}
-                </TabsTrigger>
+                </DocTab>
               ))}
-            </TabsList>
+            </div>
             <TabsContent
               value="__record"
               className="min-h-0 flex-1 overflow-x-auto bg-white lg:overflow-auto"
@@ -242,6 +236,35 @@ function Fold({
       </summary>
       <div className="mt-3">{children}</div>
     </details>
+  )
+}
+
+function DocTab({
+  active,
+  strong,
+  onClick,
+  children,
+}: {
+  active: boolean
+  strong?: boolean
+  onClick: () => void
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-current={active ? "true" : undefined}
+      className={cn(
+        "pressable shrink-0 px-2 py-1.5 text-[0.75rem] [border-style:solid] [border-width:0_0_2px_0] transition-colors",
+        strong && "font-medium",
+        active
+          ? "[border-bottom-color:var(--color-carbon)] text-carbon"
+          : "[border-bottom-color:transparent] text-ink-soft hover:text-ink"
+      )}
+    >
+      {children}
+    </button>
   )
 }
 
