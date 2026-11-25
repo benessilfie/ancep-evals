@@ -180,6 +180,16 @@ class Risk(Frozen):
         return self.total_paid_usd + self.total_reserved_usd
 
 
+class SubmissionOnFile(Frozen):
+    reference: str
+    named_insured: str
+    fein: str
+    effective_date: date
+    received: date
+    total_insured_value_usd: int
+    annual_revenue_usd: int
+
+
 class Expectation(Frozen):
     field: str
     outcome: Literal["extracted", "flagged"]
@@ -200,6 +210,7 @@ class Case(Frozen):
     corruption: str | None
     documents: tuple[DocumentName, ...]
     expectations: tuple[Expectation, ...]
+    records_on_file: tuple[SubmissionOnFile, ...] = ()
     paired_with: str | None = None
 
     @computed_field

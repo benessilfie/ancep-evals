@@ -21,6 +21,7 @@ from submission_evals.truth import (
     RecommendedAction,
     Risk,
     SourceMode,
+    SubmissionOnFile,
 )
 
 SOURCE_ACORD_140 = "https://acicompanies.com/PrivateSite/Pdfs/Forms/Acord_140_201403.pdf"
@@ -200,6 +201,7 @@ def _spec(
     expectations: tuple[Expectation, ...],
     corruption: str | None = None,
     paired_with: str | None = None,
+    records_on_file: tuple[SubmissionOnFile, ...] = (),
 ) -> CaseSpec:
     return CaseSpec(
         case=Case(
@@ -211,6 +213,7 @@ def _spec(
             corruption=corruption,
             documents=documents_for(risk, options),
             expectations=expectations,
+            records_on_file=records_on_file,
             paired_with=paired_with,
         ),
         options=options,
@@ -472,6 +475,17 @@ def all_specs() -> list[CaseSpec]:
             ),
             corruption="resend_with_changed_revenue",
             paired_with="02-clean-total-stated",
+            records_on_file=(
+                SubmissionOnFile(
+                    reference="NS-2026-11418",
+                    named_insured="Halsey Street Bakery LLC",
+                    fein="47-3918266",
+                    effective_date=date(2027, 1, 1),
+                    received=date(2026, 12, 7),
+                    total_insured_value_usd=8_400_000,
+                    annual_revenue_usd=9_400_000,
+                ),
+            ),
         ),
     ]
 
