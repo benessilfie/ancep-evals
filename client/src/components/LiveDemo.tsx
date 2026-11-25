@@ -28,10 +28,7 @@ interface LiveModel {
   id: string
   label: string
   note: string
-  usd: number
-  perHour: number
-  today: number
-  perDay: number
+  available: boolean
 }
 
 export function LiveDemo({ data }: { data: EvalData }) {
@@ -190,44 +187,28 @@ export function LiveDemo({ data }: { data: EvalData }) {
             <span className="field-label">model</span>
             <div className="mt-1.5 grid grid-cols-3 gap-1.5">
               {models.map((m) => {
-                const out = m.today === 0
                 const on = m.id === model
                 return (
                   <button
                     key={m.id}
                     type="button"
-                    disabled={running || out}
+                    disabled={running || !m.available}
                     onClick={() => setModel(m.id)}
-                    title={out ? `${m.label} has used its ${m.perDay} runs today` : m.note}
+                    title={m.available ? m.note : "not available right now"}
                     className={cn(
-                      "pressable rounded-field border px-2 py-2 text-center transition-colors",
+                      "pressable rounded-field border px-2 py-2.5 text-center text-[0.8125rem] font-medium transition-colors",
                       on
                         ? "border-ink bg-ink text-paper"
                         : "border-rule bg-white hover:border-ink-faint",
-                      out && "opacity-40"
+                      !m.available && "opacity-40"
                     )}
                   >
-                    <span className="block text-[0.8125rem] leading-tight font-medium">
-                      {m.label.replace(" 5.5", "")}
-                    </span>
-                    <span
-                      className={cn(
-                        "mt-0.5 block font-mono text-[0.625rem]",
-                        on ? "text-paper/70" : "text-ink-faint"
-                      )}
-                    >
-                      {out ? "spent" : `${m.today} left`}
-                    </span>
+                    {m.label.replace(" 5.5", "")}
                   </button>
                 )
               })}
-            </div>
             {chosen && (
-              <p className="mt-2 text-[0.75rem] leading-relaxed text-ink-faint">
-                {chosen.note}. About {Math.round(chosen.usd * 100)} cents a run, capped at{" "}
-                {chosen.perHour} an hour from one address and {chosen.perDay} a day in
-                total.
-              </p>
+              <p className="mt-2 text-[0.75rem] text-ink-faint">{chosen.note}</p>
             )}
           </div>
         )}
@@ -301,7 +282,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
         </button>
 
         <p className="mt-3 text-[0.6875rem] leading-relaxed text-ink-faint">
-          Each model has its own cap, so the demo cannot run up a bill.
+          Runs are rate limited.
         </p>
 
         {runs.length > 0 && (

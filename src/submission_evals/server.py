@@ -66,11 +66,10 @@ def _prune(bucket: deque[float], now: float, window: float) -> None:
         bucket.popleft()
 
 
-def _remaining(model: str) -> dict[str, int]:
+def _available(model: str) -> bool:
     limit = LIVE_MODELS[model]
-    now = time.time()
-    _prune(_today[model], now, 86_400)
-    return {"today": max(0, limit.per_day - len(_today[model])), "perDay": limit.per_day}
+    _prune(_today[model], time.time(), 86_400)
+    return len(_today[model]) < limit.per_day
 
 
 def _allow(ip: str, model: str) -> str | None:
@@ -81,13 +80,13 @@ def _allow(ip: str, model: str) -> str | None:
     _prune(_today[model], now, 86_400)
     if len(_today[model]) >= limit.per_day:
         return (
-            f"{limit.label} has used its {limit.per_day} live runs for today. "
-            "Another model may still have room, and the 90 recorded runs are always here."
+            f"{limit.label} is not available right now. Try another model, "
+            "or the 90 recorded runs on the findings tab."
         )
     if len(hour) >= limit.per_hour:
         return (
-            f"That is {limit.per_hour} {limit.label} runs in an hour from this address. "
-            "Try another model or come back later."
+            f"{limit.label} is not available from this address right now. "
+            "Try another model, or the 90 recorded runs on the findings tab."
         )
     hour.append(now)
     _today[model].append(now)
@@ -104,9 +103,7 @@ def health() -> dict[str, Any]:
                 "id": model,
                 "label": limit.label,
                 "note": limit.note,
-                "usd": limit.usd,
-                "perHour": limit.per_hour,
-                **_remaining(model),
+                "available": _available(model),
             }
             for model, limit in LIVE_MODELS.items()
         ],
