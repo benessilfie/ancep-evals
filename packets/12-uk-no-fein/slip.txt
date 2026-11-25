@@ -7,11 +7,11 @@ RISK DETAILS -------------------------------------------------------------------
 
 TYPE:            Commercial Combined, Property Damage and Liability
 INSURED:         Pennine Mills Limited
+INSURED'S STATUS: Private limited company
 REGISTERED NO:   07482913
 ADDRESS:         Unit 4, Kirkstall Road, Leeds LS4 2AZ
 CURRENCY:        United States Dollars (USD)
 PERIOD:          12 months at 1st February 2027
-                 both days inclusive, local standard time at the Insured's address
 INTEREST:        Buildings, Contents and Business Interruption
 SUM INSURED:     8,515,000 total, RC basis
 CONDITIONS:      100% coinsurance
@@ -32,7 +32,7 @@ CLAIMS EXPERIENCE:
 
 BUSINESS DESCRIPTION:
                  Flour milling and packing for wholesale bakeries, three sites in West Yorkshire
-                 Established 2011, 62 employees, turnover 14,600,000.
+                 Established 2 March 2011, 62 employees, turnover 14,600,000.
 
 SECURITY DETAILS -------------------------------------------------------------------------------
 

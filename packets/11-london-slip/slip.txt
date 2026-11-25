@@ -7,10 +7,11 @@ RISK DETAILS -------------------------------------------------------------------
 
 TYPE:            Commercial Combined, Property Damage and Liability
 INSURED:         Halsey Street Bakery LLC
+INSURED'S STATUS: LLC
+FEDERAL TAX ID:  47-3918266
 ADDRESS:         18 Washington Street, Hoboken, NJ 07030
 CURRENCY:        United States Dollars (USD)
 PERIOD:          12 months at 1st January 2027
-                 both days inclusive, local standard time at the Insured's address
 INTEREST:        Buildings, Contents and Business Interruption
 SUM INSURED:     8,400,000 total, RC basis
 CONDITIONS:      90% coinsurance
@@ -31,7 +32,7 @@ CLAIMS EXPERIENCE:
 
 BUSINESS DESCRIPTION:
                  Retail bakery chain, on-site baking at every outlet and a delivery fleet
-                 Established 2009, 40 employees, turnover 9,400,000.
+                 Established 6 April 2009, 40 employees, turnover 9,400,000.
 
 SECURITY DETAILS -------------------------------------------------------------------------------
 

@@ -55,6 +55,16 @@ const TESTS: Record<string, { tests: string; expect: string }> = {
     tests: "The loss runs the form points at are not in the packet.",
     expect: "Raise a query on the claims fields. Absent is not the same as zero.",
   },
+  "11-london-slip": {
+    tests: "The same risk on a London market slip instead of the usual forms.",
+    expect:
+      "Fill in the same twenty one fields. The period is written as a duration, so expiry has to be worked out and declared as derived.",
+  },
+  "12-uk-no-fein": {
+    tests: "A British insured, so there is no federal tax number anywhere in the packet.",
+    expect:
+      "Raise the FEIN rather than invent one. The slip carries a company registration number, which is not the same thing.",
+  },
   "10-duplicate-submission": {
     tests: "This risk was submitted before, and the revenue has changed since.",
     expect: "Mark it as an update of the earlier submission rather than a new risk.",

@@ -69,11 +69,13 @@ def _record_for(results: Path, row: dict[str, Any]) -> dict[str, Any] | None:
 
 
 def build(results: Path) -> dict[str, Any]:
-    rows = [
-        json.loads(line)
-        for line in (results / "results.jsonl").read_text().splitlines()
-        if line.strip()
-    ]
+    newest: dict[tuple[str, str, int], dict[str, Any]] = {}
+    for line in (results / "results.jsonl").read_text().splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        newest[(row["prompt_id"], row["model"], row["rep"])] = row
+    rows = list(newest.values())
     trials = [_trial(row, _record_for(results, row)) for row in rows]
 
     by_case: dict[str, list[dict]] = defaultdict(list)

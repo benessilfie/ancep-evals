@@ -24,6 +24,7 @@ FlagDecision = Literal["correctly_flagged", "correctly_not_flagged", "missed_fla
 _DATE_FORMATS = ("%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%B %d, %Y", "%d %B %Y", "%b %d, %Y")
 _NON_ALNUM = re.compile(r"[^a-z0-9]+")
 _CODE_SYNONYMS = {
+    "private limited company": ("private limited company", "limited company", "ltd"),
     "rc": ("rc", "replacement cost"),
     "acv": ("acv", "actual cash value"),
     "llc": ("llc", "limited liability company"),
@@ -37,8 +38,8 @@ _ENTITY_NOISE = re.compile(
 def appears_as_token(needle: str, haystack: str) -> bool:
     if not needle.strip():
         return False
-    pattern = rf"(?<![\w,]){re.escape(needle)}(?![\w,])"
-    return re.search(pattern, haystack) is not None
+    pattern = rf"(?<![\w])(?<!\d,){re.escape(needle)}(?![\w])(?!,\d)"
+    return re.search(pattern, haystack, re.IGNORECASE) is not None
 
 
 def normalise_text(value: Any) -> str:
@@ -172,6 +173,12 @@ def values_match(field: str, expected: Any, actual: Any) -> bool:
     return normalise_text(actual) == normalise_text(expected)
 
 
+def _ordinal_long(value: date) -> str:
+    day = value.day
+    suffix = {1: "st", 2: "nd", 3: "rd"}.get(day if day < 20 else day % 10, "th")
+    return value.strftime(f"%-d{suffix} %B %Y")
+
+
 def renderings(field: str, value: Any) -> list[str]:
     if isinstance(value, bool):
         return [str(value)]
@@ -191,6 +198,8 @@ def renderings(field: str, value: Any) -> list[str]:
             parsed.strftime("%B %d, %Y"),
             parsed.strftime("%d %B %Y"),
             parsed.strftime("%d-%b-%Y").upper(),
+            _ordinal_long(parsed),
+            parsed.strftime("%-d %B %Y"),
         ]
     return [str(value)]
 

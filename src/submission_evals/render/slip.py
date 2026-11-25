@@ -36,9 +36,15 @@ def render(risk: Risk, options: PacketOptions) -> str:
         "",
         f"TYPE:            {options.slip_type}",
         f"INSURED:         {risk.applicant.name}",
+        f"INSURED'S STATUS: {risk.applicant.entity_type}",
         *(
             [f"REGISTERED NO:   {options.company_number}"]
             if options.company_number
+            else []
+        ),
+        *(
+            [f"FEDERAL TAX ID:  {risk.applicant.fein}"]
+            if risk.applicant.fein
             else []
         ),
         f"ADDRESS:         {risk.applicant.street}, {risk.applicant.city}"
@@ -46,7 +52,6 @@ def render(risk: Risk, options: PacketOptions) -> str:
         + f" {risk.applicant.zip_code}",
         f"CURRENCY:        {options.slip_currency}",
         f"PERIOD:          {_period(risk)}",
-        "                 both days inclusive, local standard time at the Insured's address",
         "INTEREST:        Buildings, Contents and Business Interruption",
         f"SUM INSURED:     {money(risk.total_insured_value_usd)} total, "
         f"{risk.coverage.property_valuation_basis} basis",
@@ -89,7 +94,7 @@ def render(risk: Risk, options: PacketOptions) -> str:
     ]
     lines += [f"                 {line}" for line in wrap(risk.operations.description)]
     lines += [
-        f"                 Established {risk.applicant.business_started:%Y}, "
+        f"                 Established {risk.applicant.business_started:%-d %B %Y}, "
         f"{risk.operations.employee_count} employees, "
         f"turnover {money(risk.operations.annual_revenue_usd)}.",
         "",
