@@ -32,7 +32,7 @@ SOURCE_INCURRED = (
     "https://www.milliman.com/en/insight/a-beginners-guide-to-the-casualty-actuarial-language"
 )
 SOURCE_EXTRACTION = "https://www.docsumo.com/blog/loss-run-data-extraction"
-SOURCE_MRC = "https://www.londonmarketgroup.co.uk/mrc"
+SOURCE_MRC = "https://lmg.london/digital-market/"
 SOURCE_FEIN = "https://www.irs.gov/businesses/small-businesses-self-employed/employer-id-numbers"
 SOURCE_BROKER_QUERY = (
     "https://insops.com/blogs/why-broker-submissions-fail-on-first-receipt-and-how-to-fix-it"
