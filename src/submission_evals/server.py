@@ -17,6 +17,7 @@ import anthropic
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from starlette.datastructures import UploadFile
 
 from submission_evals.cases import all_specs
@@ -333,3 +334,8 @@ async def events(run_id: str) -> StreamingResponse:
 
 
 SYSTEM_PROMPT = SYSTEM
+
+
+_CLIENT = Path(__file__).resolve().parents[2] / "docs"
+if (_CLIENT / "index.html").exists():
+    app.mount("/", StaticFiles(directory=_CLIENT, html=True), name="client")

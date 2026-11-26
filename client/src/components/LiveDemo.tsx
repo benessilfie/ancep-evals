@@ -14,7 +14,8 @@ import {
 import type { Answer, EvalCase, EvalData } from "@/types"
 import { cn } from "@/lib/utils"
 
-const API = import.meta.env.VITE_API ?? "http://127.0.0.1:8000"
+const API =
+  import.meta.env.VITE_API ?? (import.meta.env.DEV ? "http://127.0.0.1:8000" : "")
 
 interface Finding {
   check: string

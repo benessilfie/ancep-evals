@@ -9056,7 +9056,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Property section and SOV agree and sum to 8,400,000 (building 5,970,000 + BPP 1,500,000 + BI 930,000), matching the brok"
+       "detail": "flagged: Property section and SOV agree and sum to 8,400,000 (building 5,970,000 + BPP 1,500,000 + BI 930,000), matching the broker email. This was recomputed: 1.2M+650k+1.5M+780k+1.1M+740k=5,970,000; BPP 400+180+250+220+300+150=1,500k; BI 250+120+150+140+180+90=930k; total 8,400,000."
       },
       {
        "field": "property_coinsurance_pct",
@@ -15583,7 +15583,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The application loss history is blank, so it neither confirms nil losses nor lists any. The only evidence of nil losses "
+       "detail": "flagged: The application loss history is blank, so it neither confirms nil losses nor lists any. The only evidence of nil losses is two carrier letters that are not loss runs. Both letters have identical wording, the same signatory (R. Castellan, Claims Services Manager) and the same address (4400 Cadwell Plaza, Hartford CT) although they are issued by two different carriers. The letters also cover only the two expiring policies, so the five-year history is not shown for any earlier carrier."
       },
       {
        "field": "total_paid_5y_usd",
@@ -15592,7 +15592,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No loss run is in the packet and the application loss history is blank. The carrier letters are unverified substitutes w"
+       "detail": "flagged: No loss run is in the packet and the application loss history is blank. The carrier letters are unverified substitutes with identical wording and a shared signatory and address, so a paid total cannot be established. Query the broker for carrier-issued five-year loss runs covering all prior carriers."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -15601,7 +15601,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No loss run is in the packet and the application loss history is blank. The carrier letters are unverified substitutes w"
+       "detail": "flagged: No loss run is in the packet and the application loss history is blank. The carrier letters are unverified substitutes with identical wording and a shared signatory and address, so an incurred total cannot be established. Query the broker for carrier-issued five-year loss runs covering all prior carriers."
       },
       {
        "field": "is_update_of_prior_submission",
@@ -16209,7 +16209,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The application loss history is blank with neither nil box nor loss summary marked. The only support is two no-losses le"
+       "detail": "flagged: The application loss history is blank with neither nil box nor loss summary marked. The only support is two no-losses letters that are word-for-word identical, signed by the same person at the same address for two different carriers. The letters cover 2021-01-01 to 2027-01-01, while the application shows prior terms of 2026-01-01 to 2027-01-01, and they expressly exclude unreported incidents. Zero cannot be established on this packet."
       },
       {
        "field": "total_paid_5y_usd",
@@ -16218,7 +16218,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No loss run or loss summary provided, and the no-losses letters are questioned as described under loss_count_5y. Paid to"
+       "detail": "flagged: No loss run or loss summary provided, and the no-losses letters are questioned as described under loss_count_5y. Paid total cannot be set to zero with confidence."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -16227,7 +16227,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No loss run or loss summary provided, and the no-losses letters are questioned as described under loss_count_5y. Incurre"
+       "detail": "flagged: No loss run or loss summary provided, and the no-losses letters are questioned as described under loss_count_5y. Incurred total cannot be set to zero with confidence."
       },
       {
        "field": "is_update_of_prior_submission",
@@ -17523,7 +17523,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The SOV and property section total 7,900,000 with Loc 1 (Hoboken) building at 700,000, but the applicant's finance conta"
+       "detail": "flagged: The SOV and property section total 7,900,000 with Loc 1 (Hoboken) building at 700,000, but the applicant's finance contact wrote on 04 Dec 2026 that the Hoboken building was revalued at 1,200,000, giving 8,400,000. The correction was not carried into the SOV, property section or broker's cover note. Cannot establish a single TIV."
       },
       {
        "field": "property_coinsurance_pct",
@@ -18187,7 +18187,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The SOV and property section total 7,900,000 with Loc 1 (Hoboken) building at 700,000, but the applicant's finance conta"
+       "detail": "flagged: The SOV and property section total 7,900,000 with Loc 1 (Hoboken) building at 700,000, but the applicant's finance contact wrote in the quoted chain that the Hoboken building was revalued in October to 1,200,000, taking TIV to 8,400,000. The correction was not carried into the schedule or the broker's cover note. Cannot establish a single TIV."
       },
       {
        "field": "property_coinsurance_pct",
@@ -18851,7 +18851,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The SOV and property section total 7,900,000 (buildings 5,470,000 + BPP 1,500,000 + BI 930,000) using a 700,000 value fo"
+       "detail": "flagged: The SOV and property section total 7,900,000 (buildings 5,470,000 + BPP 1,500,000 + BI 930,000) using a 700,000 value for Loc 1 Hoboken. The insured's finance contact wrote on 04 Dec 2026, in the thread forwarded by the broker, that the Hoboken building was revalued in October 2026 at 1,200,000, making the TIV 8,400,000. The schedule and cover email were not updated. It is unclear which figure is intended."
       },
       {
        "field": "property_coinsurance_pct",
@@ -19509,7 +19509,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Schedule documents total 7,900,000 but the applicant's finance contact says the Hoboken building was revalued to 1,200,0"
+       "detail": "flagged: Schedule documents total 7,900,000 but the applicant's finance contact says the Hoboken building was revalued to 1,200,000, giving 8,400,000. The SOV and property section were not updated. No single defensible value."
       },
       {
        "field": "property_coinsurance_pct",
@@ -20165,7 +20165,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The schedule and the broker total show 7,900,000 with Hoboken at 700,000. The insured's forwarded email of 4 Dec says Ho"
+       "detail": "flagged: The schedule and the broker total show 7,900,000 with Hoboken at 700,000. The insured's forwarded email of 4 Dec says Hoboken was revalued to 1,200,000, giving 8,400,000. The submitted SOV and property section were not updated, so the current value cannot be established."
       },
       {
        "field": "property_coinsurance_pct",
@@ -20819,7 +20819,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The schedule and broker cover email state 7,900,000, but the insured's later correction says the Hoboken building is now"
+       "detail": "flagged: The schedule and broker cover email state 7,900,000, but the insured's later correction says the Hoboken building is now 1,200,000, giving 8,400,000. The schedule was not updated. No single value is defensible."
       },
       {
        "field": "property_coinsurance_pct",
@@ -21475,7 +21475,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The SOV, property section, application and the broker's 7 Dec email all carry Hoboken building at 700,000 and total 7,90"
+       "detail": "flagged: The SOV, property section, application and the broker's 7 Dec email all carry Hoboken building at 700,000 and total 7,900,000. The insured's 4 Dec email says the Hoboken building was revalued to 1,200,000 giving 8,400,000, but no revised SOV or property section was supplied and the broker's later email still shows 7,900,000. A single defensible value cannot be set."
       },
       {
        "field": "property_coinsurance_pct",
@@ -22149,7 +22149,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The packet gives two totals. The SOV and property section both carry the Hoboken building at 700000 and sum to 7900000, "
+       "detail": "flagged: The packet gives two totals. The SOV and property section both carry the Hoboken building at 700000 and sum to 7900000, which matches the broker's 7900000 figure. The insured's finance contact wrote on 2026-12-04, before the 2026-12-07 submission, that the Hoboken building was revalued to 1200000, giving 8400000. The SOV, property section and broker's own 2026-12-07 email all still use the pre-revaluation figure, so no single value can be defended."
       },
       {
        "field": "property_coinsurance_pct",
@@ -22799,7 +22799,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The insured's finance contact wrote on 4 Dec 2026 that the Hoboken building was revalued from 700000 to 1200000, giving "
+       "detail": "flagged: The insured's finance contact wrote on 4 Dec 2026 that the Hoboken building was revalued from 700000 to 1200000, giving a total of 8400000. The attached SOV and property section, both dated after that email, still show Hoboken building at 700000 and total 7900000, and the broker email still quotes 7900000. The packet does not establish a single total."
       },
       {
        "field": "property_coinsurance_pct",
@@ -35725,7 +35725,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Callaghan loss run is internally inconsistent for claim 901887 (paid 30,000 + outstanding 26,000 does not equal incurred"
+       "detail": "flagged: Callaghan loss run is internally inconsistent for claim 901887 (paid 30,000 + outstanding 26,000 does not equal incurred 30,000). Application shows paid 4,000 + reserved 26,000 = 30,000. Total paid is either 16,000 or 42,000 depending on which paid figure is correct."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -36360,7 +36360,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Callaghan loss run is internally inconsistent: paid 30,000 + outstanding 26,000 does not equal incurred 30,000. Applicat"
+       "detail": "flagged: Callaghan loss run is internally inconsistent: paid 30,000 + outstanding 26,000 does not equal incurred 30,000. Application shows paid 4,000 which reconciles (4,000+26,000=30,000), suggesting the loss run paid column shows incurred, but the carrier document itself states 30,000. Total paid is either 16,000 or 42,000."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -37023,7 +37023,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Paid on GL claim 901887 conflicts: Callaghan loss run shows paid 30,000 with 26,000 outstanding but incurred only 30,000"
+       "detail": "flagged: Paid on GL claim 901887 conflicts: Callaghan loss run shows paid 30,000 with 26,000 outstanding but incurred only 30,000 (internally inconsistent); application shows paid 4,000 + reserved 26,000 = 30,000. Total paid is either 16,000 or 42,000. Property claim paid 12,000 is consistent."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -37682,7 +37682,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: GL claim 901887 paid is 30,000 on the Callaghan loss run but 4,000 on the application. The loss run is itself inconsiste"
+       "detail": "flagged: GL claim 901887 paid is 30,000 on the Callaghan loss run but 4,000 on the application. The loss run is itself inconsistent, since paid 30,000 plus outstanding 26,000 does not equal its incurred of 30,000. Total paid is either 16,000 or 42,000."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -37691,7 +37691,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The Callaghan loss run does not reconcile (paid + outstanding = 56,000 vs incurred 30,000). Incurred for the GL claim is"
+       "detail": "flagged: The Callaghan loss run does not reconcile (paid + outstanding = 56,000 vs incurred 30,000). Incurred for the GL claim is 30,000 or 56,000, so the total is 42,000 or 68,000. A corrected loss run is needed."
       },
       {
        "field": "is_update_of_prior_submission",
@@ -38348,7 +38348,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: GL claim 901887 paid is 30,000 on the Callaghan loss run but 4,000 on the application. The loss run's own paid plus outs"
+       "detail": "flagged: GL claim 901887 paid is 30,000 on the Callaghan loss run but 4,000 on the application. The loss run's own paid plus outstanding (56,000) does not equal its stated incurred (30,000). Total paid is either 16,000 or 42,000 and cannot be settled from the packet."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -38357,7 +38357,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The incurred figure depends on the unresolved GL paid amount. It is 42,000 if paid is 4,000 and 68,000 if paid is 30,000"
+       "detail": "flagged: The incurred figure depends on the unresolved GL paid amount. It is 42,000 if paid is 4,000 and 68,000 if paid is 30,000 plus 26,000 outstanding. The Callaghan loss run is internally inconsistent."
       },
       {
        "field": "is_update_of_prior_submission",
@@ -38997,7 +38997,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: GL claim paid is 30,000 on the Callaghan loss run but 4,000 on the application. The loss run is also internally inconsis"
+       "detail": "flagged: GL claim paid is 30,000 on the Callaghan loss run but 4,000 on the application. The loss run is also internally inconsistent: paid 30,000 plus outstanding 26,000 does not equal its stated incurred of 30,000. Total paid is 16,000 or 42,000."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -39006,7 +39006,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: GL incurred is stated as 30,000, which matches the application (4,000 + 26,000). But if the loss run paid of 30,000 is r"
+       "detail": "flagged: GL incurred is stated as 30,000, which matches the application (4,000 + 26,000). But if the loss run paid of 30,000 is right, paid plus outstanding gives 56,000. Total is 42,000 or 68,000 depending on the correct paid figure."
       },
       {
        "field": "is_update_of_prior_submission",
@@ -39668,7 +39668,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Property paid of 12000 agrees across the application and the Meridian loss run. GL claim 901887 paid is 4000 on the appl"
+       "detail": "flagged: Property paid of 12000 agrees across the application and the Meridian loss run. GL claim 901887 paid is 4000 on the application and is implied by incurred less outstanding (30000 less 26000), but the Callaghan loss run shows paid 30000 next to outstanding 26000 and total incurred 30000, which cannot all be true. Total paid cannot be established until the carrier confirms the GL paid figure."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -40335,7 +40335,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The GL claim paid amount conflicts. Callaghan shows 30,000 paid, while the application shows 4,000 paid and 26,000 reser"
+       "detail": "flagged: The GL claim paid amount conflicts. Callaghan shows 30,000 paid, while the application shows 4,000 paid and 26,000 reserved. Total paid would be 16,000 or 42,000 depending on which is correct."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -40344,7 +40344,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The GL incurred figure of 30,000 agrees across application and Callaghan's total column, but Callaghan's own paid and ou"
+       "detail": "flagged: The GL incurred figure of 30,000 agrees across application and Callaghan's total column, but Callaghan's own paid and outstanding figures sum to 56,000. Callaghan's paid column conflicts with the application, so the true incurred amount cannot be confirmed."
       },
       {
        "field": "is_update_of_prior_submission",
@@ -40915,7 +40915,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Property paid is 12000 on both application and loss_run_a. GL paid on claim 901887 is 4000 per the application but 30000"
+       "detail": "flagged: Property paid is 12000 on both application and loss_run_a. GL paid on claim 901887 is 4000 per the application but 30000 per the Callaghan loss run. The Callaghan row does not reconcile internally, since paid 30000 plus outstanding 26000 does not equal total incurred 30000. Total paid is therefore either 16000 or 42000 and cannot be established from the packet."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -48395,7 +48395,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Loss history not established: application refers to an attached loss summary that is not in the packet and does not decl"
+       "detail": "flagged: Loss history not established: application refers to an attached loss summary that is not in the packet and does not declare nil losses; carrier loss runs pending."
       },
       {
        "field": "total_paid_5y_usd",
@@ -49041,7 +49041,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Loss history not provided; the application does not declare nil losses and the referenced loss summary is missing, so ze"
+       "detail": "flagged: Loss history not provided; the application does not declare nil losses and the referenced loss summary is missing, so zero cannot be established."
       },
       {
        "field": "total_paid_5y_usd",
@@ -49671,7 +49671,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Loss history is not provided. The application references an attached loss summary that is not in the packet and does not"
+       "detail": "flagged: Loss history is not provided. The application references an attached loss summary that is not in the packet and does not declare nil losses. Zero cannot be inferred."
       },
       {
        "field": "total_paid_5y_usd",
@@ -50311,7 +50311,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Loss runs were not received and the application lists no claims and does not state none, so a count of zero cannot be es"
+       "detail": "flagged: Loss runs were not received and the application lists no claims and does not state none, so a count of zero cannot be established."
       },
       {
        "field": "total_paid_5y_usd",
@@ -50938,7 +50938,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No loss runs or no-loss letter were provided. The application loss table is empty and the 'none' box is not checked, so "
+       "detail": "flagged: No loss runs or no-loss letter were provided. The application loss table is empty and the 'none' box is not checked, so nil losses cannot be established."
       },
       {
        "field": "total_paid_5y_usd",
@@ -51567,7 +51567,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No loss runs or no-losses letter are provided, and the application loss table is blank, so the loss count cannot be esta"
+       "detail": "flagged: No loss runs or no-losses letter are provided, and the application loss table is blank, so the loss count cannot be established. Zero cannot be assumed."
       },
       {
        "field": "total_paid_5y_usd",
@@ -52188,7 +52188,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No loss runs are in the packet. The application says a loss summary is attached and the broker email says loss runs are "
+       "detail": "flagged: No loss runs are in the packet. The application says a loss summary is attached and the broker email says loss runs are still being requested from both carriers, so no valuation date can be established."
       },
       {
        "field": "loss_count_5y",
@@ -52197,7 +52197,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Application loss history box is unchecked and refers to an attached loss summary that is not in the packet. The packet d"
+       "detail": "flagged: Application loss history box is unchecked and refers to an attached loss summary that is not in the packet. The packet does not establish whether there are zero or some losses."
       },
       {
        "field": "total_paid_5y_usd",
@@ -52206,7 +52206,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No loss runs or loss summary are in the packet, so five-year paid losses cannot be established. The no-losses box is not"
+       "detail": "flagged: No loss runs or loss summary are in the packet, so five-year paid losses cannot be established. The no-losses box is not checked, so a zero value is not supported."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -52790,7 +52790,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No loss run or loss summary is in the packet. The broker says the loss runs are still outstanding, so no valuation date "
+       "detail": "flagged: No loss run or loss summary is in the packet. The broker says the loss runs are still outstanding, so no valuation date can be read."
       },
       {
        "field": "loss_count_5y",
@@ -52799,7 +52799,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The application says losses exist and refers to an attached loss summary, which is not in the packet. The loss count can"
+       "detail": "flagged: The application says losses exist and refers to an attached loss summary, which is not in the packet. The loss count cannot be established, and zero cannot be assumed."
       },
       {
        "field": "total_paid_5y_usd",
@@ -52808,7 +52808,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Paid losses over five years depend on the loss runs or loss summary, which are not in the packet. The application does n"
+       "detail": "flagged: Paid losses over five years depend on the loss runs or loss summary, which are not in the packet. The application does not state a no-loss position."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -53422,7 +53422,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No loss run or no-losses letter is in the packet, so no valuation date can be established. The broker says loss runs are"
+       "detail": "flagged: No loss run or no-losses letter is in the packet, so no valuation date can be established. The broker says loss runs are still outstanding."
       },
       {
        "field": "loss_count_5y",
@@ -53431,7 +53431,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The application says a loss summary is attached and leaves the none box unchecked, but no loss rows or loss runs are in "
+       "detail": "flagged: The application says a loss summary is attached and leaves the none box unchecked, but no loss rows or loss runs are in the packet. Cannot establish whether there are zero losses or some losses."
       },
       {
        "field": "total_paid_5y_usd",
@@ -53440,7 +53440,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: Five-year paid losses cannot be established. The loss summary and loss runs are not in the packet, and the none box is n"
+       "detail": "flagged: Five-year paid losses cannot be established. The loss summary and loss runs are not in the packet, and the none box is not checked."
       },
       {
        "field": "total_incurred_5y_usd",
@@ -62803,7 +62803,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: SOV values sum to 1200000+400000+250000 + 650000+180000+120000 + 1500000+250000+150000 + 780000+220000+140000 + 1100000+"
+       "detail": "flagged: SOV values sum to 1200000+400000+250000 + 650000+180000+120000 + 1500000+250000+150000 + 780000+220000+140000 + 1100000+300000+180000 + 740000+150000+90000 = 8,100,000 across rows; slip states 8,400,000. The two disagree and no document says which governs."
       },
       {
        "field": "property_coinsurance_pct",
@@ -66126,7 +66126,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No US FEIN appears anywhere in the packet. The insured is a UK private limited company, and the slip gives only a regist"
+       "detail": "flagged: No US FEIN appears anywhere in the packet. The insured is a UK private limited company, and the slip gives only a registered company number (07482913). That is not an FEIN and should not be substituted for one."
       },
       {
        "field": "applicant_entity_type",
@@ -66752,7 +66752,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No US FEIN appears anywhere in the packet. The insured is a UK private limited company. The slip shows only a UK company"
+       "detail": "flagged: No US FEIN appears anywhere in the packet. The insured is a UK private limited company. The slip shows only a UK company registration number, 07482913, which is not an FEIN and should not be recorded as one."
       },
       {
        "field": "applicant_entity_type",
@@ -67370,7 +67370,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: The packet gives no US FEIN. The insured is a UK private limited company, and the slip shows only a UK company registrat"
+       "detail": "flagged: The packet gives no US FEIN. The insured is a UK private limited company, and the slip shows only a UK company registration number (07482913), which is not an FEIN."
       },
       {
        "field": "applicant_entity_type",
@@ -67982,7 +67982,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No FEIN appears in the packet. The only identifier is a UK company registration number, which is not a FEIN. No applicat"
+       "detail": "flagged: No FEIN appears in the packet. The only identifier is a UK company registration number, which is not a FEIN. No application was supplied."
       },
       {
        "field": "applicant_entity_type",
@@ -68596,7 +68596,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No FEIN appears in the packet. The only identifier is a UK company registration number, which is not a FEIN. No applicat"
+       "detail": "flagged: No FEIN appears in the packet. The only identifier is a UK company registration number, which is not a FEIN. No application was provided."
       },
       {
        "field": "applicant_entity_type",
@@ -69829,7 +69829,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No federal employer identification number appears anywhere in the packet. The slip's REGISTERED NO 07482913 is a UK comp"
+       "detail": "flagged: No federal employer identification number appears anywhere in the packet. The slip's REGISTERED NO 07482913 is a UK company registration number and is not a FEIN."
       },
       {
        "field": "applicant_entity_type",
@@ -70457,7 +70457,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No federal employer identification number appears in any document. The slip gives REGISTERED NO 07482913, which is a UK "
+       "detail": "flagged: No federal employer identification number appears in any document. The slip gives REGISTERED NO 07482913, which is a UK company registration number and not a FEIN, so it cannot be used for this field."
       },
       {
        "field": "applicant_entity_type",
@@ -71077,7 +71077,7 @@
        "valueCorrect": null,
        "provenanceOk": null,
        "provenanceDetail": null,
-       "detail": "flagged: No US federal EIN appears in any document. The only registration number is the UK company number 07482913 on the slip, w"
+       "detail": "flagged: No US federal EIN appears in any document. The only registration number is the UK company number 07482913 on the slip, which is not an EIN and should not be recorded as one. No application form is in the packet."
       },
       {
        "field": "applicant_entity_type",

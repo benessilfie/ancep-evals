@@ -1,0 +1,21 @@
+[build]
+builder = "nixpacks"
+
+[build.nixpacksPlan.phases.setup]
+nixPkgs = ["python313", "nodejs_22"]
+
+[build.nixpacksPlan.phases.install]
+cmds = [
+  "pip install uv",
+  "uv sync --frozen --no-dev",
+  "npm --prefix client ci",
+]
+
+[build.nixpacksPlan.phases.build]
+cmds = ["npm --prefix client run build"]
+
+[deploy]
+startCommand = "uv run uvicorn submission_evals.server:app --host 0.0.0.0 --port $PORT"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 60
+restartPolicyType = "ON_FAILURE"
