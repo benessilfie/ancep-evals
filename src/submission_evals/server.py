@@ -293,7 +293,7 @@ async def _stream(run_id: str) -> AsyncIterator[str]:
     for field in GRADED_FIELDS:
         answer = getattr(produced, field)
         yield _sse("field", {"field": field, "answer": answer.model_dump(mode="json")})
-        await asyncio.sleep(0.03)
+        await asyncio.sleep(0.11)
 
     yield _sse("stage", {"stage": "checking"})
     findings = run_all(produced, packet)
