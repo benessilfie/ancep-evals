@@ -62,8 +62,9 @@ Picking Haiku keeps it cheap. Packet 05 is the interesting one.
 - [ ] The row above the document reads `output` on the left and a dropdown on the right, on one
       line, never wrapping
 - [ ] **Open packet 11 and pick Sonnet run 2.** The record should show `total sum insured`
-      raised for a human, and the model's own note should say the figures match and it is not a
-      conflict. That contradiction is a finding, not a bug
+      raised for a human, and the model's own note should say the slip and the SOV disagree so
+      the broker needs a query. The verdict panel says the opposite, that the documents answer
+      it and nothing needed raising. That contradiction is a finding, not a bug
 - [ ] Header shows the title on the left and the tabs centred. Stats on the right only appear
       on Findings and only on a wide screen
 
