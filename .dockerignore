@@ -1,0 +1,11 @@
+.venv
+venv
+node_modules
+client/node_modules
+client
+packets
+results/traces
+.git
+.env
+notes
+__pycache__
