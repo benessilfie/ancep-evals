@@ -50,6 +50,19 @@ LIVE_MODELS: dict[str, ModelLimit] = {
 }
 DEFAULT_MODEL = "claude-haiku-5-5"
 
+
+def _recorded_runs() -> str:
+    path = Path(__file__).resolve().parents[2] / "docs" / "eval.json"
+    try:
+        total = json.loads(path.read_text())["totals"]["trials"]
+    except (OSError, ValueError, KeyError, TypeError):
+        return "the recorded runs on the findings tab"
+    return f"the {total} recorded runs on the findings tab"
+
+
+RECORDED_RUNS = _recorded_runs()
+
+
 def _load_env_file() -> None:
     path = Path(__file__).resolve().parents[2] / ".env"
     if not path.exists():
@@ -98,14 +111,11 @@ def _allow(ip: str, model: str) -> str | None:
     _prune(hour, now, 3600)
     _prune(_today[model], now, 86_400)
     if len(_today[model]) >= limit.per_day:
-        return (
-            f"{limit.label} is not available right now. Try another model, "
-            "or the 90 recorded runs on the findings tab."
-        )
+        return f"{limit.label} is not available right now. Try another model, or {RECORDED_RUNS}."
     if len(hour) >= limit.per_hour:
         return (
             f"{limit.label} is not available from this address right now. "
-            "Try another model, or the 90 recorded runs on the findings tab."
+            f"Try another model, or {RECORDED_RUNS}."
         )
     hour.append(now)
     _today[model].append(now)
