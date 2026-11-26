@@ -1,3 +1,4 @@
+import { Fragment } from "react"
 import type { Answer, FieldVerdict, Trial } from "@/types"
 import { cn } from "@/lib/utils"
 
@@ -57,41 +58,51 @@ export function RecordTable({ trial }: { trial: Trial }) {
           if (!answer) return null
           const verdict = verdicts.get(field)
           const bad = isBad(verdict)
+          const detail = bad && verdict ? humanise(verdict.detail) : null
           return (
-            <tr
-              key={field}
-              className={cn("border-b border-rule-soft align-top", bad && "bg-stamp-wash")}
-            >
-              <td className="px-5 py-2 text-[0.8125rem]">
-                {FIELD_LABELS[field]}
-                <span className="block font-mono text-[0.625rem] text-ink-faint">
-                  {field}
-                </span>
-              </td>
-              <td
+            <Fragment key={field}>
+              <tr
                 className={cn(
-                  "px-3 py-2 font-mono text-[0.75rem]",
-                  bad ? "font-semibold text-stamp" : "text-ink"
+                  "align-top",
+                  bad ? "bg-stamp-wash" : "border-b border-rule-soft"
                 )}
               >
-                {answer.status === "flagged" ? (
-                  <span className="text-carbon">raised for a human</span>
-                ) : (
-                  money(answer.value)
-                )}
-                {bad && verdict && (
-                  <span className="mt-1 block font-sans text-[0.75rem] font-normal text-stamp">
-                    {humanise(verdict.detail)}
+                <td className="px-5 py-2 text-[0.8125rem]">
+                  {FIELD_LABELS[field]}
+                  <span className="block font-mono text-[0.625rem] text-ink-faint">
+                    {field}
                   </span>
-                )}
-              </td>
-              <td className="hidden px-3 py-2 font-mono text-[0.75rem] text-ink-soft sm:table-cell">
-                {answer.status === "flagged" ? "" : answer.mode}
-              </td>
-              <td className="hidden px-3 py-2 font-mono text-[0.75rem] text-ink-soft md:table-cell">
-                {answer.sources?.[0]?.document ?? ""}
-              </td>
-            </tr>
+                </td>
+                <td
+                  className={cn(
+                    "px-3 py-2 font-mono text-[0.75rem]",
+                    bad ? "font-semibold text-stamp" : "text-ink"
+                  )}
+                >
+                  {answer.status === "flagged" ? (
+                    <span className="text-carbon">raised for a human</span>
+                  ) : (
+                    money(answer.value)
+                  )}
+                </td>
+                <td className="hidden px-3 py-2 font-mono text-[0.75rem] text-ink-soft sm:table-cell">
+                  {answer.status === "flagged" ? "" : answer.mode}
+                </td>
+                <td className="hidden px-3 py-2 font-mono text-[0.75rem] text-ink-soft md:table-cell">
+                  {answer.sources?.[0]?.document ?? ""}
+                </td>
+              </tr>
+              {detail && (
+                <tr className="border-b border-rule-soft bg-stamp-wash">
+                  <td
+                    colSpan={4}
+                    className="max-w-0 px-5 pt-0 pb-2.5 text-[0.75rem] leading-snug text-stamp"
+                  >
+                    {detail}
+                  </td>
+                </tr>
+              )}
+            </Fragment>
           )
         })}
       </tbody>

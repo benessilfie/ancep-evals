@@ -312,7 +312,7 @@ def grade_field(
 
     if answer.flagged:
         action_ok: bool | None = None
-        detail = f"flagged: {answer.reason[:120]}"
+        detail = f"flagged: {answer.reason.strip()}"
         if expectation is not None:
             forbidden = expectation.forbidden_actions
             if forbidden and answer.recommended_action in forbidden:
