@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { useMarker } from "@/lib/marker"
 import { Evidence } from "@/components/Evidence"
 import { FormMark, LedgerMark, PaperMark, ScheduleMark, SealMark } from "@/components/Marks"
@@ -18,7 +18,7 @@ const FAILURE_CLASS: Record<string, string> = {
   "08-sov-page-break": "row split by layout",
   "09-missing-loss-runs": "evidence absent",
   "10-duplicate-submission": "already on file",
-  "11-london-slip": "unfamiliar format",
+  "11-london-slip": "nothing wrong",
   "12-uk-no-fein": "field has no source",
 }
 
@@ -42,29 +42,10 @@ export function HowItWorks({
   const current = steps[step]
   const last = step === steps.length - 1
   const { track, style } = useMarker<HTMLElement>(current.title)
-  const body = useRef<HTMLDivElement>(null)
-  const [floor, setFloor] = useState<number>()
-  const [wide, setWide] = useState(
-    () => typeof window === "undefined" || window.matchMedia("(min-width: 768px)").matches
-  )
-
-  useLayoutEffect(() => {
-    const height = body.current?.offsetHeight
-    if (height) setFloor((seen) => (seen === undefined || height > seen ? height : seen))
-  }, [step])
-
-  useEffect(() => {
-    const remeasure = () => {
-      setFloor(undefined)
-      setWide(window.matchMedia("(min-width: 768px)").matches)
-    }
-    window.addEventListener("resize", remeasure)
-    return () => window.removeEventListener("resize", remeasure)
-  }, [])
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
-      <div className="mx-auto w-full max-w-[64rem] px-4 pt-8 pb-28 sm:px-6 sm:pt-10 md:pb-10">
+      <div className="mx-auto flex min-h-full w-full max-w-[64rem] flex-col px-4 pt-8 pb-28 sm:px-6 sm:pt-10 md:pb-10">
         <div className={cn("mb-7", step > 0 && "hidden md:block")}>
           <h1 className="max-w-[24ch] text-[1.875rem] leading-[1.12] font-semibold tracking-[-0.02em]">
             An eval set to grade AI on commercial insurance submissions
@@ -114,16 +95,12 @@ export function HowItWorks({
           ))}
         </nav>
 
-        <div
-          ref={body}
-          style={wide ? { minHeight: floor } : undefined}
-          className="mt-6 grid gap-8 md:mt-9 md:gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start"
-        >
+        <div className="mt-6 grid gap-8 md:mt-9 md:min-h-0 md:flex-1 md:gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start">
           <div>{current.body}</div>
           <div className="min-w-0">{current.aside}</div>
         </div>
 
-        <div className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-rule bg-paper px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:static md:z-auto md:mt-10 md:border-rule-soft md:px-0 md:py-0 md:pt-5">
+        <div className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-rule bg-paper px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:static md:z-auto md:mt-10 md:shrink-0 md:border-rule-soft md:px-0 md:py-0 md:pt-5">
           <button
             type="button"
             disabled={step === 0}
@@ -306,10 +283,10 @@ function buildSteps(
             So on those {controls.length}, raising a query counts against it.
           </p>
           <p>
-            Two of them look almost identical and need opposite answers. One client
-            genuinely has no claims and the insurer sent a letter confirming it, so the
-            agent should record zero. The other is missing its claims record entirely, so
-            the agent should go back and ask.
+            One of them has a near twin among the broken ones, and the two need opposite
+            answers. One client genuinely has no claims and the insurer sent a letter
+            confirming it, so the agent should record zero. The other is missing its
+            claims record entirely, so the agent should go back and ask.
           </p>
         </Prose>
       ),
