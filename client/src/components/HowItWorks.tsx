@@ -44,8 +44,8 @@ export function HowItWorks({
   const { track, style } = useMarker<HTMLElement>(current.title)
 
   return (
-    <div className="min-h-0 flex-1 overflow-y-auto">
-      <div className="mx-auto flex min-h-full w-full max-w-[64rem] flex-col px-4 pt-8 pb-28 sm:px-6 sm:pt-10 md:pb-10">
+    <div className="min-h-0 flex-1 overflow-y-auto md:overflow-hidden">
+      <div className="mx-auto flex min-h-full w-full max-w-[64rem] flex-col px-4 pt-8 pb-28 sm:px-6 sm:pt-10 md:h-full md:pb-10">
         <div className={cn("mb-7", step > 0 && "hidden md:block")}>
           <h1 className="max-w-[24ch] text-[1.875rem] leading-[1.12] font-semibold tracking-[-0.02em]">
             An eval set to grade AI on commercial insurance submissions
@@ -95,7 +95,7 @@ export function HowItWorks({
           ))}
         </nav>
 
-        <div className="mt-6 grid gap-8 md:mt-9 md:min-h-0 md:flex-1 md:gap-10 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start">
+        <div className="mt-6 grid gap-8 md:mt-9 md:min-h-0 md:flex-1 md:gap-10 md:overflow-y-auto lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start">
           <div>{current.body}</div>
           <div className="min-w-0">{current.aside}</div>
         </div>
