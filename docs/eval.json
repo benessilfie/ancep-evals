@@ -60013,7 +60013,7 @@
      "document": "slip",
      "flagAlsoAcceptable": false,
      "rationale": "A slip states the period as a duration and an inception date rather than two dates, so the expiry has to be worked out from it and declaring it as read off the page is a false receipt.",
-     "source": "https://www.londonmarketgroup.co.uk/mrc"
+     "source": "https://lmg.london/digital-market/"
     },
     {
      "field": "total_insured_value_usd",
@@ -60022,7 +60022,7 @@
      "document": "slip",
      "flagAlsoAcceptable": false,
      "rationale": "The slip states the total sum insured in the risk details, so it is read rather than summed from the schedule.",
-     "source": "https://www.londonmarketgroup.co.uk/mrc"
+     "source": "https://lmg.london/digital-market/"
     }
    ],
    "documents": [
@@ -66060,7 +66060,7 @@
      "document": "slip",
      "flagAlsoAcceptable": false,
      "rationale": "The slip gives a period and an inception date, so expiry is worked out rather than read.",
-     "source": "https://www.londonmarketgroup.co.uk/mrc"
+     "source": "https://lmg.london/digital-market/"
     }
    ],
    "documents": [
