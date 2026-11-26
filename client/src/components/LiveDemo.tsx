@@ -42,7 +42,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
   const [pane, setPane] = useState<"packet" | "record">("packet")
   const [graded, setGraded] = useState<Graded | null>(null)
   const source = useRef<EventSource | null>(null)
-  const collected = useRef<{ fields: typeof fields; findings: Finding[] }>({
+  const collected = useRef<{ fields: typeof fields; findings: Finding[]; tokens?: number }>({
     fields: [],
     findings: [],
   })
@@ -135,7 +135,10 @@ export function LiveDemo({ data }: { data: EvalData }) {
     es.addEventListener("stage", (e) => {
       const d = JSON.parse((e as MessageEvent).data)
       setPhase(d.stage === "received" ? "reading" : d.stage)
-      if (d.seconds) setMeta({ seconds: d.seconds, tokens: d.tokens })
+      if (d.seconds) {
+        collected.current.tokens = d.tokens
+        setMeta({ seconds: d.seconds, tokens: d.tokens })
+      }
     })
     es.addEventListener("field", (e) => {
       const d = JSON.parse((e as MessageEvent).data)
@@ -160,6 +163,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
         packetId,
         label: data.cases.find((c) => c.id === packetId)?.short ?? packetId,
         seconds: d.seconds,
+        tokens: taken.tokens,
         model: chosenLabel,
         passed: d.graded ? d.graded.passed : null,
         raised: taken.fields.filter((f) => f.answer.status === "flagged").length,
@@ -189,7 +193,7 @@ export function LiveDemo({ data }: { data: EvalData }) {
     setFindings(run.findings)
     setGraded(run.passed === null ? null : { passed: run.passed, valueScore: 0, provenanceScore: 0 })
     if (run.packetId) setPacketId(run.packetId)
-    setMeta({ seconds: run.seconds })
+    setMeta({ seconds: run.seconds, tokens: run.tokens })
     setMessage(null)
     setPhase("done")
     setPane("record")

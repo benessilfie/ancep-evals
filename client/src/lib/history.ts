@@ -10,6 +10,7 @@ export interface PastRun {
   packetId: string | null
   label: string
   seconds: number
+  tokens?: number
   model?: string
   passed: boolean | null
   raised: number
