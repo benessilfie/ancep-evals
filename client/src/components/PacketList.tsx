@@ -102,8 +102,9 @@ export function PacketList({ cases, models, selected, onSelect }: Props) {
 
       <div className="px-4 py-4">
         <p className="text-[0.75rem] leading-relaxed text-ink-faint">
-          Three packets have nothing wrong with them on purpose. Without them an agent that
-          flags every field would score full marks.
+          {cases.filter((c) => c.kind === "control").length} packets have nothing wrong with
+          them on purpose. Without them an agent that flags every field would score full
+          marks.
         </p>
       </div>
     </nav>
